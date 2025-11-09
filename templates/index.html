@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PUBG POLSKA CUP 2025 - SQUAD FPP</title>
-    
+
     <link rel="icon" href="https://i.imgur.com/HcTRskR.png" type="image/png">
     <link rel="shortcut icon" href="https://i.imgur.com/HcTRskR.png" type="image/png">
 
@@ -639,6 +639,8 @@ Nagrody zostaną wypłacone kapitanom drużyn (lub wskazanemu reprezentantowi) w
 
 IV. Format Rozgrywek i Punktacja
 Turniej składa się z 6 (sześciu) gier rozgrywanych w trybie FPP na serwerach niestandardowych.
+Maksymalna ilość drużyn zostanie ustalona na podstawie liczby zapisanych drużyn i decyzja o maksymalnej ilości drużyn w turnieju
+zostanie podjęta przez Organizatora w stosownym czasie przed rozpoczęciem turnieju.
 Mapy: 2×Miramar, Rondo, Taego, 2×Erangel.
 Obowiązuje standardowa punktacja e-sportowa S.U.P.E.R. (Standard and Universal PUBG Esports Ruleset).
 Punkty za zabójstwa: 1 punkt za każde zabójstwo.
@@ -763,11 +765,11 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
 
                         // Link do op.gg/pubg
 
-                        if (kapitan) htmlWewnatrz += `<li class="captain"><a href="https://op.gg/pubg/player/${kapitan}" target="_blank" rel="noopener noreferrer">${kapitan}</a> (Kapitan)</li>`;
-                        if (gracz2) htmlWewnatrz += `<li><a href="https://op.gg/pubg/player/${gracz2}" target="_blank" rel="noopener noreferrer">${gracz2}</a></li>`;
-                        if (gracz3) htmlWewnatrz += `<li><a href="https://op.gg/pubg/player/${gracz3}" target="_blank" rel="noopener noreferrer">${gracz3}</a></li>`;
-                        if (gracz4) htmlWewnatrz += `<li><a href="https://op.gg/pubg/player/${gracz4}" target="_blank" rel="noopener noreferrer">${gracz4}</a></li>`;
-                        if (rezerwa) htmlWewnatrz += `<li class="sub-player"><a href="https://op.gg/pubg/player/${rezerwa}" target="_blank" rel="noopener noreferrer">${rezerwa}</a> (Gracz 5)</li>`;
+                        if (kapitan) htmlWewnatrz += `<li class="captain"><a href="https://op.gg/pubg/user/${kapitan}" target="_blank" rel="noopener noreferrer">${kapitan}</a> (Kapitan)</li>`;
+                        if (gracz2) htmlWewnatrz += `<li><a href="https://op.gg/pubg/user/${gracz2}" target="_blank" rel="noopener noreferrer">${gracz2}</a></li>`;
+                        if (gracz3) htmlWewnatrz += `<li><a href="https://op.gg/pubg/user/${gracz3}" target="_blank" rel="noopener noreferrer">${gracz3}</a></li>`;
+                        if (gracz4) htmlWewnatrz += `<li><a href="https://op.gg/pubg/user/${gracz4}" target="_blank" rel="noopener noreferrer">${gracz4}</a></li>`;
+                        if (rezerwa) htmlWewnatrz += `<li class="sub-player"><a href="https://op.gg/pubg/user/${rezerwa}" target="_blank" rel="noopener noreferrer">${rezerwa}</a> (Gracz 5)</li>`;
 
                         htmlWewnatrz += `</ul>`;
                         li.innerHTML = htmlWewnatrz;
@@ -790,7 +792,7 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
            !!! TUTAJ MUSISZ WPISAĆ ID MECZÓW PO ICH ZAKOŃCZENIU !!!
         */
         const MATCH_IDS = {
-            "gra1": "abdc1e9f-ca82-49e2-a1c1-2b464cb3ef2b", // To jest ID testowe
+            "gra1": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_1", // To jest ID testowe
             "gra2": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_2",
             "gra3": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_3",
             "gra4": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_4",
@@ -888,7 +890,7 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
             tableBody.innerHTML = '<tr><td colspan="5">Pobieranie i sumowanie wyników...</td></tr>';
 
             try {
-		// 1. Stwórz listę wszystkich ID meczów, które mają być policzone
+                // 1. Stwórz listę wszystkich ID meczów, które mają być policzone
                 const matchIdsToFetch = Object.values(MATCH_IDS)
                     .filter(id => id && !id.startsWith("TUTAJ_")); // Bierzemy tylko realne ID
 
