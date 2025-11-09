@@ -7,7 +7,8 @@
     
     <link rel="icon" href="https://i.imgur.com/HcTRskR.png" type="image/png">
     <link rel="shortcut icon" href="https://i.imgur.com/HcTRskR.png" type="image/png">
-    
+
+    <meta http-equiv="refresh" content="600">
     <style>
         /* ------- Globalne Style ------- */
         html {
@@ -17,12 +18,12 @@
             /* Nowe style tła */
             background-image: 
                 linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), /* Ciemny overlay dla czytelności */
-                url('https://i.imgur.com/X4FC0PH.png'); /* Poprawny link do obrazu */
+                url('https://i.imgur.com/gj1sZQj.jpg'); /* Poprawny link do obrazu */
             background-size: cover; /* Pokrywa całe tło */
             background-attachment: fixed; /* Tło jest stałe podczas przewijania */
             background-position: center center; /* Obraz wyśrodkowany */
             background-color: #121212; /* Fallback kolor tła */
-            
+
             color: #e0e0e0; /* Jasnoszary tekst */
             font-family: 'Arial', 'Helvetica', sans-serif;
             line-height: 1.6;
@@ -49,16 +50,14 @@
             text-align: center;
             border-bottom: 4px solid #ffc107; /* Żółty akcent PUBG */
         }
-        
+
         /* Styl dla baneru w nagłówku */
         header .banner-img {
             max-width: 100%; /* Obrazek responsywny */
             height: auto; /* Zachowanie proporcji */
             margin: 10px 0; /* Mały margines góra/dół */
-            /* Możesz dodać box-shadow, jeśli chcesz, np.: */
-            /* box-shadow: 0 4px 10px rgba(0,0,0,0.5); */
         }
-        
+
 
         /* ------- Pasek Nawigacji (Zakładki) ------- */
         .navbar {
@@ -90,10 +89,10 @@
         main {
             padding: 30px;
         }
-        
+
         .content-section {
             margin-bottom: 40px;
-            padding-top: 30px; 
+            padding-top: 30px;
         }
 
         /* ------- Sekcja Zapisów (Hero) ------- */
@@ -171,8 +170,8 @@
         .info-list li a:hover {
             text-decoration: underline;
         }
-        
-        
+
+
         /* ============================================= */
         /* CSS - LISTA TEAMÓW I GRACZY     */
         /* ============================================= */
@@ -183,7 +182,7 @@
             font-size: 1.1em;
             color: #ffffff;
         }
-        
+
         /* Styl pojedynczego bloku drużyny */
         ol.team-list li {
             background-color: rgba(42, 42, 42, 0.9); /* Ciemny z przezroczystością */
@@ -193,14 +192,14 @@
             list-style-position: inside; /* Numer jest W bloku */
             border-left: 3px solid #ffc107;
         }
-        
+
         /* Nazwa drużyny - obok numeru */
         .team-name {
             font-size: 1.25em;
             color: #ffc107;
             font-weight: bold;
         }
-        
+
         /* Pod-lista na graczy (pod nazwą drużyny) */
         .player-sublist {
             list-style: disc; /* Kropki dla graczy */
@@ -209,7 +208,7 @@
             font-size: 0.9em;
             color: #ccc;
         }
-        
+
         /* Resetowanie stylów dla <li> wewnątrz pod-listy */
         .player-sublist li {
             background: none;
@@ -218,13 +217,13 @@
             margin: 0;
             list-style-position: outside; /* Kropki na zewnątrz */
         }
-        
+
         /* Wyróżnienie kapitana */
         .captain {
             font-weight: bold;
             color: #ffffff; /* Jaśniejszy kolor dla kapitana */
         }
-        
+
         /* Styl dla rezerwowego */
         .sub-player {
             font-style: italic;
@@ -232,7 +231,7 @@
             color: #aaa;
         }
         /* ============================================= */
-        
+
         /* ============================================= */
         /* SEKCJE SPONSORÓW (Obrazy)      */
         /* ============================================= */
@@ -299,7 +298,7 @@
         }
         .tabs-nav {
             display: flex;
-            flex-wrap: wrap; 
+            flex-wrap: wrap;
             background-color: rgba(42, 42, 42, 0.95);
             border-radius: 8px 8px 0 0;
             overflow: hidden;
@@ -378,7 +377,7 @@
         /* Responsywność */
         @media (max-width: 768px) {
             .tab-link {
-                flex-basis: 33.3%; 
+                flex-basis: 33.3%;
                 font-size: 0.8em;
             }
         }
@@ -395,10 +394,10 @@
                 position: static;
             }
             .content-section {
-                 padding-top: 10px; 
+                 padding-top: 10px;
             }
             .tab-link {
-                flex-basis: 100%; 
+                flex-basis: 100%;
                 font-size: 1em;
             }
         }
@@ -408,7 +407,7 @@
 <body>
 
     <div class="container">
-        
+
         <header>
             <img src="https://i.imgur.com/ZDKOVNK.png" alt="PUBG POLSKA CUP 2025 - SQUAD FPP" class="banner-img">
         </header>
@@ -423,7 +422,7 @@
 
         <main>
             <section id="zapisy" class="zapisy content-section">
-                
+
                 <h3>Zapisy na turniej SQUAD FPP</h3>
                 <p>Wypełnij formularz zgłoszeniowy, klikając przycisk poniżej.</p>
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSeaYLKta8D83Xnfanm4tXVUtqX0273o7P1MJEowvVPqI6Crdg/viewform?usp=publish-editor" target="_blank" class="cta-button">
@@ -454,7 +453,7 @@
             <section id="teamy" class="info-section content-section">
                 <h3>Zapisane Teamy</h3>
                 <p>Poniżej znajduje się automatycznie aktualizowana lista drużyn. Dane pobierane są na żywo z arkusza zapisów.</p>
-                
+
                 <ol id="team-list-dynamic" class="team-list">
                     <li>Ładowanie listy drużyn...</li>
                 </ol>
@@ -494,15 +493,112 @@
                         </div>
                     </div>
 
-                    <div id="tab-gra1" class="tab-content"><h4>Wyniki - Gra 1</h4><p>Wyniki pojawią się po meczu.</p></div>
-                    <div id="tab-gra2" class="tab-content"><h4>Wyniki - Gra 2</h4><p>Wyniki pojawią się po meczu.</p></div>
-                    <div id="tab-gra3" class="tab-content"><h4>Wyniki - Gra 3</h4><p>Wyniki pojawią się po meczu.</p></div>
-                    <div id="tab-gra4" class="tab-content"><h4>Wyniki - Gra 4</h4><p>Wyniki pojawią się po meczu.</p></div>
-                    <div id="tab-gra5" class="tab-content"><h4>Wyniki - Gra 5</h4><p>Wyniki pojawią się po meczu.</p></div>
-                    <div id="tab-gra6" class="tab-content"><h4>Wyniki - Gra 6</h4><p>Wyniki pojawią się po meczu.</p></div>
+                    <div id="tab-gra1" class="tab-content">
+                        <h4>Wyniki - Gra 1</h4>
+                        <div class="results-table-container">
+                            <table class="results-table">
+                                <thead>
+                                    <tr>
+                                        <th>Miejsce</th>
+                                        <th>Nazwa Drużyny</th>
+                                        <th>Punkty (Rank)</th>
+                                        <th>Zabójstwa (Kills)</th>
+                                        <th>Suma Punktów</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="tab-gra2" class="tab-content">
+                        <h4>Wyniki - Gra 2</h4>
+                        <div class="results-table-container">
+                            <table class="results-table">
+                                <thead>
+                                    <tr>
+                                        <th>Miejsce</th>
+                                        <th>Nazwa Drużyny</th>
+                                        <th>Punkty (Rank)</th>
+                                        <th>Zabójstwa (Kills)</th>
+                                        <th>Suma Punktów</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="tab-gra3" class="tab-content">
+                        <h4>Wyniki - Gra 3</h4>
+                        <div class="results-table-container">
+                            <table class="results-table">
+                                <thead>
+                                    <tr>
+                                        <th>Miejsce</th>
+                                        <th>Nazwa Drużyny</th>
+                                        <th>Punkty (Rank)</th>
+                                        <th>Zabójstwa (Kills)</th>
+                                        <th>Suma Punktów</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="tab-gra4" class="tab-content">
+                        <h4>Wyniki - Gra 4</h4>
+                        <div class="results-table-container">
+                            <table class="results-table">
+                                <thead>
+                                    <tr>
+                                        <th>Miejsce</th>
+                                        <th>Nazwa Drużyny</th>
+                                        <th>Punkty (Rank)</th>
+                                        <th>Zabójstwa (Kills)</th>
+                                        <th>Suma Punktów</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="tab-gra5" class="tab-content">
+                        <h4>Wyniki - Gra 5</h4>
+                        <div class="results-table-container">
+                            <table class="results-table">
+                                <thead>
+                                    <tr>
+                                        <th>Miejsce</th>
+                                        <th>Nazwa Drużyny</th>
+                                        <th>Punkty (Rank)</th>
+                                        <th>Zabójstwa (Kills)</th>
+                                        <th>Suma Punktów</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="tab-gra6" class="tab-content">
+                        <h4>Wyniki - Gra 6</h4>
+                        <div class="results-table-container">
+                            <table class="results-table">
+                                <thead>
+                                    <tr>
+                                        <th>Miejsce</th>
+                                        <th>Nazwa Drużyny</th>
+                                        <th>Punkty (Rank)</th>
+                                        <th>Zabójstwa (Kills)</th>
+                                        <th>Suma Punktów</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
             </section>
-
             <section id="regulamin" class="info-section content-section">
                 <h3>Regulamin Turnieju</h3>
                 <div class="rules-container">
@@ -586,7 +682,7 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
 </pre>
                 </div>
             </section>
-            
+
             <section class="content-section sponsor-image-section">
                 <img src="https://i.imgur.com/HcTRskR.png" alt="Sponsor Turnieju 2">
             </section>
@@ -597,10 +693,9 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
             <p>&copy; 2025 PUBG POLSKA. Wszelkie prawa zastrzeżone. Strona nie jest powiązana z KRAFTON, Inc.</p>
         </footer>
 
-    </div> 
-    
-    <script>
+    </div>
 
+    <script>
 
         // =============================================
         // CZĘŚĆ 1: LOGIKA POBIERANIA LISTY DRUŻYN (BEZ ZMIAN)
@@ -678,16 +773,14 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
 
 
         // ===============================================================
-        // CZĘŚĆ 2: NOWA LOGIKA DLA WYNIKÓW MECZÓW (PUBG API)
+        // CZĘŚĆ 2: LOGIKA DLA WYNIKÓW MECZÓW (PUBG API)
         // ===============================================================
 
         /*
            !!! TUTAJ MUSISZ WPISAĆ ID MECZÓW PO ICH ZAKOŃCZENIU !!!
-           Po "Grze 1", zdobądź jej ID i wklej je poniżej.
-           Klucze (gra1, gra2...) muszą pasować do atrybutów 'data-tab' w HTML.
         */
         const MATCH_IDS = {
-            "gra1": "abdc1e9f-ca82-49e2-a1c1-2b464cb3ef2b",
+            "gra1": "abdc1e9f-ca82-49e2-a1c1-2b464cb3ef2b", // To jest ID testowe
             "gra2": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_2",
             "gra3": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_3",
             "gra4": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_4",
@@ -704,7 +797,7 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
             if (!tabContent) return;
 
             const tableBody = tabContent.querySelector('.results-table tbody');
-            if (!tableBody) return;
+            if (!tableBody) return; // Jeśli nie ma tabeli, nic nie rób
 
             tableBody.innerHTML = ''; // Wyczyść tabelę (np. z napisu "Ładowanie...")
 
