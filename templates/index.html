@@ -15,7 +15,7 @@
             scroll-behavior: smooth; /* Włącza płynne przewijanie */
         }
         body {
-            /* ZMIANA: Jednolity kolor tła */
+            /* Tło na jednolity kolor */
             background-color: #2a2a2a;
 
             color: #e0e0e0; /* Jasnoszary tekst */
@@ -38,22 +38,19 @@
 
         /* ------- Nagłówek ------- */
         header {
-            /* ZMIANA: Tło nagłówka na ciemniejszy szary */
             background-color: #2a2a2a;
             padding: 10px 20px;
             text-align: center;
             border-bottom: 4px solid #ffc107; /* Żółty akcent PUBG */
         }
 
-        /* Styl dla baneru w nagłówku - ZMIANA WYSRODKOWANIA I POWIEKSZENIA */
+        /* Styl dla baneru w nagłówku */
         header .banner-img {
             max-width: 110%; /* Lekkie powiększenie */
             height: auto; /* Zachowanie proporcji */
             margin: 10px auto; /* Wyśrodkowanie w poziomie */
             display: block; /* Upewnia się, że obraz jest wyśrodkowany poprawnie */
         }
-
-        /* Usunięto style h1 i .header-logo, bo już nie są potrzebne */
 
 
         /* ------- Pasek Nawigacji (Zakładki) ------- */
@@ -168,31 +165,54 @@
 
 
         /* ============================================= */
-        /* CSS - LISTA TEAMÓW I GRACZY     */
+        /* ZMIANA CSS - SIATKA DRUŻYN (TEAM GRID)        */
         /* ============================================= */
-        /* Używamy <ol> dla numeracji */
-        ol.team-list {
-            list-style-type: decimal; /* Numerowana lista 1., 2., 3. */
-            padding-left: 30px; /* Wcięcie na numery */
-            font-size: 1.1em;
+        /* Kontener siatki */
+        .team-grid {
+            display: flex;
+            flex-wrap: wrap; /* Pozwala na zawijanie wierszy */
+            justify-content: space-around; /* Rozkłada karty z odstępami */
+            padding: 0;
+            list-style: none;
+            margin: 0 -10px; /* Kompensuje marginesy kart */
+        }
+
+        /* Karta pojedynczej drużyny */
+        .team-card {
+            background-color: rgba(42, 42, 42, 0.9);
+            margin: 0 10px 20px 10px; /* Marginesy góra/dół i boki */
+            padding: 15px 20px;
+            border-radius: 5px;
+            border-left: 3px solid #ffc107;
+            box-sizing: border-box; /* Kluczowe dla flexboxa! */
+
+            /* 3 karty w rzędzie (ok. 33.3%) */
+            flex-basis: 30%; /* Zostawia trochę miejsca na marginesy */
+            min-width: 250px; /* Minimalna szerokość, zanim zacznie się łamać */
+        }
+
+        /* Nagłówek karty (Numer + Nazwa) */
+        .team-card-header {
+            display: flex;
+            align-items: baseline; /* Wyrównuje numer i tekst */
+            margin-bottom: 10px; /* Odstęp od listy graczy */
+            border-bottom: 1px solid #444; /* Linia oddzielająca */
+            padding-bottom: 5px;
+        }
+
+        /* Numer drużyny */
+        .team-number {
+            font-size: 1.25em;
+            font-weight: bold;
             color: #ffffff;
         }
 
-        /* Styl pojedynczego bloku drużyny */
-        ol.team-list li {
-            background-color: rgba(42, 42, 42, 0.9); /* Ciemny z przezroczystością */
-            margin-bottom: 15px; /* Odstęp między drużynami */
-            padding: 15px 20px;
-            border-radius: 5px;
-            list-style-position: inside; /* Numer jest W bloku */
-            border-left: 3px solid #ffc107;
-        }
-
-        /* Nazwa drużyny - obok numeru */
+        /* Nazwa drużyny */
         .team-name {
             font-size: 1.25em;
             color: #ffc107;
             font-weight: bold;
+            margin-left: 8px; /* Odstęp od numeru */
         }
 
         /* Pod-lista na graczy (pod nazwą drużyny) */
@@ -226,17 +246,15 @@
             color: #aaa;
         }
 
-        /* ============================================= */
-        /* Linki w liście graczy            */
-        /* ============================================= */
+        /* Linki w liście graczy */
         .player-sublist a {
-            color: #ffffff; /* Biały kolor linku (lub #ccc, jeśli wolisz) */
-            text-decoration: none; /* Usunięcie podkreślenia */
-            border-bottom: 1px dotted #ffc107; /* Delikatne podkreślenie w kolorze akcentu */
+            color: #ffffff;
+            text-decoration: none;
+            border-bottom: 1px dotted #ffc107;
             transition: color 0.2s, border-bottom 0.2s;
         }
         .player-sublist a:hover {
-            color: #ffc107; /* Zmiana koloru na żółty po najechaniu */
+            color: #ffc107;
             text-decoration: none;
             border-bottom: 1px solid #ffc107;
         }
@@ -386,6 +404,11 @@
                 flex-basis: 33.3%;
                 font-size: 0.8em;
             }
+            /* 2 karty w rzędzie */
+            .team-card {
+                flex-basis: 45%;
+                min-width: 200px;
+            }
         }
         @media (max-width: 600px) {
             .navbar {
@@ -405,6 +428,10 @@
             .tab-link {
                 flex-basis: 100%;
                 font-size: 1em;
+            }
+            /* 1 karta w rzędzie */
+            .team-card {
+                flex-basis: 100%;
             }
         }
 
@@ -460,9 +487,8 @@
                 <h3>Zapisane Teamy</h3>
                 <p>Poniżej znajduje się automatycznie aktualizowana lista drużyn. Dane pobierane są na żywo z arkusza zapisów.</p>
 
-                <ol id="team-list-dynamic" class="team-list">
-                    <li>Ładowanie listy drużyn...</li>
-                </ol>
+                <div id="team-list-dynamic" class="team-grid">
+                    </div>
             </section>
 
             <section id="wyniki" class="info-section content-section">
@@ -624,7 +650,7 @@ II. Zapisy i Wpisowe
 Zapisy odbywają się poprzez oficjalny formularz udostępniony przez Organizatora.
 Udział w turnieju jest darmowy.
 Organizatorzy zbierają dobrowolne wpisowe od chętnych drużyn i graczy w celu ufundowania puli nagród.
-Dane do wpłaty zostaną udostępnione kapitanom drużyn po pomyślnej rejestracji.
+Dane do wpłaty zostaną udostępnione kapitanom drużyn po pomyśnej rejestracji.
 Wniesienie opłaty nie jest wymagane do wzięcia udziału w grach, jednak pula nagród składa się w 100% z zebranych środków.
 Gracze posiadający aktywną blokadę (bana) na serwerze Discord PUBG POLSKA mają zakaz udziału w turnieju.
 
@@ -639,8 +665,6 @@ Nagrody zostaną wypłacone kapitanom drużyn (lub wskazanemu reprezentantowi) w
 
 IV. Format Rozgrywek i Punktacja
 Turniej składa się z 6 (sześciu) gier rozgrywanych w trybie FPP na serwerach niestandardowych.
-Maksymalna ilość drużyn zostanie ustalona na podstawie liczby zapisanych drużyn i decyzja o maksymalnej ilości drużyn w turnieju
-zostanie podjęta przez Organizatora w stosownym czasie przed rozpoczęciem turnieju.
 Mapy: 2×Miramar, Rondo, Taego, 2×Erangel.
 Obowiązuje standardowa punktacja e-sportowa S.U.P.E.R. (Standard and Universal PUBG Esports Ruleset).
 Punkty za zabójstwa: 1 punkt za każde zabójstwo.
@@ -734,7 +758,10 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
 
         async function pobierzListeDruzyn() {
             const csvUrl = '/api/druzyny'; // Pyta nasz backend
+
+            // ZMIANA JAVASCRIPT: Zmieniono 'listaElement'
             const listaElement = document.getElementById('team-list-dynamic');
+
             try {
                 const response = await fetch(csvUrl, { cache: 'no-store' });
                 if (!response.ok) { throw new Error(`Błąd serwera. Status: ${response.status}`); }
@@ -760,26 +787,35 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
                         const gracz4 = cleanText(kolumny[9]);
                         const rezerwa = cleanText(kolumny[11]);
 
-                        const li = document.createElement('li');
-                        let htmlWewnatrz = `<span class="team-name">${nazwaDrużyny}</span><ul class="player-sublist">`;
+                        // ZMIANA JAVASCRIPT: Tworzymy 'div' zamiast 'li'
+                        const teamCard = document.createElement('div');
+                        teamCard.className = 'team-card';
 
-                        // Link do op.gg/pubg
+                        let htmlWewnatrz = `<div class="team-card-header">
+                                                <span class="team-number">${teamCount}.</span>
+                                                <span class="team-name">${nazwaDrużyny}</span>
+                                            </div>
+                                            <ul class="player-sublist">`;
 
-                        if (kapitan) htmlWewnatrz += `<li class="captain"><a href="https://op.gg/pubg/user/${kapitan}" target="_blank" rel="noopener noreferrer">${kapitan}</a> (Kapitan)</li>`;
-                        if (gracz2) htmlWewnatrz += `<li><a href="https://op.gg/pubg/user/${gracz2}" target="_blank" rel="noopener noreferrer">${gracz2}</a></li>`;
-                        if (gracz3) htmlWewnatrz += `<li><a href="https://op.gg/pubg/user/${gracz3}" target="_blank" rel="noopener noreferrer">${gracz3}</a></li>`;
-                        if (gracz4) htmlWewnatrz += `<li><a href="https://op.gg/pubg/user/${gracz4}" target="_blank" rel="noopener noreferrer">${gracz4}</a></li>`;
-                        if (rezerwa) htmlWewnatrz += `<li class="sub-player"><a href="https://op.gg/pubg/user/${rezerwa}" target="_blank" rel="noopener noreferrer">${rezerwa}</a> (Gracz 5)</li>`;
+                        const platforma = "steam";
+
+                        if (kapitan) htmlWewnatrz += `<li class="captain"><a href="https://op.gg/pubg/player/${kapitan}" target="_blank" rel="noopener noreferrer">${kapitan}</a> (Kapitan)</li>`;
+                        if (gracz2) htmlWewnatrz += `<li><a href="https://op.gg/pubg/player/${gracz2}" target="_blank" rel="noopener noreferrer">${gracz2}</a></li>`;
+                        if (gracz3) htmlWewnatrz += `<li><a href="https://op.gg/pubg/player/${gracz3}" target="_blank" rel="noopener noreferrer">${gracz3}</a></li>`;
+                        if (gracz4) htmlWewnatrz += `<li><a href="https://op.gg/pubg/player/${gracz4}" target="_blank" rel="noopener noreferrer">${gracz4}</a></li>`;
+                        if (rezerwa) htmlWewnatrz += `<li class="sub-player"><a href="https://op.gg/pubg/player/${rezerwa}" target="_blank" rel="noopener noreferrer">${rezerwa}</a> (Gracz 5)</li>`;
 
                         htmlWewnatrz += `</ul>`;
-                        li.innerHTML = htmlWewnatrz;
-                        listaElement.appendChild(li);
+
+                        // ZMIANA JAVASCRIPT: Wstawiamy HTML do nowej karty
+                        teamCard.innerHTML = htmlWewnatrz;
+                        listaElement.appendChild(teamCard);
                     }
                 }
-                if (teamCount === 0) { listaElement.innerHTML = '<li>Brak zapisanych drużyn. Bądź pierwszy!</li>'; }
+                if (teamCount === 0) { listaElement.innerHTML = '<p>Brak zapisanych drużyn. Bądź pierwszy!</p>'; } // Zmieniono na paragraf
             } catch (error) {
                 console.error('Błąd podczas ładowania listy drużyn:', error);
-                listaElement.innerHTML = `<li>Nie udało się załadować listy drużyn. Błąd: ${error.message}</li>`;
+                listaElement.innerHTML = `<p>Nie udało się załadować listy drużyn. Błąd: ${error.message}</p>`; // Zmieniono na paragraf
             }
         }
 
@@ -792,7 +828,7 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
            !!! TUTAJ MUSISZ WPISAĆ ID MECZÓW PO ICH ZAKOŃCZENIU !!!
         */
         const MATCH_IDS = {
-            "gra1": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_1", // To jest ID testowe
+            "gra1": "abdc1e9f-ca82-49e2-a1c1-2b464cb3ef2b", // To jest ID testowe
             "gra2": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_2",
             "gra3": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_3",
             "gra4": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_4",
