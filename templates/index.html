@@ -165,7 +165,7 @@
 
 
         /* ============================================= */
-        /* ZMIANA CSS - SIATKA DRUŻYN (TEAM GRID)        */
+        /* CSS - SIATKA DRUŻYN (TEAM GRID)        */
         /* ============================================= */
         /* Kontener siatki */
         .team-grid {
@@ -640,18 +640,18 @@ Regulamin Turnieju  PUBG POLSKA CUP 2025   (29.11)
 I. Informacje Ogólne
 Nazwa Turnieju: PUBG POLSKA CUP 2025
 Organizator: PUBG POLSKA
-Data Turnieju: godzina 18.00 - 29 listopad 2025 r. (Sobota)
+Data Turnieju: godzina 18:00 - 29 listopad 2025 r. (Sobota)
 Platforma: PC (Steam)
 Format: SQUAD (4-osobowe drużyny), tryb FPP (First Person Perspective)
 Oficjalna Transmisja: Turniej będzie transmitowany na żywo na kanale twitch.tv/akerman88
 Komunikacja: Oficjalnym kanałem komunikacji z administracją i miejscem ogłoszeń jest dedykowany serwer Discord. Podczas trwania turnieju, obecność na serwerze oraz korzystanie z dedykowanych kanałów głosowych drużyn jest obowiązkowe.
 
 II. Zapisy i Wpisowe
-Zapisy odbywają się poprzez oficjalny formularz udostępniony przez Organizatora.
-Udział w turnieju jest darmowy.
+Zapisy odbywają się poprzez oficjalny formularz udostępniony przez Organizatora do 28.11.2025r. do 18:00. Udział w turnieju jest darmowy.
 Organizatorzy zbierają dobrowolne wpisowe od chętnych drużyn i graczy w celu ufundowania puli nagród.
-Dane do wpłaty zostaną udostępnione kapitanom drużyn po pomyśnej rejestracji.
+Dane do wpłaty zostaną udostępnione kapitanom drużyn po pomyślnej rejestracji.
 Wniesienie opłaty nie jest wymagane do wzięcia udziału w grach, jednak pula nagród składa się w 100% z zebranych środków.
+Wziąć udział w wydarzeniu mogą jedynie gracze, którzy mają ukończone 18 lat. Podanie nieprawdziwych danych dotyczących wieku skutkuje natychmiastową dyskwalifikacją całej drużyny oraz może wiązać się z utratą ewentualnych nagród.
 Gracze posiadający aktywną blokadę (bana) na serwerze Discord PUBG POLSKA mają zakaz udziału w turnieju.
 
 III. Pula Nagród
@@ -665,6 +665,7 @@ Nagrody zostaną wypłacone kapitanom drużyn (lub wskazanemu reprezentantowi) w
 
 IV. Format Rozgrywek i Punktacja
 Turniej składa się z 6 (sześciu) gier rozgrywanych w trybie FPP na serwerach niestandardowych.
+Maksymalna ilość drużyn zostanie ustalona na podstawie liczby zapisanych drużyn i decyzja o maksymalnej ilości drużyn w turnieju zostanie podjęta przez Organizatora w stosownym czasie przed rozpoczęciem turnieju.
 Mapy: 2×Miramar, Rondo, Taego, 2×Erangel.
 Obowiązuje standardowa punktacja e-sportowa S.U.P.E.R. (Standard and Universal PUBG Esports Ruleset).
 Punkty za zabójstwa: 1 punkt za każde zabójstwo.
@@ -715,11 +716,7 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
                 </div>
             </section>
 
-            <section class="content-section sponsor-image-section">
-                <img src="https://i.imgur.com/HcTRskR.png" alt="Sponsor Turnieju 2">
-            </section>
-
-        </main>
+            </main>
 
         <footer>
             <p>&copy; 2025 PUBG POLSKA. Wszelkie prawa zastrzeżone. Strona nie jest powiązana z KRAFTON, Inc.</p>
@@ -758,10 +755,7 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
 
         async function pobierzListeDruzyn() {
             const csvUrl = '/api/druzyny'; // Pyta nasz backend
-
-            // ZMIANA JAVASCRIPT: Zmieniono 'listaElement'
             const listaElement = document.getElementById('team-list-dynamic');
-
             try {
                 const response = await fetch(csvUrl, { cache: 'no-store' });
                 if (!response.ok) { throw new Error(`Błąd serwera. Status: ${response.status}`); }
@@ -787,7 +781,6 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
                         const gracz4 = cleanText(kolumny[9]);
                         const rezerwa = cleanText(kolumny[11]);
 
-                        // ZMIANA JAVASCRIPT: Tworzymy 'div' zamiast 'li'
                         const teamCard = document.createElement('div');
                         teamCard.className = 'team-card';
 
@@ -797,7 +790,7 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
                                             </div>
                                             <ul class="player-sublist">`;
 
-                        const platforma = "steam";
+                        // Link do op.gg/pubg
 
                         if (kapitan) htmlWewnatrz += `<li class="captain"><a href="https://op.gg/pubg/player/${kapitan}" target="_blank" rel="noopener noreferrer">${kapitan}</a> (Kapitan)</li>`;
                         if (gracz2) htmlWewnatrz += `<li><a href="https://op.gg/pubg/player/${gracz2}" target="_blank" rel="noopener noreferrer">${gracz2}</a></li>`;
@@ -806,16 +799,14 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
                         if (rezerwa) htmlWewnatrz += `<li class="sub-player"><a href="https://op.gg/pubg/player/${rezerwa}" target="_blank" rel="noopener noreferrer">${rezerwa}</a> (Gracz 5)</li>`;
 
                         htmlWewnatrz += `</ul>`;
-
-                        // ZMIANA JAVASCRIPT: Wstawiamy HTML do nowej karty
                         teamCard.innerHTML = htmlWewnatrz;
                         listaElement.appendChild(teamCard);
                     }
                 }
-                if (teamCount === 0) { listaElement.innerHTML = '<p>Brak zapisanych drużyn. Bądź pierwszy!</p>'; } // Zmieniono na paragraf
+                if (teamCount === 0) { listaElement.innerHTML = '<p>Brak zapisanych drużyn. Bądź pierwszy!</p>'; }
             } catch (error) {
                 console.error('Błąd podczas ładowania listy drużyn:', error);
-                listaElement.innerHTML = `<p>Nie udało się załadować listy drużyn. Błąd: ${error.message}</p>`; // Zmieniono na paragraf
+                listaElement.innerHTML = `<p>Nie udało się załadować listy drużyn. Błąd: ${error.message}</p>`;
             }
         }
 
@@ -828,7 +819,7 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
            !!! TUTAJ MUSISZ WPISAĆ ID MECZÓW PO ICH ZAKOŃCZENIU !!!
         */
         const MATCH_IDS = {
-            "gra1": "abdc1e9f-ca82-49e2-a1c1-2b464cb3ef2b", // To jest ID testowe
+            "gra1": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_1", // To jest ID testowe
             "gra2": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_2",
             "gra3": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_3",
             "gra4": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_4",
