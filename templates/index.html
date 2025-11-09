@@ -54,7 +54,7 @@
         /* Styl dla nagłówka tekstowego w headerze */
         header h1 {
             color: #ffc107;
-            font-size: 3.2em; /* ZMIANA: Lekko zmniejszona czcionka */
+            font-size: 3.2em;
             margin: 0;
             text-transform: uppercase;
             letter-spacing: 3px;
@@ -234,7 +234,7 @@
         }
 
         /* ============================================= */
-        /* NOWE STYLE - Linki w liście graczy            */
+        /* Linki w liście graczy            */
         /* ============================================= */
         .player-sublist a {
             color: #ffffff; /* Biały kolor linku (lub #ccc, jeśli wolisz) */
@@ -772,8 +772,7 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
                         const li = document.createElement('li');
                         let htmlWewnatrz = `<span class="team-name">${nazwaDrużyny}</span><ul class="player-sublist">`;
 
-                        // --- ZMIANA: Dodanie linków ---
-                        const platforma = "steam"; // Zakładamy, że platforma to Steam
+                        const platforma = "steam";
 
                         if (kapitan) htmlWewnatrz += `<li class="captain"><a href="https://pubglookup.com/players/${platforma}/${kapitan}" target="_blank" rel="noopener noreferrer">${kapitan}</a> (Kapitan)</li>`;
                         if (gracz2) htmlWewnatrz += `<li><a href="https://pubglookup.com/players/${platforma}/${gracz2}" target="_blank" rel="noopener noreferrer">${gracz2}</a></li>`;
@@ -811,6 +810,9 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
             "generalna": null // Zakładka generalna (na razie pusta)
         };
 
+        // Globalna pamięć podręczna (cache) na wyniki
+        const matchDataCache = {};
+
         /**
          * Funkcja wypełniająca tabelę wyników danymi z API
          */
@@ -819,9 +821,9 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
             if (!tabContent) return;
 
             const tableBody = tabContent.querySelector('.results-table tbody');
-            if (!tableBody) return; // Jeśli nie ma tabeli, nic nie rób
+            if (!tableBody) return;
 
-            tableBody.innerHTML = ''; // Wyczyść tabelę (np. z napisu "Ładowanie...")
+            tableBody.innerHTML = ''; // Wyczyść tabelę
 
             data.forEach(team => {
                 const row = `
@@ -838,44 +840,133 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
         }
 
         /**
-         * Funkcja pobierająca dane jednego meczu z naszego backendu
+         * Funkcja-wrapper do pobierania danych, używająca cache
+         */
+         async function getMatchData(matchId) {
+            if (matchDataCache[matchId]) {
+                return matchDataCache[matchId]; // Zwróć dane z cache, jeśli je mamy
+            }
+
+            // Jeśli nie ma w cache, pobierz z serwera
+            const response = await fetch(`/api/wyniki/${matchId}`);
+            if (!response.ok) {
+                throw new Error(`Błąd serwera: ${response.statusText}`);
+            }
+            const data = await response.json();
+            if (data.error) {
+                throw new Error(data.error);
+            }
+
+            matchDataCache[matchId] = data; // Zapisz dane w cache
+            return data;
+        }
+
+
+        /**
+         * Funkcja pobierająca dane JEDNEGO meczu i wstawiająca do tabeli
          */
         async function fetchMatchResults(tabId, matchId) {
             const tabContent = document.getElementById(tabId);
             const tableBody = tabContent.querySelector('.results-table tbody');
 
-            // Pokaż status ładowania
             if (tableBody) {
                 tableBody.innerHTML = '<tr><td colspan="5">Ładowanie wyników...</td></tr>';
-            } else if (tabContent) {
-                tabContent.innerHTML = '<h4>Ładowanie wyników...</h4>';
             }
 
             try {
-                const response = await fetch(`/api/wyniki/${matchId}`);
-                if (!response.ok) {
-                    throw new Error(`Błąd serwera: ${response.statusText}`);
-                }
-
-                const data = await response.json();
-
-                if (data.error) {
-                    throw new Error(data.error);
-                }
-
-                // Mamy dane, wypełnijmy tabelę
+                const data = await getMatchData(matchId); // Użyj funkcji z cache
                 populateTable(tabId, data);
-
-                // Zapisz dane w pamięci, aby nie ładować ich ponownie
                 tabContent.dataset.loaded = "true";
 
             } catch (error) {
                 console.error(`Błąd pobierania wyników dla ${matchId}:`, error);
                 if (tableBody) {
                     tableBody.innerHTML = `<tr><td colspan="5">Nie udało się załadować wyników. Błąd: ${error.message}</td></tr>`;
-                } else if (tabContent) {
-                    tabContent.innerHTML = `<h4>Nie udało się załadować wyników.</h4>`;
                 }
+            }
+        }
+
+        /**
+         * ZMIANA: Nowa funkcja do liczenia klasyfikacji generalnej
+         */
+        async function calculateAndShowGeneralClassification() {
+            const tabId = "tab-generalna";
+            const tabContent = document.getElementById(tabId);
+            const tableBody = tabContent.querySelector('.results-table tbody');
+
+            if (!tableBody) return;
+
+            tableBody.innerHTML = '<tr><td colspan="5">Pobieranie i sumowanie wyników...</td></tr>';
+
+            try {
+                // 1. Stwórz listę wszystkich ID meczów, które mają być policzone
+                const matchIdsToFetch = Object.values(MATCH_IDS)
+                    .filter(id => id && !id.startsWith("TUTAJ_")); // Bierzemy tylko realne ID
+
+                if (matchIdsToFetch.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="5">Brak wyników do wyświetlenia.</td></tr>';
+                    return;
+                }
+
+                // 2. Pobierz wszystkie wyniki równolegle
+                const allMatchesResults = await Promise.all(
+                    matchIdsToFetch.map(id => getMatchData(id))
+                );
+
+                // 3. Sumuj wyniki
+                const teamStats = {}; // Obiekt do przechowywania sum
+
+                allMatchesResults.forEach(matchData => {
+                    matchData.forEach(team => {
+                        const teamName = team.team_name; // Używamy nicku lidera jako ID teamu
+                        if (!teamStats[teamName]) {
+                            // Stwórz wpis dla drużyny, jeśli jeszcze nie istnieje
+                            teamStats[teamName] = {
+                                team_name: teamName,
+                                placement_points: 0,
+                                kills: 0,
+                                total_points: 0
+                            };
+                        }
+                        // Dodaj punkty
+                        teamStats[teamName].placement_points += team.placement_points;
+                        teamStats[teamName].kills += team.kills;
+                        teamStats[teamName].total_points += team.total_points;
+                    });
+                });
+
+                // 4. Konwertuj obiekt z powrotem na listę
+                const generalRankingList = Object.values(teamStats);
+
+                // ===================================================================
+                // !!! TUTAJ JEST POPRAWKA BŁĘDU (POPRAWNE SORTOWANIE W JAVASCRIPT) !!!
+                // ===================================================================
+                generalRankingList.sort((teamA, teamB) => {
+                    // 1. Sortuj po 'total_points' (malejąco)
+                    if (teamA.total_points > teamB.total_points) return -1;
+                    if (teamA.total_points < teamB.total_points) return 1;
+
+                    // 2. Tie-breaker: sortuj po 'kills' (malejąco)
+                    if (teamA.kills > teamB.kills) return -1;
+                    if (teamA.kills < teamB.kills) return 1;
+
+                    return 0; // Remis
+                });
+                // ===================================================================
+
+                // 6. Nadaj finalne rangi (miejsca)
+                const finalList = generalRankingList.map((team, index) => ({
+                    ...team,
+                    rank: index + 1 // Nadaj miejsce 1, 2, 3...
+                }));
+
+                // 7. Wypełnij tabelę
+                populateTable(tabId, finalList);
+                tabContent.dataset.loaded = "true";
+
+            } catch (error) {
+                console.error('Błąd podczas liczenia klasyfikacji generalnej:', error);
+                tableBody.innerHTML = `<tr><td colspan="5">Nie udało się policzyć klasyfikacji. Błąd: ${error.message}</td></tr>`;
             }
         }
 
@@ -889,7 +980,7 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
             // 1. Uruchom ładowanie listy teamów
             pobierzListeDruzyn();
 
-            // 2. Logika zakładek wyników (teraz z pobieraniem danych)
+            // 2. Logika zakładek wyników
             const tabsNav = document.querySelector('.tabs-nav');
             const tabContents = document.querySelectorAll('.tab-content');
 
@@ -898,7 +989,7 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
                     const clickedTab = e.target.closest('.tab-link');
                     if (!clickedTab) return;
 
-                    const tabKey = clickedTab.dataset.tab; // np. "gra1"
+                    const tabKey = clickedTab.dataset.tab; // np. "gra1" lub "generalna"
                     const targetContentId = 'tab-' + tabKey; // np. "tab-gra1"
                     const targetContent = document.getElementById(targetContentId);
 
@@ -910,13 +1001,29 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
                         targetContent.classList.add('active');
                     }
 
-                    // Pobieranie danych
+                    // --- ZMIENIONA LOGIKA POBIERANIA ---
                     const matchId = MATCH_IDS[tabKey];
-                    const isLoaded = targetContent.dataset.loaded === "true";
+                    // ZMIANA: Sprawdzamy, czy dane są ładowane LUB załadowane
+                    const isLoadingOrLoaded = targetContent.dataset.loaded === "true" || targetContent.dataset.loading === "true";
 
-                    // Jeśli zakładka ma przypisane ID meczu I nie była jeszcze ładowana
-                    if (matchId && !isLoaded) {
-                        fetchMatchResults(targetContentId, matchId);
+                    if (isLoadingOrLoaded) return; // Jeśli już załadowane lub w trakcie ładowania, nie rób nic
+
+                    // Oznacz jako "w trakcie ładowania"
+                    targetContent.dataset.loading = "true";
+
+                    if (tabKey === 'generalna') {
+                        // Jeśli to zakładka generalna, uruchom kalkulator
+                        calculateAndShowGeneralClassification().finally(() => {
+                            targetContent.dataset.loading = "false"; // Zakończono ładowanie
+                        });
+                    } else if (matchId && !matchId.startsWith("TUTAJ_")) {
+                        // Jeśli to zakładka gry I ma wpisane ID, pobierz wyniki
+                        fetchMatchResults(targetContentId, matchId).finally(() => {
+                            targetContent.dataset.loading = "false"; // Zakończono ładowanie
+                        });
+                    } else {
+                        // Jeśli to zakładka gry bez ID, usuń status ładowania
+                        targetContent.dataset.loading = "false";
                     }
                 });
             }
