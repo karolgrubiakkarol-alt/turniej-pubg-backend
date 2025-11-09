@@ -55,11 +55,9 @@ def pobierz_druzyny():
 @app.route('/api/wyniki/<match_id>')
 def pobierz_wyniki_meczu(match_id):
     # 1. Pobierz swój tajny klucz API ze zmiennych środowiskowych Render
-    # !!! TO JEST POPRAWIONA LINIA !!!
     API_KEY = os.environ.get('PUBG_API_KEY')
 
     if not API_KEY:
-        # Ten błąd jest teraz poprawny - jeśli zmienna 'PUBG_API_KEY' nie jest ustawiona
         print("BŁĄD: Nie znaleziono klucza 'PUBG_API_KEY' w zmiennych środowiskowych!")
         return jsonify(error="Błąd konfiguracji serwera: brak klucza API"), 500
 
@@ -112,7 +110,6 @@ def pobierz_wyniki_meczu(match_id):
                         total_kills += player['kills']
                         team_player_names.append(player['name'])
 
-                # Użyj nicku pierwszego gracza jako nazwy teamu (API PUBG nie podaje nazwy teamu)
                 team_name = team_player_names[0] if team_player_names else "Nieznana Drużyna"
 
                 # 4. Oblicz punkty S.U.P.E.R.
@@ -120,18 +117,33 @@ def pobierz_wyniki_meczu(match_id):
                 total_points = placement_points + total_kills
 
                 results_data.append({
-                    "rank": placement,
+                    "rank": placement,  # Na razie to jest "stary" rank z API
                     "team_name": team_name,
                     "placement_points": placement_points,
                     "kills": total_kills,
                     "total_points": total_points
                 })
 
-        # 5. Sortowanie wyników
-        results_data.sort(key=lambda x: x['rank'])
+        # ===================================================================
+        # !!! KROK 5: POPRAWIONE SORTOWANIE !!!
+        # ===================================================================
+
+        # Sortuj listę:
+        # 1. Po 'total_points' (malejąco)
+        # 2. Jako tie-breaker, po 'kills' (malejąco)
+        results_data.sort(key=lambda x: (x['total_points'], x['kills']), reverse=True)
+
+        # ===================================================================
+        # !!! KROK 6: AKTUALIZACJA MIEJSC (RANK) PO SORTOWANIU !!!
+        # ===================================================================
+
+        # Teraz, gdy lista jest poprawnie posortowana,
+        # przejdź przez nią i nadpisz pole 'rank' poprawną wartością (1, 2, 3...)
+        for i, team in enumerate(results_data):
+            team['rank'] = i + 1  # Ustawia rank na 1 dla pierwszego, 2 dla drugiego, itd.
 
         print("Przetwarzanie zakończone. Zwracanie JSON.")
-        return jsonify(results_data)  # Zwróć gotową listę wyników
+        return jsonify(results_data)  # Zwróć gotową, poprawnie posortowaną listę wyników
 
     except requests.exceptions.RequestException as e:
         # Ten błąd złapie np. błąd 404 (złe ID meczu) lub 401 (zły klucz API)
