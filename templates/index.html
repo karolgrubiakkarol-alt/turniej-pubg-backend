@@ -165,7 +165,7 @@
 
 
         /* ============================================= */
-        /* CSS - SIATKA DRUŻYN (TEAM GRID) - ZMIANY      */
+        /* CSS - SIATKA DRUŻYN (TEAM GRID)        */
         /* ============================================= */
         /* Kontener siatki */
         .team-grid {
@@ -199,7 +199,6 @@
             border-bottom: 1px solid #444; /* Linia oddzielająca */
             padding-bottom: 5px;
 
-            /* ZMIANA: Dodano style dla klikalności */
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
@@ -225,18 +224,18 @@
         /* Pod-lista na graczy (pod nazwą drużyny) */
         .player-sublist {
             list-style: disc; /* Kropki dla graczy */
-            margin: 0; /* ZMIANA: Domyślnie 0 marginesu */
+            margin: 0; /* Domyślnie 0 marginesu */
             padding-left: 25px; /* Wcięcie dla listy graczy */
             font-size: 0.9em;
             color: #ccc;
 
-            /* ZMIANA: Domyślnie ukryte z animacją */
+            /* Domyślnie ukryte z animacją */
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.4s ease-out;
         }
 
-        /* ZMIANA: Klasa dodawana przez JS do rozwinięcia listy */
+        /* Klasa dodawana przez JS do rozwinięcia listy */
         .player-sublist.expanded {
             max-height: 200px; /* Wystarczająco wysoko, aby zmieścić 5 graczy */
             margin: 10px 0 0 0; /* Przywróć margines górny po rozwinięciu */
@@ -733,11 +732,7 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
                 </div>
             </section>
 
-            <section class="content-section sponsor-image-section">
-                <img src="https://i.imgur.com/HcTRskR.png" alt="Sponsor Turnieju 2">
-            </section>
-
-        </main>
+            </main>
 
         <footer>
             <p>&copy; 2025 PUBG POLSKA. Wszelkie prawa zastrzeżone. Strona nie jest powiązana z KRAFTON, Inc.</p>
