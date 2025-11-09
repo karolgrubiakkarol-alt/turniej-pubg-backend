@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUBG POLSKA CUP 2025 - SQUAD FPP</title>
+    
+    <link rel="icon" href="https://i.imgur.com/HcTRskR.png" type="image/png">
+    <link rel="shortcut icon" href="https://i.imgur.com/HcTRskR.png" type="image/png">
+    
+    <style>
+        /* ------- Globalne Style ------- */
+        html {
+            scroll-behavior: smooth; /* Włącza płynne przewijanie */
+        }
+        body {
+            /* Nowe style tła */
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), /* Ciemny overlay dla czytelności */
+                url('https://i.imgur.com/X4FC0PH.png'); /* Poprawny link do obrazu */
+            background-size: cover; /* Pokrywa całe tło */
+            background-attachment: fixed; /* Tło jest stałe podczas przewijania */
+            background-position: center center; /* Obraz wyśrodkowany */
+            background-color: #121212; /* Fallback kolor tła */
+            
+            color: #e0e0e0; /* Jasnoszary tekst */
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8); /* Lekki cień dla lepszej czytelności tekstu */
+        }
+
+        /* ------- Główny Kontener ------- */
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: rgba(30, 30, 30, 0.9); /* Ciemnoszare tło kontenera z przezroczystością */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+            overflow: hidden; /* Aby zaokrąglone rogi działały na sekcjach */
+        }
+
+        /* ------- Nagłówek ------- */
+        header {
+            background-color: rgba(0, 0, 0, 0.8); /* Ciemniejszy z przezroczystością */
+            padding: 10px 20px; /* Zmniejszony padding, aby obrazek miał więcej miejsca */
+            text-align: center;
+            border-bottom: 4px solid #ffc107; /* Żółty akcent PUBG */
+        }
+        
+        /* Styl dla baneru w nagłówku */
+        header .banner-img {
+            max-width: 100%; /* Obrazek responsywny */
+            height: auto; /* Zachowanie proporcji */
+            margin: 10px 0; /* Mały margines góra/dół */
+            /* Możesz dodać box-shadow, jeśli chcesz, np.: */
+            /* box-shadow: 0 4px 10px rgba(0,0,0,0.5); */
+        }
+        
+
+        /* ------- Pasek Nawigacji (Zakładki) ------- */
+        .navbar {
+            background-color: rgba(42, 42, 42, 0.95); /* Ciemny z przezroczystością */
+            padding: 10px 0;
+            text-align: center;
+            border-bottom: 2px solid #333;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 1em;
+            font-weight: bold;
+            margin: 0 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            text-shadow: none; /* Reset cienia dla nawigacji */
+        }
+        .navbar a:hover, .navbar a.active {
+            background-color: #ffc107;
+            color: #121212;
+        }
+
+        /* ------- Główna Treść ------- */
+        main {
+            padding: 30px;
+        }
+        
+        .content-section {
+            margin-bottom: 40px;
+            padding-top: 30px; 
+        }
+
+        /* ------- Sekcja Zapisów (Hero) ------- */
+        .zapisy {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: rgba(42, 42, 42, 0.9); /* Ciemny z przezroczystością */
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .zapisy h3 {
+            font-size: 2em;
+            color: #ffffff;
+            margin-top: 0;
+        }
+        .zapisy p {
+            font-size: 1.1em;
+            color: #b0b0b0;
+        }
+
+        /* ------- Przycisk Zapisów (Call to Action) ------- */
+        .cta-button {
+            display: inline-block;
+            background-color: #ffc107;
+            color: #121212;
+            padding: 15px 35px;
+            font-size: 1.3em;
+            font-weight: bold;
+            text-decoration: none;
+            text-transform: uppercase;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            text-shadow: none; /* Reset cienia dla przycisku */
+        }
+        .cta-button:hover {
+            background-color: #ffffff;
+            color: #121212;
+            transform: scale(1.05);
+        }
+
+        /* ------- Sekcje Informacyjne (Wspólny styl) ------- */
+        .info-section h3 {
+            color: #ffc107;
+            border-bottom: 2px solid #444;
+            padding-bottom: 10px;
+            font-size: 1.8em;
+            margin-top: 0;
+        }
+
+        /* ------- Lista Informacji (np. zasady, daty) ------- */
+        .info-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .info-list li {
+            background-color: rgba(42, 42, 42, 0.9); /* Ciemny z przezroczystością */
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 5px solid #ffc107;
+        }
+        .info-list li strong {
+            color: #ffffff;
+            display: inline-block;
+            min-width: 120px;
+        }
+        /* Styl dla linku w liście */
+        .info-list li a {
+            color: #ffc107; /* Żółty kolor linku */
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .info-list li a:hover {
+            text-decoration: underline;
+        }
+        
+        
+        /* ============================================= */
+        /* CSS - LISTA TEAMÓW I GRACZY     */
+        /* ============================================= */
+        /* Używamy <ol> dla numeracji */
+        ol.team-list {
+            list-style-type: decimal; /* Numerowana lista 1., 2., 3. */
+            padding-left: 30px; /* Wcięcie na numery */
+            font-size: 1.1em;
+            color: #ffffff;
+        }
+        
+        /* Styl pojedynczego bloku drużyny */
+        ol.team-list li {
+            background-color: rgba(42, 42, 42, 0.9); /* Ciemny z przezroczystością */
+            margin-bottom: 15px; /* Odstęp między drużynami */
+            padding: 15px 20px;
+            border-radius: 5px;
+            list-style-position: inside; /* Numer jest W bloku */
+            border-left: 3px solid #ffc107;
+        }
+        
+        /* Nazwa drużyny - obok numeru */
+        .team-name {
+            font-size: 1.25em;
+            color: #ffc107;
+            font-weight: bold;
+        }
+        
+        /* Pod-lista na graczy (pod nazwą drużyny) */
+        .player-sublist {
+            list-style: disc; /* Kropki dla graczy */
+            margin: 10px 0 0 0; /* Odstęp od nazwy drużyny */
+            padding-left: 25px; /* Wcięcie dla listy graczy */
+            font-size: 0.9em;
+            color: #ccc;
+        }
+        
+        /* Resetowanie stylów dla <li> wewnątrz pod-listy */
+        .player-sublist li {
+            background: none;
+            border: none;
+            padding: 2px 0;
+            margin: 0;
+            list-style-position: outside; /* Kropki na zewnątrz */
+        }
+        
+        /* Wyróżnienie kapitana */
+        .captain {
+            font-weight: bold;
+            color: #ffffff; /* Jaśniejszy kolor dla kapitana */
+        }
+        
+        /* Styl dla rezerwowego */
+        .sub-player {
+            font-style: italic;
+            opacity: 0.8;
+            color: #aaa;
+        }
+        /* ============================================= */
+        
+        /* ============================================= */
+        /* SEKCJE SPONSORÓW (Obrazy)      */
+        /* ============================================= */
+        .sponsor-image-section {
+            padding-top: 10px; /* Mniejszy padding top niż inne sekcje */
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center; /* Wyśrodkowanie obrazka */
+        }
+        .sponsor-image-section img {
+            max-width: 100%; /* Obrazek responsywny */
+            height: auto; /* Zachowanie proporcji */
+            border-radius: 8px; /* Lekko zaokrąglone rogi */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5); /* Cień pasujący do reszty */
+        }
+        /* ============================================= */
+
+
+        /* ------- Sekcja Tabela Wyników ------- */
+        .results-table-container {
+            overflow-x: auto;
+        }
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 1.1em;
+            box-shadow: 0 0 10px rgba(0,0,0,0.4);
+            min-width: 600px;
+        }
+        .results-table th, .results-table td {
+            border: 1px solid #444;
+            padding: 12px 15px;
+            text-align: left;
+        }
+        .results-table th {
+            background-color: #ffc107;
+            color: #121212;
+            text-align: center;
+            font-weight: bold;
+            text-shadow: none; /* Reset cienia dla nagłówków tabeli */
+        }
+        .results-table tr {
+            background-color: rgba(42, 42, 42, 0.9);
+        }
+        .results-table tr:nth-of-type(even) {
+            background-color: rgba(51, 51, 51, 0.9);
+        }
+        .results-table tr:nth-of-type(1) td:first-child,
+        .results-table tr:nth-of-type(2) td:first-child,
+        .results-table tr:nth-of-type(3) td:first-child {
+            font-weight: bold;
+            color: #ffc107;
+        }
+        .results-table td:nth-child(1) {
+            text-align: center;
+            width: 10%;
+        }
+
+        /* ------- Zakładki Wyników ------- */
+        .tabs-container {
+            width: 100%;
+            margin-top: 20px;
+        }
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap; 
+            background-color: rgba(42, 42, 42, 0.95);
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
+        }
+        .tab-link {
+            padding: 12px 15px;
+            font-size: 0.9em;
+            font-weight: bold;
+            color: #ccc;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            flex-grow: 1;
+            text-align: center;
+            border-bottom: 3px solid transparent;
+            text-shadow: none; /* Reset cienia dla zakładek */
+        }
+        .tab-link:hover {
+            background-color: #333;
+            color: #fff;
+        }
+        .tab-link.active {
+            background-color: rgba(30, 30, 30, 0.9);
+            color: #ffc107;
+            border-bottom: 3px solid #ffc107;
+        }
+        .tab-content {
+            display: none;
+            background-color: rgba(30, 30, 30, 0.9);
+            padding: 20px;
+            border: 1px solid #444;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-content h4 {
+            color: #ffffff;
+            font-size: 1.4em;
+            margin-top: 0;
+            text-align: center;
+        }
+
+        /* ------- Sekcja Regulamin ------- */
+        .rules-container {
+            background-color: rgba(42, 42, 42, 0.9);
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 10px 25px;
+            max-height: 500px;
+            overflow-y: auto;
+            font-family: 'Courier New', Courier, monospace;
+            color: #ccc;
+            line-height: 1.5;
+            text-shadow: none; /* Reset cienia dla regulaminu */
+        }
+        .rules-container pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin: 0;
+        }
+
+        /* ------- Stopka ------- */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #777;
+            margin-top: 30px;
+            border-top: 2px solid #333;
+            text-shadow: none; /* Reset cienia dla stopki */
+        }
+
+        /* Responsywność */
+        @media (max-width: 768px) {
+            .tab-link {
+                flex-basis: 33.3%; 
+                font-size: 0.8em;
+            }
+        }
+        @media (max-width: 600px) {
+            .navbar {
+                padding: 5px 0;
+            }
+            .navbar a {
+                display: block;
+                margin: 5px 0;
+                font-size: 1.1em;
+            }
+            .navbar {
+                position: static;
+            }
+            .content-section {
+                 padding-top: 10px; 
+            }
+            .tab-link {
+                flex-basis: 100%; 
+                font-size: 1em;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <header>
+            <img src="https://i.imgur.com/ZDKOVNK.png" alt="PUBG POLSKA CUP 2025 - SQUAD FPP" class="banner-img">
+        </header>
+
+        <nav class="navbar">
+            <a href="#zapisy">Zapisy</a>
+            <a href="#szczegoly">Szczegóły</a>
+            <a href="#teamy">Zapisane Teamy</a>
+            <a href="#wyniki">Wyniki</a>
+            <a href="#regulamin">Regulamin</a>
+        </nav>
+
+        <main>
+            <section id="zapisy" class="zapisy content-section">
+                
+                <h3>Zapisy na turniej SQUAD FPP</h3>
+                <p>Wypełnij formularz zgłoszeniowy, klikając przycisk poniżej.</p>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeaYLKta8D83Xnfanm4tXVUtqX0273o7P1MJEowvVPqI6Crdg/viewform?usp=publish-editor" target="_blank" class="cta-button">
+                    ZAPISZ DRUŻYNĘ TERAZ!
+                </a>
+                <p style="margin-top: 20px; font-size: 0.9em;">Liczba miejsc ograniczona. Decyduje kolejność zgłoszeń.</p>
+            </section>
+
+            <section class="content-section sponsor-image-section">
+                <img src="https://i.imgur.com/YJ7FL9X.jpeg" alt="Sponsor Turnieju 1">
+            </section>
+
+
+            <section id="szczegoly" class="info-section content-section">
+                <h3>Szczegóły Turnieju</h3>
+                <ul class="info-list">
+                    <li><strong>Data:</strong> 29 Listopada 2025 (Sobota), start 18:00</li>
+                    <li><strong>Format:</strong> SQUAD FPP (drużyny 4-osobowe)</li>
+                    <li><strong>Serwer:</strong> EU</li>
+                    <li><strong>Mapy:</strong> 2× Miramar, Taego, Rondo oraz 2× Erangel</li>
+                    <li><strong>Pula nagród:</strong> Z dobrowolnych wpisowych (50%/30%/20%)</li>
+                    <li><strong>Wpisowe:</strong> Dobrowolne</li>
+                    <li><strong>Transmisja:</strong> <a href="https://twitch.tv/akerman88" target="_blank">twitch.tv/akerman88</a></li>
+                    <li><strong>Discord:</strong> <a href="https://discadia.com/pubgpolska" target="_blank">Dołącz do serwera (Kliknij!)</a></li>
+                </ul>
+            </section>
+
+            <section id="teamy" class="info-section content-section">
+                <h3>Zapisane Teamy</h3>
+                <p>Poniżej znajduje się automatycznie aktualizowana lista drużyn. Dane pobierane są na żywo z arkusza zapisów.</p>
+                
+                <ol id="team-list-dynamic" class="team-list">
+                    <li>Ładowanie listy drużyn...</li>
+                </ol>
+            </section>
+
+            <section id="wyniki" class="info-section content-section">
+                <h3>Wyniki Końcowe</h3>
+                <p>Wybierz zakładkę, aby zobaczyć wyniki z poszczególnych gier lub klasyfikację generalną.</p>
+
+                <div class="tabs-container">
+                    <div class="tabs-nav">
+                        <button class="tab-link active" data-tab="generalna">Klasyfikacja Generalna</button>
+                        <button class="tab-link" data-tab="gra1">Gra 1</button>
+                        <button class="tab-link" data-tab="gra2">Gra 2</button>
+                        <button class="tab-link" data-tab="gra3">Gra 3</button>
+                        <button class="tab-link" data-tab="gra4">Gra 4</button>
+                        <button class="tab-link" data-tab="gra5">Gra 5</button>
+                        <button class="tab-link" data-tab="gra6">Gra 6</button>
+                    </div>
+
+                    <div id="tab-generalna" class="tab-content active">
+                        <h4>Klasyfikacja Generalna (Suma 6 gier)</h4>
+                        <div class="results-table-container">
+                            <table class="results-table">
+                                <thead>
+                                    <tr>
+                                        <th>Miejsce</th>
+                                        <th>Nazwa Drużyny</th>
+                                        <th>Punkty (Rank)</th>
+                                        <th>Zabójstwa (Kills)</th>
+                                        <th>Suma Punktów</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="tab-gra1" class="tab-content"><h4>Wyniki - Gra 1</h4><p>Wyniki pojawią się po meczu.</p></div>
+                    <div id="tab-gra2" class="tab-content"><h4>Wyniki - Gra 2</h4><p>Wyniki pojawią się po meczu.</p></div>
+                    <div id="tab-gra3" class="tab-content"><h4>Wyniki - Gra 3</h4><p>Wyniki pojawią się po meczu.</p></div>
+                    <div id="tab-gra4" class="tab-content"><h4>Wyniki - Gra 4</h4><p>Wyniki pojawią się po meczu.</p></div>
+                    <div id="tab-gra5" class="tab-content"><h4>Wyniki - Gra 5</h4><p>Wyniki pojawią się po meczu.</p></div>
+                    <div id="tab-gra6" class="tab-content"><h4>Wyniki - Gra 6</h4><p>Wyniki pojawią się po meczu.</p></div>
+                </div>
+            </section>
+
+            <section id="regulamin" class="info-section content-section">
+                <h3>Regulamin Turnieju</h3>
+                <div class="rules-container">
+<pre>
+Regulamin Turnieju  PUBG POLSKA CUP 2025   (29.11)
+
+I. Informacje Ogólne
+Nazwa Turnieju: PUBG POLSKA CUP 2025
+Organizator: PUBG POLSKA
+Data Turnieju: godzina 18.00 - 29 listopad 2025 r. (Sobota)
+Platforma: PC (Steam)
+Format: SQUAD (4-osobowe drużyny), tryb FPP (First Person Perspective)
+Oficjalna Transmisja: Turniej będzie transmitowany na żywo na kanale twitch.tv/akerman88
+Komunikacja: Oficjalnym kanałem komunikacji z administracją i miejscem ogłoszeń jest dedykowany serwer Discord. Podczas trwania turnieju, obecność na serwerze oraz korzystanie z dedykowanych kanałów głosowych drużyn jest obowiązkowe.
+
+II. Zapisy i Wpisowe
+Zapisy odbywają się poprzez oficjalny formularz udostępniony przez Organizatora.
+Udział w turnieju jest darmowy.
+Organizatorzy zbierają dobrowolne wpisowe od chętnych drużyn i graczy w celu ufundowania puli nagród.
+Dane do wpłaty zostaną udostępnione kapitanom drużyn po pomyślnej rejestracji.
+Wniesienie opłaty nie jest wymagane do wzięcia udziału w grach, jednak pula nagród składa się w 100% z zebranych środków.
+Gracze posiadający aktywną blokadę (bana) na serwerze Discord PUBG POLSKA mają zakaz udziału w turnieju.
+
+III. Pula Nagród
+Całkowita pula nagród zależy od sumy zebranych dobrowolnych wpisowych.
+100% zebranej kwoty zostanie rozdzielone pomiędzy trzy najlepsze drużyny turnieju.
+Podział puli nagród:
+1. Miejsce: 50% puli
+2. Miejsce: 30% puli
+3. Miejsce: 20% puli
+Nagrody zostaną wypłacone kapitanom drużyn (lub wskazanemu reprezentantowi) w terminie do 7 dni roboczych po zakończeniu turnieju.
+
+IV. Format Rozgrywek i Punktacja
+Turniej składa się z 6 (sześciu) gier rozgrywanych w trybie FPP na serwerach niestandardowych.
+Mapy: 2×Miramar, Rondo, Taego, 2×Erangel.
+Obowiązuje standardowa punktacja e-sportowa S.U.P.E.R. (Standard and Universal PUBG Esports Ruleset).
+Punkty za zabójstwa: 1 punkt za każde zabójstwo.
+Punkty za miejsce:
+1. miejsce: 10 punktów
+2. miejsce: 6 punktów
+3. miejsce: 5 punktów
+4. miejsce: 4 punkty
+5. miejsce: 3 punkty
+6. miejsce: 2 punkty
+7-8. miejsce: 1 punkt
+9-16. miejsce: 0 punktów
+Ostateczna klasyfikacja jest tworzona na podstawie sumy punktów (za miejsce + za zabójstwa) ze wszystkich 6 gier.
+Zasady rozstrzygania remisów (Tie-break): W przypadku remisu punktowego o wyższym miejscu decyduje:
+a) Łączna liczba zabójstw (Kills) we wszystkich meczach.
+b) Najwyższa liczba punktów zdobyta w pojedynczej grze.
+c) Najwyższe miejsce zajęte w ostatnim meczu turnieju.
+
+V. Zasady Uczciwej Gry (Fair-Play)
+Zakaz oszukiwania: Używanie jakichkolwiek programów wspomagających (cheaty), skryptów (w tym makr), modyfikacji plików gry jest surowo zabronione i skutkuje natychmiastową dyskwalifikacją całej drużyny oraz permanentnym banem na przyszłe wydarzenia organizowane przez PUBG POLSKA.
+Zakaz "Teaming'u": Jakakolwiek forma współpracy lub "sojuszu" między dwiema lub więcej drużynami w trakcie meczu jest zabroniona i karana dyskwalifikacją.
+Wykorzystywanie błędów gry (Exploits): Świadome wykorzystywanie błędów gry (np. wchodzenie pod tekstury) jest zabronione.
+Zachowanie: Wymagana jest kultura osobista i szacunek do przeciwników, organizatorów oraz widzów. Wszelkie przejawy toksyczności, rasizmu czy mowy nienawiści będą karane.
+
+VI. Drużyny i Gracze
+Drużyna składa się z 4 graczy (SQUAD). Dopuszcza się posiadanie jednego (1) gracza rezerwowego.
+Kapitan drużyny jest odpowiedzialny za kontakt z administracją.
+Gracze zobowiązani są do używania w grze nicków (IGN) zgłoszonych podczas rejestracji.
+
+VII. Procedura Meczowa
+Wszystkie drużyny mają obowiązek przebywać na serwerze Discord PUBG POLSKA i korzystać z dedykowanych im kanałów głosowych podczas trwania wszystkich meczów.
+Dane do logowania na serwer (Nazwa lobby + Hasło) będą przekazywane kapitanom drużyn na dedykowanym kanale Discord na 15 minut przed startem pierwszej gry.
+Drużyny mają obowiązek stawić się w lobby na czas.
+Rozłączenia (Disconnects):
+W przypadku rozłączenia pojedynczego gracza (DC) gra jest kontynuowana. Gracz może próbować dołączyć ponownie.
+Organizator nie przewiduje restartu lobby z powodu problemów technicznych pojedynczych graczy.
+Restart meczu może nastąpić tylko w przypadku krytycznego błędu serwera (np. rozłączenie ponad 25% graczy) i tylko po decyzji głównego administratora.
+
+VIII. Transmisja
+Oficjalna transmisja z komentarzem odbędzie się na kanale twitch.tv/akerman88. Transmisja będzie posiadała odpowiednie opóźnienie (delay) w celu uniknięcia "stream-snipingu".
+Gracze mogą streamować swoją grę (POV), jednak zaleca się ustawienie własnego opóźnienia transmisji (minimum 5 minut) dla własnego bezpieczeństwa taktycznego. Organizator nie ponosi odpowiedzialności za "stream-sniping" wynikający z braku opóźnienia na prywatnych transmisjach.
+
+IX. Postanowienia Końcowe
+Administracja turnieju (PUBG POLSKA) ma pełne prawo do podejmowania ostatecznych decyzji we wszystkich sprawach spornych.
+Organizator zastrzega sobie prawo do zmiany niniejszego regulaminu w dowolnym momencie, jeśli uzna to za konieczne dla zapewnienia uczciwej i płynnej rozgrywki.
+Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów niniejszego regulaminu.
+</pre>
+                </div>
+            </section>
+            
+            <section class="content-section sponsor-image-section">
+                <img src="https://i.imgur.com/HcTRskR.png" alt="Sponsor Turnieju 2">
+            </section>
+
+        </main>
+
+        <footer>
+            <p>&copy; 2025 PUBG POLSKA. Wszelkie prawa zastrzeżone. Strona nie jest powiązana z KRAFTON, Inc.</p>
+        </footer>
+
+    </div> 
+    
+    <script>
+        
+        /**
+         * Funkcja pomocnicza do czyszczenia tekstu z CSV (usuwa cudzysłowy i białe znaki)
+         */
+        function cleanText(text) {
+            if (!text) return null; // Zwraca null, jeśli komórka jest pusta
+            // Usuwa cudzysłowy tylko jeśli są na skrajnych końcach
+            return text.trim().replace(/^"|"$/g, ''); 
+        }
+
+        /**
+         * Bardziej zaawansowana funkcja do parsowania pojedynczego wiersza CSV.
+         * Radzi sobie z przecinkami wewnątrz cytowanych pól (np. "Team, który wygra").
+         */
+        function parseCSVRow(row) {
+            const columns = [];
+            let currentColumn = '';
+            let inQuotes = false;
+            
+            for (let i = 0; i < row.length; i++) {
+                const char = row[i];
+                
+                if (char === '"') {
+                    // Obsługa podwójnego cudzysłowu (np. "") wewnątrz pola
+                    if (inQuotes && row[i+1] === '"') { 
+                        currentColumn += '"';
+                        i++; // Pomiń następny cudzysłów
+                    } else {
+                        inQuotes = !inQuotes; // Włącz/Wyłącz tryb "w cudzysłowie"
+                    }
+                } else if (char === ',' && !inQuotes) {
+                    // Jeśli przecinek i NIE jesteśmy w cudzysłowie -> koniec kolumny
+                    columns.push(currentColumn);
+                    currentColumn = ''; // Zresetuj dla następnej kolumny
+                } else {
+                    // Zwykły znak, dodaj go do bieżącej kolumny
+                    currentColumn += char;
+                }
+            }
+            columns.push(currentColumn); // Dodaj ostatnią kolumnę
+            return columns;
+        }
+
+
+        /**
+         * Główna funkcja do pobierania i wyświetlania listy drużyn
+         */
+        /**
+         * Główna funkcja do pobierania i wyświetlania listy drużyn
+         */
+        async function pobierzListeDruzyn() {
+
+            /*
+              !!! NAJWAŻNIEJSZA ZMIANA !!!
+              Zamiast łączyć się z Google, łączymy się z naszym WŁASNYM backendem (app.py)
+              pod adresem '/api/druzyny', który zdefiniowaliśmy we Flasku.
+            */
+            const csvUrl = '/api/druzyny';
+
+            const listaElement = document.getElementById('team-list-dynamic');
+
+            try {
+                // 1. Pobieramy dane z naszego backendu
+                const response = await fetch(csvUrl, { cache: 'no-store' });
+
+                if (!response.ok) {
+                    throw new Error(`Błąd serwera - nie można pobrać danych. Status: ${response.status}`);
+                }
+
+                // Nasz backend zwraca JSON, w którym dane CSV są w polu "data"
+                const jsonData = await response.json();
+
+                if (jsonData.error) {
+                    // Wyświetl błąd, jeśli nasz backend go zgłosił (np. błąd połączenia z Google)
+                    throw new Error(jsonData.error);
+                }
+
+                const dataCsv = jsonData.data; // Wyciągamy tekst CSV z JSONa
+
+                // 2. Parsowanie danych CSV (ten kod jest taki sam jak poprzednio)
+                const wiersze = dataCsv.split(/\r?\n/);
+
+                listaElement.innerHTML = ''; // Czyścimy listę
+                let teamCount = 0;
+
+                for (let i = 1; i < wiersze.length; i++) { // Zaczynamy od 1, aby pominąć nagłówek
+                    const wiersz = wiersze[i].trim();
+                    if (!wiersz) continue;
+
+                    const kolumny = parseCSVRow(wiersz);
+
+                    const nazwaDrużyny = cleanText(kolumny[1]); // Kolumna B
+
+                    if (nazwaDrużyny) {
+                        teamCount++;
+
+                        const kapitan = cleanText(kolumny[3]); // Kolumna D
+                        const gracz2 = cleanText(kolumny[5]); // Kolumna F
+                        const gracz3 = cleanText(kolumny[7]); // Kolumna H
+                        const gracz4 = cleanText(kolumny[9]); // Kolumna J
+                        const rezerwa = cleanText(kolumny[11]); // Kolumna L
+
+                        const li = document.createElement('li');
+                        let htmlWewnatrz = '';
+
+                        htmlWewnatrz += `<span class="team-name">${nazwaDrużyny}</span>`;
+                        htmlWewnatrz += `<ul class="player-sublist">`;
+
+                        if (kapitan) htmlWewnatrz += `<li class="captain">${kapitan} (Kapitan)</li>`;
+                        if (gracz2) htmlWewnatrz += `<li>${gracz2}</li>`;
+                        if (gracz3) htmlWewnatrz += `<li>${gracz3}</li>`;
+                        if (gracz4) htmlWewnatrz += `<li>${gracz4}</li>`;
+                        if (rezerwa) htmlWewnatrz += `<li class="sub-player">${rezerwa} (Gracz 5)</li>`;
+                        
+                        htmlWewnatrz += `</ul>`;
+                        li.innerHTML = htmlWewnatrz;
+                        listaElement.appendChild(li);
+                    }
+                }
+                
+                if (teamCount === 0) {
+                     listaElement.innerHTML = '<li>Brak zapisanych drużyn. Bądź pierwszy!</li>';
+                }
+
+            } catch (error) {
+                console.error('Błąd podczas ładowania listy drużyn:', error);
+                listaElement.innerHTML = `<li>Nie udało się załadować listy drużyn. Błąd: ${error.message}</li>`;
+            }
+        }
+
+        // Uruchom funkcje po załadowaniu całej zawartości strony
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Uruchomienie ładowania listy teamów
+            pobierzListeDruzyn();
+
+            // Logika zakładek wyników
+            const tabsNav = document.querySelector('.tabs-nav');
+            const tabLinks = document.querySelectorAll('.tab-link');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            if (tabsNav) {
+                tabsNav.addEventListener('click', (e) => {
+                    const clickedTab = e.target.closest('.tab-link');
+                    if (!clickedTab) return; 
+
+                    const tabId = clickedTab.dataset.tab;
+                    const targetContent = document.getElementById('tab-' + tabId);
+
+                    tabLinks.forEach(link => link.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    clickedTab.classList.add('active');
+                    if (targetContent) {
+                        targetContent.classList.add('active');
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
