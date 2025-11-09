@@ -7,7 +7,6 @@ app = Flask(__name__)
 
 
 # --- Funkcja pomocnicza do liczenia punktów S.U.P.E.R. ---
-# (Na podstawie regulaminu, który mi podałeś)
 def calculate_placement_points(rank):
     if rank == 1:
         return 10
@@ -56,10 +55,12 @@ def pobierz_druzyny():
 @app.route('/api/wyniki/<match_id>')
 def pobierz_wyniki_meczu(match_id):
     # 1. Pobierz swój tajny klucz API ze zmiennych środowiskowych Render
-    API_KEY = os.environ.get('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2ODI1MTUwMC05ZWRmLTAxM2UtYzY0ZS00NmU0ZjNkZDQyMzciLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNzYyNjEzMDkxLCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6InN0cm9uYXR1cm5pZWpvIn0.dEKoq_w3D4d4NUwR7yoyzvfWsPajcYhyBbakbJFONb8')
+    # !!! TO JEST POPRAWIONA LINIA !!!
+    API_KEY = os.environ.get('PUBG_API_KEY')
 
     if not API_KEY:
-        print("BŁĄD: Nie znaleziono klucza PUBG_API_KEY w zmiennych środowiskowych!")
+        # Ten błąd jest teraz poprawny - jeśli zmienna 'PUBG_API_KEY' nie jest ustawiona
+        print("BŁĄD: Nie znaleziono klucza 'PUBG_API_KEY' w zmiennych środowiskowych!")
         return jsonify(error="Błąd konfiguracji serwera: brak klucza API"), 500
 
     BASE_URL = f"https://api.pubg.com/shards/steam/matches/{match_id}"
@@ -73,7 +74,7 @@ def pobierz_wyniki_meczu(match_id):
     try:
         # 2. Wyślij zapytanie do API PUBG
         response = requests.get(BASE_URL, headers=HEADERS)
-        response.raise_for_status()  # Sprawdź, czy zapytanie się powiodło
+        response.raise_for_status()  # Sprawdź, czy zapytanie się powiodło (np. czy ID meczu jest OK)
 
         data = response.json()
         print("Dane pobrane. Przetwarzanie...")
@@ -112,7 +113,6 @@ def pobierz_wyniki_meczu(match_id):
                         team_player_names.append(player['name'])
 
                 # Użyj nicku pierwszego gracza jako nazwy teamu (API PUBG nie podaje nazwy teamu)
-                # LUB jeśli masz listę teamów, możesz tu zmapować nicki do nazwy
                 team_name = team_player_names[0] if team_player_names else "Nieznana Drużyna"
 
                 # 4. Oblicz punkty S.U.P.E.R.
@@ -134,9 +134,6 @@ def pobierz_wyniki_meczu(match_id):
         return jsonify(results_data)  # Zwróć gotową listę wyników
 
     except requests.exceptions.RequestException as e:
+        # Ten błąd złapie np. błąd 404 (złe ID meczu) lub 401 (zły klucz API)
         print(f"Błąd podczas pobierania danych z API PUBG: {e}")
         return jsonify(error=str(e)), 500
-
-    # Ten blok jest potrzebny TYLKO do testowania na Twoim komputerze
-    if __name__ == '__main__':
-        app.run(debug=True, port=5000)
