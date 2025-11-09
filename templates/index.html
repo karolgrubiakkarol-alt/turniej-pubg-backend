@@ -18,7 +18,7 @@
             /* Nowe style tła */
             background-image: 
                 linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), /* Ciemny overlay dla czytelności */
-                url('https://i.imgur.com/X4FC0PH.png'); /* Poprawny link do obrazu */
+                url('https://i.imgur.com/57zJ354.png'); /* Poprawione tło */
             background-size: cover; /* Pokrywa całe tło */
             background-attachment: fixed; /* Tło jest stałe podczas przewijania */
             background-position: center center; /* Obraz wyśrodkowany */
@@ -46,18 +46,20 @@
         /* ------- Nagłówek ------- */
         header {
             background-color: rgba(0, 0, 0, 0.8); /* Ciemniejszy z przezroczystością */
-            padding: 10px 20px; /* Zmniejszony padding, aby obrazek miał więcej miejsca */
+            padding: 20px; /* Zwiększony padding dla tekstu */
             text-align: center;
             border-bottom: 4px solid #ffc107; /* Żółty akcent PUBG */
         }
 
-        /* Styl dla baneru w nagłówku */
-        header .banner-img {
-            max-width: 100%; /* Obrazek responsywny */
-            height: auto; /* Zachowanie proporcji */
-            margin: 10px 0; /* Mały margines góra/dół */
+        /* Styl dla nagłówka tekstowego w headerze */
+        header h1 {
+            color: #ffc107;
+            font-size: 3.2em; /* ZMIANA: Lekko zmniejszona czcionka */
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.9);
         }
-
 
         /* ------- Pasek Nawigacji (Zakładki) ------- */
         .navbar {
@@ -229,6 +231,21 @@
             font-style: italic;
             opacity: 0.8;
             color: #aaa;
+        }
+
+        /* ============================================= */
+        /* NOWE STYLE - Linki w liście graczy            */
+        /* ============================================= */
+        .player-sublist a {
+            color: #ffffff; /* Biały kolor linku (lub #ccc, jeśli wolisz) */
+            text-decoration: none; /* Usunięcie podkreślenia */
+            border-bottom: 1px dotted #ffc107; /* Delikatne podkreślenie w kolorze akcentu */
+            transition: color 0.2s, border-bottom 0.2s;
+        }
+        .player-sublist a:hover {
+            color: #ffc107; /* Zmiana koloru na żółty po najechaniu */
+            text-decoration: none;
+            border-bottom: 1px solid #ffc107;
         }
         /* ============================================= */
 
@@ -409,7 +426,7 @@
     <div class="container">
 
         <header>
-            <img src="https://i.imgur.com/ZDKOVNK.png" alt="PUBG POLSKA CUP 2025 - SQUAD FPP" class="banner-img">
+            <h1>PUBG POLSKA CUP 2025</h1>
         </header>
 
         <nav class="navbar">
@@ -506,8 +523,7 @@
                                         <th>Suma Punktów</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    </tbody>
+                                <tbody></tbody>
                             </table>
                         </div>
                     </div>
@@ -599,6 +615,7 @@
 
                 </div>
             </section>
+
             <section id="regulamin" class="info-section content-section">
                 <h3>Regulamin Turnieju</h3>
                 <div class="rules-container">
@@ -698,7 +715,7 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
     <script>
 
         // =============================================
-        // CZĘŚĆ 1: LOGIKA POBIERANIA LISTY DRUŻYN (BEZ ZMIAN)
+        // CZĘŚĆ 1: LOGIKA POBIERANIA LISTY DRUŻYN
         // =============================================
 
         function cleanText(text) {
@@ -754,11 +771,16 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
 
                         const li = document.createElement('li');
                         let htmlWewnatrz = `<span class="team-name">${nazwaDrużyny}</span><ul class="player-sublist">`;
-                        if (kapitan) htmlWewnatrz += `<li class="captain">${kapitan} (Kapitan)</li>`;
-                        if (gracz2) htmlWewnatrz += `<li>${gracz2}</li>`;
-                        if (gracz3) htmlWewnatrz += `<li>${gracz3}</li>`;
-                        if (gracz4) htmlWewnatrz += `<li>${gracz4}</li>`;
-                        if (rezerwa) htmlWewnatrz += `<li class="sub-player">${rezerwa} (Gracz 5)</li>`;
+
+                        // --- ZMIANA: Dodanie linków ---
+                        const platforma = "steam"; // Zakładamy, że platforma to Steam
+
+                        if (kapitan) htmlWewnatrz += `<li class="captain"><a href="https://pubglookup.com/players/${platforma}/${kapitan}" target="_blank" rel="noopener noreferrer">${kapitan}</a> (Kapitan)</li>`;
+                        if (gracz2) htmlWewnatrz += `<li><a href="https://pubglookup.com/players/${platforma}/${gracz2}" target="_blank" rel="noopener noreferrer">${gracz2}</a></li>`;
+                        if (gracz3) htmlWewnatrz += `<li><a href="https://pubglookup.com/players/${platforma}/${gracz3}" target="_blank" rel="noopener noreferrer">${gracz3}</a></li>`;
+                        if (gracz4) htmlWewnatrz += `<li><a href="https://pubglookup.com/players/${platforma}/${gracz4}" target="_blank" rel="noopener noreferrer">${gracz4}</a></li>`;
+                        if (rezerwa) htmlWewnatrz += `<li class="sub-player"><a href="https://pubglookup.com/players/${platforma}/${rezerwa}" target="_blank" rel="noopener noreferrer">${rezerwa}</a> (Gracz 5)</li>`;
+
                         htmlWewnatrz += `</ul>`;
                         li.innerHTML = htmlWewnatrz;
                         listaElement.appendChild(li);
