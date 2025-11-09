@@ -600,161 +600,208 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
     </div> 
     
     <script>
-        
-        /**
-         * Funkcja pomocnicza do czyszczenia tekstu z CSV (usuwa cudzysłowy i białe znaki)
-         */
+
+
+        // =============================================
+        // CZĘŚĆ 1: LOGIKA POBIERANIA LISTY DRUŻYN (BEZ ZMIAN)
+        // =============================================
+
         function cleanText(text) {
-            if (!text) return null; // Zwraca null, jeśli komórka jest pusta
-            // Usuwa cudzysłowy tylko jeśli są na skrajnych końcach
-            return text.trim().replace(/^"|"$/g, ''); 
+            if (!text) return null;
+            return text.trim().replace(/^"|"$/g, '');
         }
 
-        /**
-         * Bardziej zaawansowana funkcja do parsowania pojedynczego wiersza CSV.
-         * Radzi sobie z przecinkami wewnątrz cytowanych pól (np. "Team, który wygra").
-         */
         function parseCSVRow(row) {
             const columns = [];
             let currentColumn = '';
             let inQuotes = false;
-            
             for (let i = 0; i < row.length; i++) {
                 const char = row[i];
-                
                 if (char === '"') {
-                    // Obsługa podwójnego cudzysłowu (np. "") wewnątrz pola
-                    if (inQuotes && row[i+1] === '"') { 
-                        currentColumn += '"';
-                        i++; // Pomiń następny cudzysłów
-                    } else {
-                        inQuotes = !inQuotes; // Włącz/Wyłącz tryb "w cudzysłowie"
-                    }
+                    if (inQuotes && row[i+1] === '"') {
+                        currentColumn += '"'; i++;
+                    } else { inQuotes = !inQuotes; }
                 } else if (char === ',' && !inQuotes) {
-                    // Jeśli przecinek i NIE jesteśmy w cudzysłowie -> koniec kolumny
-                    columns.push(currentColumn);
-                    currentColumn = ''; // Zresetuj dla następnej kolumny
-                } else {
-                    // Zwykły znak, dodaj go do bieżącej kolumny
-                    currentColumn += char;
-                }
+                    columns.push(currentColumn); currentColumn = '';
+                } else { currentColumn += char; }
             }
-            columns.push(currentColumn); // Dodaj ostatnią kolumnę
+            columns.push(currentColumn);
             return columns;
         }
 
-
-        /**
-         * Główna funkcja do pobierania i wyświetlania listy drużyn
-         */
-        /**
-         * Główna funkcja do pobierania i wyświetlania listy drużyn
-         */
         async function pobierzListeDruzyn() {
-
-            /*
-              !!! NAJWAŻNIEJSZA ZMIANA !!!
-              Zamiast łączyć się z Google, łączymy się z naszym WŁASNYM backendem (app.py)
-              pod adresem '/api/druzyny', który zdefiniowaliśmy we Flasku.
-            */
-            const csvUrl = '/api/druzyny';
-
+            const csvUrl = '/api/druzyny'; // Pyta nasz backend
             const listaElement = document.getElementById('team-list-dynamic');
-
             try {
-                // 1. Pobieramy dane z naszego backendu
                 const response = await fetch(csvUrl, { cache: 'no-store' });
+                if (!response.ok) { throw new Error(`Błąd serwera. Status: ${response.status}`); }
 
-                if (!response.ok) {
-                    throw new Error(`Błąd serwera - nie można pobrać danych. Status: ${response.status}`);
-                }
-
-                // Nasz backend zwraca JSON, w którym dane CSV są w polu "data"
                 const jsonData = await response.json();
+                if (jsonData.error) { throw new Error(jsonData.error); }
 
-                if (jsonData.error) {
-                    // Wyświetl błąd, jeśli nasz backend go zgłosił (np. błąd połączenia z Google)
-                    throw new Error(jsonData.error);
-                }
-
-                const dataCsv = jsonData.data; // Wyciągamy tekst CSV z JSONa
-
-                // 2. Parsowanie danych CSV (ten kod jest taki sam jak poprzednio)
+                const dataCsv = jsonData.data;
                 const wiersze = dataCsv.split(/\r?\n/);
-
-                listaElement.innerHTML = ''; // Czyścimy listę
+                listaElement.innerHTML = '';
                 let teamCount = 0;
 
-                for (let i = 1; i < wiersze.length; i++) { // Zaczynamy od 1, aby pominąć nagłówek
+                for (let i = 1; i < wiersze.length; i++) {
                     const wiersz = wiersze[i].trim();
                     if (!wiersz) continue;
-
                     const kolumny = parseCSVRow(wiersz);
-
-                    const nazwaDrużyny = cleanText(kolumny[1]); // Kolumna B
-
+                    const nazwaDrużyny = cleanText(kolumny[1]);
                     if (nazwaDrużyny) {
                         teamCount++;
-
-                        const kapitan = cleanText(kolumny[3]); // Kolumna D
-                        const gracz2 = cleanText(kolumny[5]); // Kolumna F
-                        const gracz3 = cleanText(kolumny[7]); // Kolumna H
-                        const gracz4 = cleanText(kolumny[9]); // Kolumna J
-                        const rezerwa = cleanText(kolumny[11]); // Kolumna L
+                        const kapitan = cleanText(kolumny[3]);
+                        const gracz2 = cleanText(kolumny[5]);
+                        const gracz3 = cleanText(kolumny[7]);
+                        const gracz4 = cleanText(kolumny[9]);
+                        const rezerwa = cleanText(kolumny[11]);
 
                         const li = document.createElement('li');
-                        let htmlWewnatrz = '';
-
-                        htmlWewnatrz += `<span class="team-name">${nazwaDrużyny}</span>`;
-                        htmlWewnatrz += `<ul class="player-sublist">`;
-
+                        let htmlWewnatrz = `<span class="team-name">${nazwaDrużyny}</span><ul class="player-sublist">`;
                         if (kapitan) htmlWewnatrz += `<li class="captain">${kapitan} (Kapitan)</li>`;
                         if (gracz2) htmlWewnatrz += `<li>${gracz2}</li>`;
                         if (gracz3) htmlWewnatrz += `<li>${gracz3}</li>`;
                         if (gracz4) htmlWewnatrz += `<li>${gracz4}</li>`;
                         if (rezerwa) htmlWewnatrz += `<li class="sub-player">${rezerwa} (Gracz 5)</li>`;
-                        
                         htmlWewnatrz += `</ul>`;
                         li.innerHTML = htmlWewnatrz;
                         listaElement.appendChild(li);
                     }
                 }
-                
-                if (teamCount === 0) {
-                     listaElement.innerHTML = '<li>Brak zapisanych drużyn. Bądź pierwszy!</li>';
-                }
-
+                if (teamCount === 0) { listaElement.innerHTML = '<li>Brak zapisanych drużyn. Bądź pierwszy!</li>'; }
             } catch (error) {
                 console.error('Błąd podczas ładowania listy drużyn:', error);
                 listaElement.innerHTML = `<li>Nie udało się załadować listy drużyn. Błąd: ${error.message}</li>`;
             }
         }
 
-        // Uruchom funkcje po załadowaniu całej zawartości strony
+
+        // ===============================================================
+        // CZĘŚĆ 2: NOWA LOGIKA DLA WYNIKÓW MECZÓW (PUBG API)
+        // ===============================================================
+
+        /*
+           !!! TUTAJ MUSISZ WPISAĆ ID MECZÓW PO ICH ZAKOŃCZENIU !!!
+           Po "Grze 1", zdobądź jej ID i wklej je poniżej.
+           Klucze (gra1, gra2...) muszą pasować do atrybutów 'data-tab' w HTML.
+        */
+        const MATCH_IDS = {
+            "gra1": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_1",
+            "gra2": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_2",
+            "gra3": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_3",
+            "gra4": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_4",
+            "gra5": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_5",
+            "gra6": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_6",
+            "generalna": null // Zakładka generalna (na razie pusta)
+        };
+
+        /**
+         * Funkcja wypełniająca tabelę wyników danymi z API
+         */
+        function populateTable(tabId, data) {
+            const tabContent = document.getElementById(tabId);
+            if (!tabContent) return;
+
+            const tableBody = tabContent.querySelector('.results-table tbody');
+            if (!tableBody) return;
+
+            tableBody.innerHTML = ''; // Wyczyść tabelę (np. z napisu "Ładowanie...")
+
+            data.forEach(team => {
+                const row = `
+                    <tr>
+                        <td>${team.rank}</td>
+                        <td>${team.team_name}</td>
+                        <td>${team.placement_points}</td>
+                        <td>${team.kills}</td>
+                        <td>${team.total_points}</td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        /**
+         * Funkcja pobierająca dane jednego meczu z naszego backendu
+         */
+        async function fetchMatchResults(tabId, matchId) {
+            const tabContent = document.getElementById(tabId);
+            const tableBody = tabContent.querySelector('.results-table tbody');
+
+            // Pokaż status ładowania
+            if (tableBody) {
+                tableBody.innerHTML = '<tr><td colspan="5">Ładowanie wyników...</td></tr>';
+            } else if (tabContent) {
+                tabContent.innerHTML = '<h4>Ładowanie wyników...</h4>';
+            }
+
+            try {
+                const response = await fetch(`/api/wyniki/${matchId}`);
+                if (!response.ok) {
+                    throw new Error(`Błąd serwera: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                // Mamy dane, wypełnijmy tabelę
+                populateTable(tabId, data);
+
+                // Zapisz dane w pamięci, aby nie ładować ich ponownie
+                tabContent.dataset.loaded = "true";
+
+            } catch (error) {
+                console.error(`Błąd pobierania wyników dla ${matchId}:`, error);
+                if (tableBody) {
+                    tableBody.innerHTML = `<tr><td colspan="5">Nie udało się załadować wyników. Błąd: ${error.message}</td></tr>`;
+                } else if (tabContent) {
+                    tabContent.innerHTML = `<h4>Nie udało się załadować wyników.</h4>`;
+                }
+            }
+        }
+
+
+        // =============================================
+        // CZĘŚĆ 3: GŁÓWNY KOD URUCHAMIAJĄCY
+        // =============================================
+
         document.addEventListener('DOMContentLoaded', () => {
-            
-            // Uruchomienie ładowania listy teamów
+
+            // 1. Uruchom ładowanie listy teamów
             pobierzListeDruzyn();
 
-            // Logika zakładek wyników
+            // 2. Logika zakładek wyników (teraz z pobieraniem danych)
             const tabsNav = document.querySelector('.tabs-nav');
-            const tabLinks = document.querySelectorAll('.tab-link');
             const tabContents = document.querySelectorAll('.tab-content');
 
             if (tabsNav) {
                 tabsNav.addEventListener('click', (e) => {
                     const clickedTab = e.target.closest('.tab-link');
-                    if (!clickedTab) return; 
+                    if (!clickedTab) return;
 
-                    const tabId = clickedTab.dataset.tab;
-                    const targetContent = document.getElementById('tab-' + tabId);
+                    const tabKey = clickedTab.dataset.tab; // np. "gra1"
+                    const targetContentId = 'tab-' + tabKey; // np. "tab-gra1"
+                    const targetContent = document.getElementById(targetContentId);
 
-                    tabLinks.forEach(link => link.classList.remove('active'));
+                    // Przełączanie zakładek
+                    document.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
                     tabContents.forEach(content => content.classList.remove('active'));
-
                     clickedTab.classList.add('active');
                     if (targetContent) {
                         targetContent.classList.add('active');
+                    }
+
+                    // Pobieranie danych
+                    const matchId = MATCH_IDS[tabKey];
+                    const isLoaded = targetContent.dataset.loaded === "true";
+
+                    // Jeśli zakładka ma przypisane ID meczu I nie była jeszcze ładowana
+                    if (matchId && !isLoaded) {
+                        fetchMatchResults(targetContentId, matchId);
                     }
                 });
             }
