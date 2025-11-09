@@ -15,21 +15,14 @@
             scroll-behavior: smooth; /* Włącza płynne przewijanie */
         }
         body {
-            /* Nowe style tła */
-            background-image: 
-                linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), /* Ciemny overlay dla czytelności */
-                url('https://i.imgur.com/57zJ354.png'); /* Poprawione tło */
-            background-size: cover; /* Pokrywa całe tło */
-            background-attachment: fixed; /* Tło jest stałe podczas przewijania */
-            background-position: center center; /* Obraz wyśrodkowany */
-            background-color: #121212; /* Fallback kolor tła */
+            /* ZMIANA: Jednolity kolor tła */
+            background-color: #2a2a2a;
 
             color: #e0e0e0; /* Jasnoszary tekst */
             font-family: 'Arial', 'Helvetica', sans-serif;
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8); /* Lekki cień dla lepszej czytelności tekstu */
         }
 
         /* ------- Główny Kontener ------- */
@@ -37,7 +30,7 @@
             width: 90%;
             max-width: 900px;
             margin: 20px auto;
-            background-color: rgba(30, 30, 30, 0.9); /* Ciemnoszare tło kontenera z przezroczystością */
+            background-color: rgba(30, 30, 30, 0.9); /* Ciemnoszare tło kontenera */
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
             overflow: hidden; /* Aby zaokrąglone rogi działały na sekcjach */
@@ -45,21 +38,23 @@
 
         /* ------- Nagłówek ------- */
         header {
-            background-color: rgba(0, 0, 0, 0.8); /* Ciemniejszy z przezroczystością */
-            padding: 20px; /* Zwiększony padding dla tekstu */
+            /* ZMIANA: Tło nagłówka na ciemniejszy szary */
+            background-color: #2a2a2a;
+            padding: 10px 20px;
             text-align: center;
             border-bottom: 4px solid #ffc107; /* Żółty akcent PUBG */
         }
 
-        /* Styl dla nagłówka tekstowego w headerze */
-        header h1 {
-            color: #ffc107;
-            font-size: 3.2em;
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.9);
+        /* Styl dla baneru w nagłówku - ZMIANA WYSRODKOWANIA I POWIEKSZENIA */
+        header .banner-img {
+            max-width: 110%; /* Lekkie powiększenie */
+            height: auto; /* Zachowanie proporcji */
+            margin: 10px auto; /* Wyśrodkowanie w poziomie */
+            display: block; /* Upewnia się, że obraz jest wyśrodkowany poprawnie */
         }
+
+        /* Usunięto style h1 i .header-logo, bo już nie są potrzebne */
+
 
         /* ------- Pasek Nawigacji (Zakładki) ------- */
         .navbar {
@@ -80,7 +75,6 @@
             padding: 5px 10px;
             border-radius: 5px;
             transition: background-color 0.3s, color 0.3s;
-            text-shadow: none; /* Reset cienia dla nawigacji */
         }
         .navbar a:hover, .navbar a.active {
             background-color: #ffc107;
@@ -129,7 +123,6 @@
             border: none;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.3s ease;
-            text-shadow: none; /* Reset cienia dla przycisku */
         }
         .cta-button:hover {
             background-color: #ffffff;
@@ -289,7 +282,6 @@
             color: #121212;
             text-align: center;
             font-weight: bold;
-            text-shadow: none; /* Reset cienia dla nagłówków tabeli */
         }
         .results-table tr {
             background-color: rgba(42, 42, 42, 0.9);
@@ -332,7 +324,6 @@
             flex-grow: 1;
             text-align: center;
             border-bottom: 3px solid transparent;
-            text-shadow: none; /* Reset cienia dla zakładek */
         }
         .tab-link:hover {
             background-color: #333;
@@ -372,7 +363,6 @@
             font-family: 'Courier New', Courier, monospace;
             color: #ccc;
             line-height: 1.5;
-            text-shadow: none; /* Reset cienia dla regulaminu */
         }
         .rules-container pre {
             white-space: pre-wrap;
@@ -388,7 +378,6 @@
             color: #777;
             margin-top: 30px;
             border-top: 2px solid #333;
-            text-shadow: none; /* Reset cienia dla stopki */
         }
 
         /* Responsywność */
@@ -426,7 +415,7 @@
     <div class="container">
 
         <header>
-            <h1>PUBG POLSKA CUP 2025</h1>
+            <img src="https://i.imgur.com/VhDs7mJ.png" alt="PUBG POLSKA CUP 2025" class="banner-img">
         </header>
 
         <nav class="navbar">
@@ -443,7 +432,7 @@
                 <h3>Zapisy na turniej SQUAD FPP</h3>
                 <p>Wypełnij formularz zgłoszeniowy, klikając przycisk poniżej.</p>
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSeaYLKta8D83Xnfanm4tXVUtqX0273o7P1MJEowvVPqI6Crdg/viewform?usp=publish-editor" target="_blank" class="cta-button">
-                    ZAPISZ DRUŻYNĘ TERAZ!
+                    ZAPISZ DRUŻYNĘ!
                 </a>
                 <p style="margin-top: 20px; font-size: 0.9em;">Liczba miejsc ograniczona. Decyduje kolejność zgłoszeń.</p>
             </section>
@@ -772,13 +761,13 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
                         const li = document.createElement('li');
                         let htmlWewnatrz = `<span class="team-name">${nazwaDrużyny}</span><ul class="player-sublist">`;
 
-                        const platforma = "steam";
+                        // Link do op.gg/pubg
 
-                        if (kapitan) htmlWewnatrz += `<li class="captain"><a href="https://pubglookup.com/players/${platforma}/${kapitan}" target="_blank" rel="noopener noreferrer">${kapitan}</a> (Kapitan)</li>`;
-                        if (gracz2) htmlWewnatrz += `<li><a href="https://pubglookup.com/players/${platforma}/${gracz2}" target="_blank" rel="noopener noreferrer">${gracz2}</a></li>`;
-                        if (gracz3) htmlWewnatrz += `<li><a href="https://pubglookup.com/players/${platforma}/${gracz3}" target="_blank" rel="noopener noreferrer">${gracz3}</a></li>`;
-                        if (gracz4) htmlWewnatrz += `<li><a href="https://pubglookup.com/players/${platforma}/${gracz4}" target="_blank" rel="noopener noreferrer">${gracz4}</a></li>`;
-                        if (rezerwa) htmlWewnatrz += `<li class="sub-player"><a href="https://pubglookup.com/players/${platforma}/${rezerwa}" target="_blank" rel="noopener noreferrer">${rezerwa}</a> (Gracz 5)</li>`;
+                        if (kapitan) htmlWewnatrz += `<li class="captain"><a href="https://op.gg/pubg/player/${kapitan}" target="_blank" rel="noopener noreferrer">${kapitan}</a> (Kapitan)</li>`;
+                        if (gracz2) htmlWewnatrz += `<li><a href="https://op.gg/pubg/player/${gracz2}" target="_blank" rel="noopener noreferrer">${gracz2}</a></li>`;
+                        if (gracz3) htmlWewnatrz += `<li><a href="https://op.gg/pubg/player/${gracz3}" target="_blank" rel="noopener noreferrer">${gracz3}</a></li>`;
+                        if (gracz4) htmlWewnatrz += `<li><a href="https://op.gg/pubg/player/${gracz4}" target="_blank" rel="noopener noreferrer">${gracz4}</a></li>`;
+                        if (rezerwa) htmlWewnatrz += `<li class="sub-player"><a href="https://op.gg/pubg/player/${rezerwa}" target="_blank" rel="noopener noreferrer">${rezerwa}</a> (Gracz 5)</li>`;
 
                         htmlWewnatrz += `</ul>`;
                         li.innerHTML = htmlWewnatrz;
@@ -887,7 +876,7 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
         }
 
         /**
-         * ZMIANA: Nowa funkcja do liczenia klasyfikacji generalnej
+         * Funkcja do liczenia klasyfikacji generalnej
          */
         async function calculateAndShowGeneralClassification() {
             const tabId = "tab-generalna";
@@ -899,7 +888,7 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
             tableBody.innerHTML = '<tr><td colspan="5">Pobieranie i sumowanie wyników...</td></tr>';
 
             try {
-                // 1. Stwórz listę wszystkich ID meczów, które mają być policzone
+		// 1. Stwórz listę wszystkich ID meczów, które mają być policzone
                 const matchIdsToFetch = Object.values(MATCH_IDS)
                     .filter(id => id && !id.startsWith("TUTAJ_")); // Bierzemy tylko realne ID
 
@@ -938,21 +927,14 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
                 // 4. Konwertuj obiekt z powrotem na listę
                 const generalRankingList = Object.values(teamStats);
 
-                // ===================================================================
-                // !!! TUTAJ JEST POPRAWKA BŁĘDU (POPRAWNE SORTOWANIE W JAVASCRIPT) !!!
-                // ===================================================================
+                // 5. Posortuj listę generalną (poprawiona składnia JavaScript)
                 generalRankingList.sort((teamA, teamB) => {
-                    // 1. Sortuj po 'total_points' (malejąco)
                     if (teamA.total_points > teamB.total_points) return -1;
                     if (teamA.total_points < teamB.total_points) return 1;
-
-                    // 2. Tie-breaker: sortuj po 'kills' (malejąco)
                     if (teamA.kills > teamB.kills) return -1;
                     if (teamA.kills < teamB.kills) return 1;
-
-                    return 0; // Remis
+                    return 0;
                 });
-                // ===================================================================
 
                 // 6. Nadaj finalne rangi (miejsca)
                 const finalList = generalRankingList.map((team, index) => ({
@@ -1003,26 +985,22 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
 
                     // --- ZMIENIONA LOGIKA POBIERANIA ---
                     const matchId = MATCH_IDS[tabKey];
-                    // ZMIANA: Sprawdzamy, czy dane są ładowane LUB załadowane
                     const isLoadingOrLoaded = targetContent.dataset.loaded === "true" || targetContent.dataset.loading === "true";
 
-                    if (isLoadingOrLoaded) return; // Jeśli już załadowane lub w trakcie ładowania, nie rób nic
+                    if (isLoadingOrLoaded) return;
 
-                    // Oznacz jako "w trakcie ładowania"
                     targetContent.dataset.loading = "true";
 
                     if (tabKey === 'generalna') {
-                        // Jeśli to zakładka generalna, uruchom kalkulator
                         calculateAndShowGeneralClassification().finally(() => {
-                            targetContent.dataset.loading = "false"; // Zakończono ładowanie
+                            targetContent.dataset.loading = "false";
                         });
                     } else if (matchId && !matchId.startsWith("TUTAJ_")) {
-                        // Jeśli to zakładka gry I ma wpisane ID, pobierz wyniki
                         fetchMatchResults(targetContentId, matchId).finally(() => {
-                            targetContent.dataset.loading = "false"; // Zakończono ładowanie
+                            targetContent.dataset.loading = "false";
                         });
                     } else {
-                        // Jeśli to zakładka gry bez ID, usuń status ładowania
+                        // Jeśli ID meczu nie jest ustawione, po prostu usuń "loading"
                         targetContent.dataset.loading = "false";
                     }
                 });
