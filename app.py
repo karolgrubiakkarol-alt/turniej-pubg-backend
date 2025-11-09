@@ -56,7 +56,7 @@ def pobierz_druzyny():
 @app.route('/api/wyniki/<match_id>')
 def pobierz_wyniki_meczu(match_id):
     # 1. Pobierz swój tajny klucz API ze zmiennych środowiskowych Render
-    API_KEY = os.environ.get('PUBG_API_KEY')
+    API_KEY = os.environ.get('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2ODI1MTUwMC05ZWRmLTAxM2UtYzY0ZS00NmU0ZjNkZDQyMzciLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNzYyNjEzMDkxLCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6InN0cm9uYXR1cm5pZWpvIn0.dEKoq_w3D4d4NUwR7yoyzvfWsPajcYhyBbakbJFONb8')
 
     if not API_KEY:
         print("BŁĄD: Nie znaleziono klucza PUBG_API_KEY w zmiennych środowiskowych!")
@@ -136,3 +136,7 @@ def pobierz_wyniki_meczu(match_id):
     except requests.exceptions.RequestException as e:
         print(f"Błąd podczas pobierania danych z API PUBG: {e}")
         return jsonify(error=str(e)), 500
+
+    # Ten blok jest potrzebny TYLKO do testowania na Twoim komputerze
+    if __name__ == '__main__':
+        app.run(debug=True, port=5000)
