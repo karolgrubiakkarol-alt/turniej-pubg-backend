@@ -63,12 +63,13 @@
             top: 0;
             z-index: 1000;
         }
+        /* ZMIANA: Mniejsza czcionka i marginesy dla 7 zakładek */
         .navbar a {
             color: #e0e0e0;
             text-decoration: none;
-            font-size: 1em;
+            font-size: 0.9em; /* Mniejsza czcionka */
             font-weight: bold;
-            margin: 0 10px;
+            margin: 0 8px; /* Mniejszy margines */
             padding: 5px 10px;
             border-radius: 5px;
             transition: background-color 0.3s, color 0.3s;
@@ -465,9 +466,11 @@
         <nav class="navbar">
             <a href="#zapisy">Zapisy</a>
             <a href="#szczegoly">Szczegóły</a>
+            <a href="#sponsorzy">Sponsorzy</a>
             <a href="#teamy">Zapisane Teamy</a>
             <a href="#wyniki">Wyniki</a>
             <a href="#regulamin">Regulamin</a>
+            <a href="#kontakt">Kontakt</a>
         </nav>
 
         <main>
@@ -498,6 +501,32 @@
                     <li><strong>Transmisja:</strong> <a href="https://twitch.tv/akerman88" target="_blank">twitch.tv/akerman88</a></li>
                     <li><strong>Discord:</strong> <a href="https://discadia.com/pubgpolska" target="_blank">Dołącz do serwera (Kliknij!)</a></li>
                 </ul>
+            </section>
+
+            <section id="sponsorzy" class="info-section content-section">
+                <h3>Sponsorzy (Dobrowolne Wpisowe)</h3>
+                <p>Wielkie podziękowania dla wszystkich, którzy wsparli pulę nagród turnieju! Każda donacja wspiera społeczność.</p>
+
+                <div class="results-table-container">
+                    <table class="results-table">
+                        <thead>
+                            <tr>
+                                <th>Nick Gracza / Sponsora</th>
+                                <th>Kwota Donacji</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Przykładowy Gracz 1</td>
+                                <td style="text-align: center; color: #ffc107; font-weight: bold;">50 PLN</td>
+                            </tr>
+                            <tr>
+                                <td>Anonimowy Darczyńca</td>
+                                <td style="text-align: center; color: #ffc107; font-weight: bold;">25 PLN</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </section>
 
             <section id="teamy" class="info-section content-section">
@@ -732,7 +761,26 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
                 </div>
             </section>
 
-            </main>
+            <section id="kontakt" class="info-section content-section">
+                <h3>Kontakt</h3>
+                <p>W razie pytań, problemów technicznych lub spraw organizacyjnych, prosimy o kontakt poprzez Discord:</p>
+                <ul class="info-list">
+                    <li>
+                        <strong>Organizator:</strong>
+                        <a href="https://discordapp.com/users/397785664373915659" target="_blank" rel="noopener noreferrer">Kliknij, aby skontaktować się (Discord)</a>
+                    </li>
+                    <li>
+                        <strong>Dział Techniczny:</strong>
+                        <a href="https://discordapp.com/users/605726001539973121" target="_blank" rel="noopener noreferrer">Kliknij, aby skontaktować się (Discord)</a>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="content-section sponsor-image-section">
+                <img src="https://i.imgur.com/HcTRskR.png" alt="Sponsor Turnieju 2">
+            </section>
+
+        </main>
 
         <footer>
             <p>&copy; 2025 PUBG POLSKA. Wszelkie prawa zastrzeżone. Strona nie jest powiązana z KRAFTON, Inc.</p>
@@ -835,7 +883,7 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
            !!! TUTAJ MUSISZ WPISAĆ ID MECZÓW PO ICH ZAKOŃCZENIU !!!
         */
         const MATCH_IDS = {
-            "gra1": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_1", // To jest ID testowe
+            "gra1": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_1",
             "gra2": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_2",
             "gra3": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_3",
             "gra4": "TUTAJ_WKLEJ_ID_MECZU_DLA_GRY_4",
