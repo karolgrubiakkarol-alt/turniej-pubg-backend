@@ -808,11 +808,11 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
 
                         // Link do op.gg/pubg
 
-                        if (kapitan) htmlWewnatrz += `<li class="captain"><a href="https://op.gg/pubg/player/${kapitan}" target="_blank" rel="noopener noreferrer">${kapitan}</a> (Kapitan)</li>`;
-                        if (gracz2) htmlWewnatrz += `<li><a href="https://op.gg/pubg/player/${gracz2}" target="_blank" rel="noopener noreferrer">${gracz2}</a></li>`;
-                        if (gracz3) htmlWewnatrz += `<li><a href="https://op.gg/pubg/player/${gracz3}" target="_blank" rel="noopener noreferrer">${gracz3}</a></li>`;
-                        if (gracz4) htmlWewnatrz += `<li><a href="https://op.gg/pubg/player/${gracz4}" target="_blank" rel="noopener noreferrer">${gracz4}</a></li>`;
-                        if (rezerwa) htmlWewnatrz += `<li class="sub-player"><a href="https://op.gg/pubg/player/${rezerwa}" target="_blank" rel="noopener noreferrer">${rezerwa}</a> (Gracz 5)</li>`;
+                        if (kapitan) htmlWewnatrz += `<li class="captain"><a href="https://op.gg/pubg/user/${kapitan}" target="_blank" rel="noopener noreferrer">${kapitan}</a> (Kapitan)</li>`;
+                        if (gracz2) htmlWewnatrz += `<li><a href="https://op.gg/pubg/user/${gracz2}" target="_blank" rel="noopener noreferrer">${gracz2}</a></li>`;
+                        if (gracz3) htmlWewnatrz += `<li><a href="https://op.gg/pubg/user/${gracz3}" target="_blank" rel="noopener noreferrer">${gracz3}</a></li>`;
+                        if (gracz4) htmlWewnatrz += `<li><a href="https://op.gg/pubg/user/${gracz4}" target="_blank" rel="noopener noreferrer">${gracz4}</a></li>`;
+                        if (rezerwa) htmlWewnatrz += `<li class="sub-player"><a href="https://op.gg/pubg/user/${rezerwa}" target="_blank" rel="noopener noreferrer">${rezerwa}</a> (Gracz 5)</li>`;
 
                         htmlWewnatrz += `</ul>`;
                         teamCard.innerHTML = htmlWewnatrz;
