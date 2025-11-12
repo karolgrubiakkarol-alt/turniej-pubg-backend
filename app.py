@@ -189,7 +189,7 @@ def pobierz_wyniki_meczu(match_id):
                 })
 
         # 6. Sortowanie (bez zmian)
-        results_data.sort(key=lambda x: (x['total_points'], x['kills']), reverse=True)
+        results_data.sort(key=lambda x: (x['total_points'], x['placement_points']), reverse=True)
 
         # 7. Aktualizacja miejsc (rank) po sortowaniu (bez zmian)
         for i, team in enumerate(results_data):
