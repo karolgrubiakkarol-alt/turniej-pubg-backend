@@ -450,7 +450,94 @@
                 flex-basis: 100%;
             }
         }
+    /* ============================================= */
+        /* NOWE STYLE - Zwijany kontener + Siatka Sponsorów */
+        /* ============================================= */
+        .collapsible-trigger {
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .collapsible-trigger:hover {
+            background-color: rgba(60, 60, 60, 0.9); /* Efekt najechania */
+        }
 
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+
+        .collapsible-content.expanded {
+            max-height: 1000px; /* Wystarczająco wysoko */
+            padding-top: 20px; /* Dodaj odstęp tylko, gdy rozwinięte */
+        }
+
+        .sponsor-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 0;
+            list-style: none;
+            margin: 20px -10px 0 -10px;
+        }
+
+        .sponsor-card {
+            background-color: rgba(42, 42, 42, 0.9);
+            margin: 0 10px 20px 10px;
+            padding: 15px 20px;
+            border-radius: 5px;
+            border-left: 3px solid #ffc107;
+            box-sizing: border-box;
+            flex-basis: 30%;
+            min-width: 250px;
+            text-align: center;
+        }
+
+        .sponsor-name {
+            display: block;
+            font-size: 1.1em;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .sponsor-amount {
+            display: block;
+            font-size: 1.3em;
+            color: #ffc107;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        /* NOWY STYL: Suma Puli Nagród */
+        .sponsor-total {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 2px solid #444;
+            text-align: center;
+            font-size: 1.3em;
+        }
+        .sponsor-total strong {
+            color: #ffffff;
+        }
+        .sponsor-total #total-prize-pool {
+            color: #ffc107;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        /* ============================================= */
+
+        /* Poprawka responsywności dla kart sponsorów */
+        @media (max-width: 768px) {
+            .sponsor-card {
+                flex-basis: 45%;
+                min-width: 200px;
+            }
+        }
+        @media (max-width: 600px) {
+            .sponsor-card {
+                flex-basis: 100%;
+            }
+        }
     </style>
     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-94Z01SBR91"></script>
@@ -511,32 +598,31 @@
             </section>
 
             <section id="sponsorzy" class="info-section content-section">
-                <h3>Sponsorzy</h3>
-                <p>Wielkie podziękowania dla wszystkich, którzy wsparli pulę nagród turnieju! Każda donacja wspiera społeczność.</p>
+                <h3 class="collapsible-trigger">Sponsorzy</h3>
 
-                <div class="results-table-container">
-                    <table class="results-table">
-                        <thead>
-                            <tr>
-                                <th>Nick Gracza / Sponsora</th>
-                                <th>Kwota Donacji</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>MorderczeJajo</td>
-                                <td style="text-align: center; color: #ffc107; font-weight: bold;">50zł</td>
-                            </tr>
-                            <tr>
-                                <td>XserXses9</td>
-                                <td style="text-align: center; color: #ffc107; font-weight: bold;">50zł</td>
-                            </tr>
-                            <tr>
-                                <td>Team NYSA</td>
-                                <td style="text-align: center; color: #ffc107; font-weight: bold;">80zł</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="collapsible-content">
+                    <p>Wielkie podziękowania dla wszystkich, którzy wsparli pulę nagród turnieju! Każda donacja wspiera społeczność.</p>
+
+                    <div class="sponsor-grid">
+                        <div class="sponsor-card">
+                            <span class="sponsor-name">MorderczeJajo</span>
+                            <span class="sponsor-amount">50 PLN</span>
+                        </div>
+                        <div class="sponsor-card">
+                            <span class="sponsor-name">XserXses9</span>
+                            <span class="sponsor-amount">50 PLN</span>
+                        </div>
+                        <div class="sponsor-card">
+                            <span class="sponsor-name">Team NYSA</span>
+                            <span class="sponsor-amount">80 PLN</span>
+                        </div>
+                    </div>
+
+                    <div class="sponsor-total">
+                        <strong>Łączna pula nagród:</strong>
+                        <span id="total-prize-pool" class="sponsor-amount">0 PLN</span>
+                    </div>
+
                 </div>
             </section>
 
@@ -1058,6 +1144,36 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
         }
 
 
+        /**
+         * Funkcja do liczenia sumy donacji
+         */
+        function calculatePrizePool() {
+            const sponsorSection = document.getElementById('sponsorzy');
+            if (!sponsorSection) return;
+
+            const amounts = sponsorSection.querySelectorAll('.sponsor-amount');
+            let total = 0;
+
+            amounts.forEach(amountElement => {
+                // Sprawdź, czy element nie jest sumą (żeby nie liczyć sumy w sumie)
+                if (amountElement.id !== 'total-prize-pool') {
+                    const textValue = amountElement.textContent || '';
+                    const numericValue = parseFloat(textValue.replace('PLN', '').replace('zł', '').replace(',', '.').trim());
+
+                    if (!isNaN(numericValue)) {
+                        total += numericValue;
+                    }
+                }
+            });
+
+            // Sformatuj wynik z powrotem na " PLN"
+            const totalElement = document.getElementById('total-prize-pool');
+            if (totalElement) {
+                totalElement.textContent = total.toFixed(2) + ' PLN'; // .toFixed(2) da np. 205.00 PLN
+            }
+        }
+
+
         // =============================================
         // CZĘŚĆ 3: GŁÓWNY KOD URUCHAMIAJĄCY
         // =============================================
@@ -1067,7 +1183,10 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
             // 1. Uruchom ładowanie listy teamów
             pobierzListeDruzyn();
 
-            // 2. Logika zakładek wyników
+            // 2. Uruchom liczenie puli nagród
+            calculatePrizePool();
+
+            // 3. Logika zakładek wyników
             const tabsNav = document.querySelector('.tabs-nav');
             const tabContents = document.querySelectorAll('.tab-content');
 
@@ -1088,7 +1207,6 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
                         targetContent.classList.add('active');
                     }
 
-                    // --- ZMIENIONA LOGIKA POBIERANIA ---
                     const matchId = MATCH_IDS[tabKey];
                     const isLoadingOrLoaded = targetContent.dataset.loaded === "true" || targetContent.dataset.loading === "true";
 
@@ -1105,37 +1223,41 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
                             targetContent.dataset.loading = "false";
                         });
                     } else {
-                        // Jeśli ID meczu nie jest ustawione, po prostu usuń "loading"
                         targetContent.dataset.loading = "false";
                     }
                 });
             }
 
-            // =============================================
-            // NOWA LOGIKA - Rozwijanie listy graczy
-            // =============================================
+            // 4. Logika rozwijania listy graczy
             const teamListContainer = document.getElementById('team-list-dynamic');
 
             if (teamListContainer) {
                 teamListContainer.addEventListener('click', (e) => {
-                    // Znajdź nagłówek, który został kliknięty
                     const header = e.target.closest('.team-card-header');
-
-                    // Jeśli kliknięto poza nagłówkiem, nie rób nic
                     if (!header) return;
-
-                    // Znajdź listę graczy, która jest *następnym rodzeństwem* nagłówka
                     const playerList = header.nextElementSibling;
-
-                    // Jeśli to jest lista graczy, przełącz jej klasę 'expanded'
                     if (playerList && playerList.classList.contains('player-sublist')) {
                         playerList.classList.toggle('expanded');
                     }
                 });
             }
-            // =============================================
+
+            // 5. Logika rozwijania sekcji Sponsorzy
+            const sponsorHeader = document.querySelector('#sponsorzy .collapsible-trigger');
+
+            if (sponsorHeader) {
+                sponsorHeader.addEventListener('click', () => {
+                    const content = sponsorHeader.nextElementSibling;
+                    if (content && content.classList.contains('collapsible-content')) {
+                        content.classList.toggle('expanded');
+                    }
+                });
+            }
         });
     </script>
+
+</body>
+</html>
 
 </body>
 </html>
