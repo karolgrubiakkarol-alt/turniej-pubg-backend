@@ -922,6 +922,7 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
         async function pobierzListeDruzyn() {
             const csvUrl = '/api/druzyny'; // Pyta nasz backend
             const listaElement = document.getElementById('team-list-dynamic');
+
             try {
                 const response = await fetch(csvUrl, { cache: 'no-store' });
                 if (!response.ok) { throw new Error(`Błąd serwera. Status: ${response.status}`); }
@@ -931,32 +932,55 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
 
                 const dataCsv = jsonData.data;
                 const wiersze = dataCsv.split(/\r?\n/);
+
+                // Czyścimy kontener główny
                 listaElement.innerHTML = '';
+
+                // WAŻNE: Usuwamy klasę 'team-grid' z głównego kontenera,
+                // abyśmy mogli w środku stworzyć dwie oddzielne siatki (główną i rezerwową)
+                listaElement.classList.remove('team-grid');
+
+                // Tworzymy kontener dla GŁÓWNEJ listy (pierwsze 18)
+                const mainGrid = document.createElement('div');
+                mainGrid.className = 'team-grid';
+                listaElement.appendChild(mainGrid);
+
+                let reserveGrid = null; // Zmienna na siatkę rezerwową (stworzymy ją tylko jak będzie potrzebna)
                 let teamCount = 0;
 
                 for (let i = 1; i < wiersze.length; i++) {
                     const wiersz = wiersze[i].trim();
                     if (!wiersz) continue;
+
                     const kolumny = parseCSVRow(wiersz);
                     const nazwaDrużyny = cleanText(kolumny[1]);
+
                     if (nazwaDrużyny) {
                         teamCount++;
+
+                        // WARUNEK: Jeśli przekroczymy 21 drużyn (18 głównych + 3 rezerwowe), przerywamy pętlę.
+                        // 4. drużyna rezerwowa się nie pojawi.
+                        if (teamCount > 21) {
+                            break;
+                        }
+
                         const kapitan = cleanText(kolumny[3]);
                         const gracz2 = cleanText(kolumny[5]);
                         const gracz3 = cleanText(kolumny[7]);
                         const gracz4 = cleanText(kolumny[9]);
                         const rezerwa = cleanText(kolumny[11]);
 
+                        // Tworzenie karty drużyny (HTML)
                         const teamCard = document.createElement('div');
                         teamCard.className = 'team-card';
 
+                        // Jeśli to drużyna rezerwowa, zmieniamy numerację lub dodajemy dopisek (opcjonalnie),
+                        // tutaj zostawiam po prostu kolejny numer.
                         let htmlWewnatrz = `<div class="team-card-header">
                                                 <span class="team-number">${teamCount}.</span>
                                                 <span class="team-name">${nazwaDrużyny}</span>
                                             </div>
                                             <ul class="player-sublist">`;
-
-                        // Link do op.gg/pubg/user/
 
                         if (kapitan) htmlWewnatrz += `<li class="captain"><a href="https://op.gg/pubg/user/${kapitan}" target="_blank" rel="noopener noreferrer">${kapitan}</a> (Kapitan)</li>`;
                         if (gracz2) htmlWewnatrz += `<li><a href="https://op.gg/pubg/user/${gracz2}" target="_blank" rel="noopener noreferrer">${gracz2}</a></li>`;
@@ -966,10 +990,45 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
 
                         htmlWewnatrz += `</ul>`;
                         teamCard.innerHTML = htmlWewnatrz;
-                        listaElement.appendChild(teamCard);
+
+                        // LOGIKA ROZDZIELANIA NA GŁÓWNE I REZERWOWE
+                        if (teamCount <= 18) {
+                            // Pierwsze 18 idzie do głównej siatki
+                            mainGrid.appendChild(teamCard);
+                        } else {
+                            // Drużyny 19, 20, 21 idą do rezerwy
+
+                            // Jeśli to pierwsza rezerwowa (19.), stwórz nagłówek i kontener
+                            if (!reserveGrid) {
+                                const reserveHeader = document.createElement('h3');
+                                reserveHeader.textContent = 'Drużyny Rezerwowe';
+                                // Style dla nagłówka rezerwowego
+                                reserveHeader.style.width = '100%';
+                                reserveHeader.style.textAlign = 'left';
+                                reserveHeader.style.color = '#ffc107';
+                                reserveHeader.style.borderBottom = '2px solid #444';
+                                reserveHeader.style.paddingBottom = '10px';
+                                reserveHeader.style.marginTop = '40px';
+                                reserveHeader.style.marginBottom = '20px';
+                                reserveHeader.style.fontSize = '1.8em'; // Zgodne z h3 w sekcjach
+
+                                listaElement.appendChild(reserveHeader);
+
+                                reserveGrid = document.createElement('div');
+                                reserveGrid.className = 'team-grid'; // Używamy tej samej klasy co wyżej
+                                listaElement.appendChild(reserveGrid);
+                            }
+
+                            // Dodaj kartę do siatki rezerwowej
+                            reserveGrid.appendChild(teamCard);
+                        }
                     }
                 }
-                if (teamCount === 0) { listaElement.innerHTML = '<p>Brak zapisanych drużyn. Bądź pierwszy!</p>'; }
+
+                if (teamCount === 0) {
+                    listaElement.innerHTML = '<p style="text-align:center; padding:20px;">Brak zapisanych drużyn. Bądź pierwszy!</p>';
+                }
+
             } catch (error) {
                 console.error('Błąd podczas ładowania listy drużyn:', error);
                 listaElement.innerHTML = `<p>Nie udało się załadować listy drużyn. Błąd: ${error.message}</p>`;
