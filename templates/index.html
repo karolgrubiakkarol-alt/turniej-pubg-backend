@@ -1005,11 +1005,6 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
                     if (nazwaDrużyny) {
                         teamCount++;
 
-                        // WARUNEK: Jeśli przekroczymy 21 drużyn (18 głównych + 3 rezerwowe), przerywamy pętlę.
-                        // 4. drużyna rezerwowa się nie pojawi.
-                        if (teamCount > 21) {
-                            break;
-                        }
 
                         const kapitan = cleanText(kolumny[3]);
                         const gracz2 = cleanText(kolumny[5]);
