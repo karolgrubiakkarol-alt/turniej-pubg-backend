@@ -538,6 +538,40 @@
                 flex-basis: 100%;
             }
         }
+        /* NOWE STYLE DLA RAMKI IFRAME */
+.iframe-container {
+    background-color: #121212; /* Bardzo ciemne tło, aby pasowało do aplikacji */
+    border-radius: 8px;
+    overflow: hidden;
+    height: 900px; /* WAŻNE: Ustalenie stałej wysokości okna aplikacji */
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+.iframe-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none; /* Usuwamy ramkę */
+}
+
+/* W widoku mobilnym zmniejszamy wysokość ramki, aby była widoczna */
+@media (max-width: 600px) {
+    .iframe-container {
+        height: 600px;
+    }
+}
+/* Styl dla przycisku KAPITAN */
+        .btn-captain {
+            background-color: transparent;
+            border: 1px solid #ffb300;
+            color: #ffb300; /* Żółty tekst */
+            padding: 4px 8px;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .btn-captain.is-captain {
+            background-color: #ffb300; /* Żółte tło */
+            color: #1e1e1e; /* Ciemny tekst na żółtym tle */
+        }
     </style>
     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-94Z01SBR91"></script>
@@ -558,7 +592,7 @@
         </header>
 
         <nav class="navbar">
-            <a href="#zapisy">Zapisy</a>
+            <a href="#zapisy">Fantasy Coach</a>
             <a href="#szczegoly">Szczegóły</a>
             <a href="#sponsorzy">Sponsorzy</a>
             <a href="#teamy">Zapisane Teamy</a>
@@ -567,16 +601,17 @@
             <a href="#kontakt">Kontakt</a>
         </nav>
 
-        <main>
-            <section id="zapisy" class="zapisy content-section">
+       <section id="zapisy" class="zapisy content-section">
 
-                <h3>Zapisy na turniej SQUAD FPP</h3>
-                <p>Wypełnij formularz zgłoszeniowy, klikając przycisk poniżej.</p>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeaYLKta8D83Xnfanm4tXVUtqX0273o7P1MJEowvVPqI6Crdg/viewform?usp=publish-editor" target="_blank" class="cta-button">
-                    ZAPISZ DRUŻYNĘ NA LISTĘ REZERWOWĄ!
-                </a>
-                <p style="margin-top: 20px; font-size: 0.9em;">Liczba miejsc w turnieju została wyczerpana. Jeśli dalej jesteś zainteresowany wzięciem udziału, zapisz się na listę rezerwową.</p>
-            </section>
+    <h3>Aplikacja Fantasy Coach</h3>
+    <p>Stwórz swój dream team, wybierz zawodników i walcz o najlepszy wynik!</p>
+
+    <a href="https://fantasycoach.web.app/" target="_blank" class="cta-button">
+        STWÓRZ SWOJE FANTASY
+    </a>
+
+    <p style="margin-top: 20px; font-size: 0.9em;">Kliknij przycisk powyżej, aby przejść do aplikacji Fantasy Draft.</p>
+</section>
 
             <section class="content-section sponsor-image-section">
                 <img src="https://i.imgur.com/YJ7FL9X.jpeg" alt="Sponsor Turnieju 1">
@@ -1326,9 +1361,6 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
             }
         });
     </script>
-
-</body>
-</html>
 
 </body>
 </html>
