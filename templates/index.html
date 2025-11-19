@@ -11,13 +11,11 @@
     <style>
         /* ------- Globalne Style ------- */
         html {
-            scroll-behavior: smooth; /* Włącza płynne przewijanie */
+            scroll-behavior: smooth;
         }
         body {
-            /* Tło na jednolity kolor */
             background-color: #2a2a2a;
-
-            color: #e0e0e0; /* Jasnoszary tekst */
+            color: #e0e0e0;
             font-family: 'Arial', 'Helvetica', sans-serif;
             line-height: 1.6;
             margin: 0;
@@ -29,10 +27,10 @@
             width: 90%;
             max-width: 900px;
             margin: 20px auto;
-            background-color: rgba(30, 30, 30, 0.9); /* Ciemnoszare tło kontenera */
+            background-color: rgba(30, 30, 30, 0.9);
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-            overflow: hidden; /* Aby zaokrąglone rogi działały na sekcjach */
+            overflow: hidden;
         }
 
         /* ------- Nagłówek ------- */
@@ -40,21 +38,20 @@
             background-color: #2a2a2a;
             padding: 10px 20px;
             text-align: center;
-            border-bottom: 4px solid #ffc107; /* Żółty akcent PUBG */
+            border-bottom: 4px solid #ffc107;
         }
 
-        /* Styl dla baneru w nagłówku */
         header .banner-img {
-            max-width: 110%; /* Lekkie powiększenie */
-            height: auto; /* Zachowanie proporcji */
-            margin: 10px auto; /* Wyśrodkowanie w poziomie */
-            display: block; /* Upewnia się, że obraz jest wyśrodkowany poprawnie */
+            max-width: 110%;
+            height: auto;
+            margin: 10px auto;
+            display: block;
         }
 
 
-        /* ------- Pasek Nawigacji (Zakładki) ------- */
+        /* ------- Pasek Nawigacji ------- */
         .navbar {
-            background-color: rgba(42, 42, 42, 0.95); /* Ciemny z przezroczystością */
+            background-color: rgba(42, 42, 42, 0.95);
             padding: 10px 0;
             text-align: center;
             border-bottom: 2px solid #333;
@@ -87,11 +84,11 @@
             padding-top: 30px;
         }
 
-        /* ------- Sekcja Zapisów (Hero) ------- */
+        /* ------- Sekcja Zapisów ------- */
         .zapisy {
             text-align: center;
             padding: 40px 20px;
-            background-color: rgba(42, 42, 42, 0.9); /* Ciemny z przezroczystością */
+            background-color: rgba(42, 42, 42, 0.9);
             border-radius: 8px;
             margin-bottom: 30px;
         }
@@ -105,7 +102,6 @@
             color: #b0b0b0;
         }
 
-        /* ------- Przycisk Zapisów (Call to Action) ------- */
         .cta-button {
             display: inline-block;
             background-color: #ffc107;
@@ -126,7 +122,7 @@
             transform: scale(1.05);
         }
 
-        /* ------- Sekcje Informacyjne (Wspólny styl) ------- */
+        /* ------- Sekcje Informacyjne ------- */
         .info-section h3 {
             color: #ffc107;
             border-bottom: 2px solid #444;
@@ -135,13 +131,12 @@
             margin-top: 0;
         }
 
-        /* ------- Lista Informacji (np. zasady, daty) ------- */
         .info-list {
             list-style: none;
             padding-left: 0;
         }
         .info-list li {
-            background-color: rgba(42, 42, 42, 0.9); /* Ciemny z przezroczystością */
+            background-color: rgba(42, 42, 42, 0.9);
             margin-bottom: 10px;
             padding: 15px;
             border-radius: 5px;
@@ -152,9 +147,8 @@
             display: inline-block;
             min-width: 120px;
         }
-        /* Styl dla linku w liście */
         .info-list li a {
-            color: #ffc107; /* Żółty kolor linku */
+            color: #ffc107;
             font-weight: bold;
             text-decoration: none;
         }
@@ -164,105 +158,89 @@
 
 
         /* ============================================= */
-        /* CSS - SIATKA DRUŻYN (TEAM GRID)        */
+        /* CSS - SIATKA DRUŻYN (TEAM GRID)               */
         /* ============================================= */
-        /* Kontener siatki */
         .team-grid {
             display: flex;
-            flex-wrap: wrap; /* Pozwala na zawijanie wierszy */
-            justify-content: space-around; /* Rozkłada karty z odstępami */
+            flex-wrap: wrap;
+            justify-content: space-around;
             padding: 0;
             list-style: none;
-            margin: 0 -10px; /* Kompensuje marginesy kart */
+            margin: 0 -10px;
         }
 
-        /* Karta pojedynczej drużyny */
         .team-card {
             background-color: rgba(42, 42, 42, 0.9);
-            margin: 0 10px 20px 10px; /* Marginesy góra/dół i boki */
+            margin: 0 10px 20px 10px;
             padding: 15px 20px;
             border-radius: 5px;
             border-left: 3px solid #ffc107;
-            box-sizing: border-box; /* Kluczowe dla flexboxa! */
-
-            /* 3 karty w rzędzie (ok. 33.3%) */
-            flex-basis: 30%; /* Zostawia trochę miejsca na marginesy */
-            min-width: 250px; /* Minimalna szerokość, zanim zacznie się łamać */
+            box-sizing: border-box;
+            flex-basis: 30%;
+            min-width: 250px;
         }
 
-        /* Nagłówek karty (Numer + Nazwa) */
         .team-card-header {
             display: flex;
-            align-items: baseline; /* Wyrównuje numer i tekst */
-            margin-bottom: 5px; /* Zmniejszony margines, gdy lista jest zwinięta */
-            border-bottom: 1px solid #444; /* Linia oddzielająca */
+            align-items: baseline;
+            margin-bottom: 5px;
+            border-bottom: 1px solid #444;
             padding-bottom: 5px;
-
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
         .team-card-header:hover {
-            background-color: rgba(60, 60, 60, 0.9); /* Efekt najechania */
+            background-color: rgba(60, 60, 60, 0.9);
         }
 
-        /* Numer drużyny */
         .team-number {
             font-size: 1.25em;
             font-weight: bold;
             color: #ffffff;
         }
 
-        /* Nazwa drużyny */
         .team-name {
             font-size: 1.25em;
             color: #ffc107;
             font-weight: bold;
-            margin-left: 8px; /* Odstęp od numeru */
+            margin-left: 8px;
         }
 
-        /* Pod-lista na graczy (pod nazwą drużyny) */
         .player-sublist {
-            list-style: disc; /* Kropki dla graczy */
-            margin: 0; /* Domyślnie 0 marginesu */
-            padding-left: 25px; /* Wcięcie dla listy graczy */
+            list-style: disc;
+            margin: 0;
+            padding-left: 25px;
             font-size: 0.9em;
             color: #ccc;
-
-            /* Domyślnie ukryte z animacją */
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.4s ease-out;
         }
 
-        /* Klasa dodawana przez JS do rozwinięcia listy */
         .player-sublist.expanded {
-            max-height: 200px; /* Wystarczająco wysoko, aby zmieścić 5 graczy */
-            margin: 10px 0 0 0; /* Przywróć margines górny po rozwinięciu */
+            max-height: 200px;
+            margin: 10px 0 0 0;
         }
 
-        /* Resetowanie stylów dla <li> wewnątrz pod-listy */
         .player-sublist li {
             background: none;
             border: none;
             padding: 2px 0;
             margin: 0;
-            list-style-position: outside; /* Kropki na zewnątrz */
+            list-style-position: outside;
         }
 
-        /* Wyróżnienie kapitana */
         .captain {
             font-weight: bold;
-            color: #ffffff; /* Jaśniejszy kolor dla kapitana */
+            color: #ffffff;
         }
 
-        /* Styl dla rezerwowego */
         .sub-player {
             font-style: italic;
             opacity: 0.8;
             color: #aaa;
         }
 
-        /* Linki w liście graczy */
         .player-sublist a {
             color: #ffffff;
             text-decoration: none;
@@ -274,24 +252,22 @@
             text-decoration: none;
             border-bottom: 1px solid #ffc107;
         }
-        /* ============================================= */
 
         /* ============================================= */
-        /* SEKCJE SPONSORÓW (Obrazy)      */
+        /* SEKCJE SPONSORÓW (Obrazy)                     */
         /* ============================================= */
         .sponsor-image-section {
-            padding-top: 10px; /* Mniejszy padding top niż inne sekcje */
+            padding-top: 10px;
             margin-top: 0;
             margin-bottom: 20px;
-            text-align: center; /* Wyśrodkowanie obrazka */
+            text-align: center;
         }
         .sponsor-image-section img {
-            max-width: 100%; /* Obrazek responsywny */
-            height: auto; /* Zachowanie proporcji */
-            border-radius: 8px; /* Lekko zaokrąglone rogi */
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5); /* Cień pasujący do reszty */
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
-        /* ============================================= */
 
 
         /* ------- Sekcja Tabela Wyników ------- */
@@ -420,7 +396,6 @@
                 flex-basis: 33.3%;
                 font-size: 0.8em;
             }
-            /* 2 karty w rzędzie */
             .team-card {
                 flex-basis: 45%;
                 min-width: 200px;
@@ -445,20 +420,20 @@
                 flex-basis: 100%;
                 font-size: 1em;
             }
-            /* 1 karta w rzędzie */
             .team-card {
                 flex-basis: 100%;
             }
         }
-    /* ============================================= */
-        /* NOWE STYLE - Zwijany kontener + Siatka Sponsorów */
+
+        /* ============================================= */
+        /* NOWE STYLE - Zwijany kontener */
         /* ============================================= */
         .collapsible-trigger {
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
         .collapsible-trigger:hover {
-            background-color: rgba(60, 60, 60, 0.9); /* Efekt najechania */
+            background-color: rgba(60, 60, 60, 0.9);
         }
 
         .collapsible-content {
@@ -468,53 +443,176 @@
         }
 
         .collapsible-content.expanded {
-            max-height: 1000px; /* Wystarczająco wysoko */
-            padding-top: 20px; /* Dodaj odstęp tylko, gdy rozwinięte */
+            max-height: 1200px; /* Zwiększone, żeby pomieścić sponsorów */
+            padding-top: 20px;
         }
 
-        .sponsor-grid {
+        /* ============================================= */
+        /* ZMIENIONE STYLE - TOP 3 SPONSORÓW (PODIUM)    */
+        /* ============================================= */
+
+        /* Kontener główny dla Podium */
+        .top-sponsors-container {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            padding: 0;
-            list-style: none;
-            margin: 20px -10px 0 -10px;
+            justify-content: center;
+            align-items: flex-end; /* Wyrównujemy do dołu, aby zbudować piramidę */
+            gap: 15px; /* Odstęp między kolumnami */
+            margin-bottom: 50px;
+            padding-top: 20px;
+            position: relative;
         }
 
-        .sponsor-card {
-            background-color: rgba(42, 42, 42, 0.9);
-            margin: 0 10px 20px 10px;
-            padding: 15px 20px;
-            border-radius: 5px;
-            border-left: 3px solid #ffc107;
-            box-sizing: border-box;
-            flex-basis: 30%;
-            min-width: 250px;
+        /* Wspólny styl dla pojedynczego elementu podium */
+        .top-sponsor-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
+            width: 160px; /* Sztywna szerokość naprawia problem długiego tekstu */
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .top-sponsor-item:hover {
+            transform: scale(1.02); /* Delikatne powiększenie po najechaniu */
+        }
+
+        /* --- Ustawianie kolejności (Podium) --- */
+
+        /* TIER 1 - Środek (Złoto) */
+        .tier-1 {
+            order: 2; /* Wizualnie w środku */
+            z-index: 10;
+            margin-bottom: 20px; /* Wypychamy go w górę względem reszty */
+        }
+
+        /* TIER 2 - Lewa (Srebro) */
+        .tier-2 {
+            order: 1; /* Wizualnie z lewej */
+            margin-bottom: 0;
+        }
+
+        /* TIER 3 - Prawa (Brąz) */
+        .tier-3 {
+            order: 3; /* Wizualnie z prawej */
+            margin-bottom: 0;
+        }
+
+        /* --- Stylizacja Obrazków (Logo) --- */
+        .sponsor-logo-link {
+            display: block;
+            position: relative;
+            margin-bottom: 15px; /* Odstęp logo od tekstu */
+        }
+
+        .sponsor-logo {
+            object-fit: contain;
+            border-radius: 8px;
+            background-color: #1a1a1a;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+
+        /* Rozmiary i ramki logo */
+        .tier-1 .sponsor-logo {
+            width: 160px;
+            height: 160px;
+            border: 3px solid #ffc107; /* Złota ramka */
+        }
+        .tier-2 .sponsor-logo {
+            width: 110px;
+            height: 110px;
+            border: 3px solid #c0c0c0; /* Srebrna ramka */
+            filter: brightness(0.9);
+        }
+        .tier-3 .sponsor-logo {
+            width: 110px;
+            height: 110px;
+            border: 3px solid #cd7f32; /* Brązowa ramka */
+            filter: brightness(0.9);
+        }
+
+        /* --- Stylizacja Tekstów --- */
+        .sponsor-info {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
         }
 
         .sponsor-name {
             display: block;
-            font-size: 1.1em;
-            color: #ffffff;
-            font-weight: bold;
+            line-height: 1.2;
+            margin-bottom: 5px;
+            word-wrap: break-word; /* Długie nazwy przejdą do nowej linii */
         }
 
         .sponsor-amount {
-            display: block;
-            font-size: 1.3em;
-            color: #ffc107;
             font-weight: bold;
-            margin-top: 8px;
+            color: #ffc107;
+            background-color: rgba(0,0,0,0.3);
+            padding: 2px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 5px;
         }
 
-        /* NOWY STYL: Suma Puli Nagród */
-        .sponsor-total {
-            margin-top: 25px;
-            padding-top: 15px;
-            border-top: 2px solid #444;
+        /* Kolory i wielkości czcionek */
+        .tier-1 .sponsor-name { font-size: 1.8em; font-weight: bold; color: #fff; text-shadow: 0 0 15px rgba(255, 193, 7, 0.4); }
+        .tier-1 .sponsor-amount { font-size: 1.3em; }
+
+        .tier-2 .sponsor-name { font-size: 1.3em; font-weight: bold; color: #e0e0e0; }
+        .tier-2 .sponsor-amount { font-size: 1.1em; }
+
+        .tier-3 .sponsor-name { font-size: 1.3em; font-weight: bold; color: #cd7f32; }
+        .tier-3 .sponsor-amount { font-size: 1.1em; }
+
+
+        /* ============================================= */
+        /* SIATKA POZOSTAŁYCH SPONSORÓW (GRID 3 KOLUMNY) */
+        /* ============================================= */
+        .sponsor-grid {
+            display: grid; /* Używamy Grid zamiast Flexbox */
+            grid-template-columns: repeat(3, 1fr); /* Dokładnie 3 równe kolumny */
+            gap: 20px; /* Odstępy między kafelkami */
+            margin-top: 40px;
+            padding: 0 10px;
+        }
+
+        .sponsor-card {
+            background-color: rgba(42, 42, 42, 0.9);
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 3px solid #ffc107;
             text-align: center;
-            font-size: 1.3em;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.2s;
+        }
+
+        .sponsor-card:hover {
+            background-color: rgba(60, 60, 60, 0.9);
+        }
+
+        .sponsor-card .sponsor-name {
+            font-size: 1.1em;
+            color: #fff;
+            font-weight: bold;
+        }
+        .sponsor-card .sponsor-amount {
+            font-size: 1.2em;
+            margin-top: 5px;
+            color: #ffc107;
+            font-weight: bold;
+        }
+
+        /* Suma nagród */
+        .sponsor-total {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            text-align: center;
+            font-size: 1.4em;
         }
         .sponsor-total strong {
             color: #ffffff;
@@ -524,57 +622,42 @@
             font-weight: bold;
             margin-left: 10px;
         }
-        /* ============================================= */
 
-        /* Poprawka responsywności dla kart sponsorów */
+        /* --- Responsywność (TELEFON) --- */
         @media (max-width: 768px) {
-            .sponsor-card {
-                flex-basis: 45%;
-                min-width: 200px;
+            /* Podium zmienia się w pionową listę */
+            .top-sponsors-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 40px;
             }
-        }
-        @media (max-width: 600px) {
-            .sponsor-card {
-                flex-basis: 100%;
-            }
-        }
-        /* NOWE STYLE DLA RAMKI IFRAME */
-.iframe-container {
-    background-color: #121212; /* Bardzo ciemne tło, aby pasowało do aplikacji */
-    border-radius: 8px;
-    overflow: hidden;
-    height: 900px; /* WAŻNE: Ustalenie stałej wysokości okna aplikacji */
-    width: 100%;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-}
-.iframe-container iframe {
-    width: 100%;
-    height: 100%;
-    border: none; /* Usuwamy ramkę */
-}
+            .tier-1 { order: 1; margin-bottom: 0; }
+            .tier-2 { order: 2; }
+            .tier-3 { order: 3; }
 
-/* W widoku mobilnym zmniejszamy wysokość ramki, aby była widoczna */
-@media (max-width: 600px) {
-    .iframe-container {
-        height: 600px;
-    }
-}
-/* Styl dla przycisku KAPITAN */
+            .top-sponsor-item { width: 100%; max-width: 280px; }
+
+            /* Siatka zmienia się na 1 kolumnę na telefonach */
+            .sponsor-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Styl dla przycisku KAPITAN */
         .btn-captain {
             background-color: transparent;
             border: 1px solid #ffb300;
-            color: #ffb300; /* Żółty tekst */
+            color: #ffb300;
             padding: 4px 8px;
             font-size: 0.9em;
             margin-left: 10px;
         }
         .btn-captain.is-captain {
-            background-color: #ffb300; /* Żółte tło */
-            color: #1e1e1e; /* Ciemny tekst na żółtym tle */
+            background-color: #ffb300;
+            color: #1e1e1e;
         }
     </style>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-94Z01SBR91"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-94Z01SBR91"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -635,17 +718,47 @@
             <section id="sponsorzy" class="info-section content-section">
                 <h3 class="collapsible-trigger">Sponsorzy</h3>
 
-                <div class="collapsible-content">
-                    <p>Wielkie podziękowania dla wszystkich, którzy wsparli pulę nagród turnieju! Każda donacja wspiera społeczność.</p>
+                <div class="collapsible-content expanded">
+                    <p style="text-align: center; margin-bottom: 30px;">Wielkie podziękowania dla wszystkich, którzy wsparli pulę nagród! Każda donacja wspiera społeczność.</p>
+
+                    <div class="top-sponsors-container">
+
+                        <div class="top-sponsor-item tier-1">
+                            <a href="https://discord.gg/XDv6KmYMWu" target="_blank" class="sponsor-logo-link">
+                                <img src="https://i.imgur.com/RQT4Zlr.png" alt="Logo Green8" class="sponsor-logo">
+                            </a>
+                            <div class="sponsor-info">
+                                <span class="sponsor-name">Green8</span>
+                                <span class="sponsor-amount">728.04 PLN</span>
+                            </div>
+                        </div>
+
+                        <div class="top-sponsor-item tier-2">
+                            <a href="#" target="_blank" class="sponsor-logo-link">
+                                <img src="https://i.imgur.com/fTQ5IMU.png" alt="Logo ADHD" class="sponsor-logo">
+                            </a>
+                            <div class="sponsor-info">
+                                <span class="sponsor-name">ADHD</span>
+                                <span class="sponsor-amount">300 PLN</span>
+                            </div>
+                        </div>
+
+                        <div class="top-sponsor-item tier-3">
+                            <a href="https://fantasycoach.web.app/" target="_blank" class="sponsor-logo">
+                                <img src="https://i.imgur.com/024ZnlK.jpeg" alt="Logo Ciągnie po nogach" class="sponsor-logo">
+                            </a>
+                            <div class="sponsor-info">
+                                <span class="sponsor-name">Ciągnie po nogach</span>
+                                <span class="sponsor-amount">180 PLN</span>
+                            </div>
+                        </div>
+
+                    </div>
 
                     <div class="sponsor-grid">
                         <div class="sponsor-card">
-                            <span class="sponsor-name">MorderczeJajo</span>
-                            <span class="sponsor-amount">50 PLN</span>
-                        </div>
-                        <div class="sponsor-card">
-                            <span class="sponsor-name">XserXses9</span>
-                            <span class="sponsor-amount">50 PLN</span>
+                            <span class="sponsor-name">zManian</span>
+                            <span class="sponsor-amount">100 PLN</span>
                         </div>
                         <div class="sponsor-card">
                             <span class="sponsor-name">JANOVSKI</span>
@@ -656,17 +769,10 @@
                             <span class="sponsor-amount">80 PLN</span>
                         </div>
                         <div class="sponsor-card">
-                            <span class="sponsor-name">zManian</span>
-                            <span class="sponsor-amount">100 PLN</span>
+                            <span class="sponsor-name">MorderczeJajo</span>
+                            <span class="sponsor-amount">50 PLN</span>
                         </div>
-                        <div class="sponsor-card">
-                            <span class="sponsor-name">Ciągnie po nogach</span>
-                            <span class="sponsor-amount">180 PLN</span>
-                        </div>
-                        <div class="sponsor-card">
-                            <span class="sponsor-name">ADHD </span>
-                            <span class="sponsor-amount">300 PLN</span>
-                        </div>
+
                     </div>
 
                     <div class="sponsor-total">
@@ -678,11 +784,14 @@
             </section>
 
             <section id="teamy" class="info-section content-section">
-                <h3>Zapisane Teamy</h3>
-                <p>Poniżej znajduje się automatycznie aktualizowana lista drużyn. Dane pobierane są na żywo z arkusza zapisów. Kliknij na drużynę, aby zobaczyć skład.</p>
+                <h3 class="collapsible-trigger">Zapisane Teamy</h3>
 
-                <div id="team-list-dynamic" class="team-grid">
+                <div class="collapsible-content">
+                    <p>Poniżej znajduje się automatycznie aktualizowana lista drużyn. Dane pobierane są na żywo z arkusza zapisów. Kliknij na drużynę, aby zobaczyć skład.</p>
+
+                    <div id="team-list-dynamic" class="team-grid">
                     </div>
+                </div>
             </section>
 
             <section id="wyniki" class="info-section content-section">
@@ -829,7 +938,7 @@
                 <h3>Regulamin Turnieju</h3>
                 <div class="rules-container">
 <pre>
-Regulamin Turnieju  PUBG POLSKA CUP 2025   (29.11)
+Regulamin Turnieju PUBG POLSKA CUP 2025 (29.11)
 
 I. Informacje Ogólne
 Nazwa Turnieju: PUBG POLSKA CUP 2025
@@ -968,7 +1077,11 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
 
         async function pobierzListeDruzyn() {
             const csvUrl = '/api/druzyny'; // Pyta nasz backend
-            const listaElement = document.getElementById('team-list-dynamic');
+            // UWAGA: Kontener jest teraz wewnątrz collapsible-content
+            const collapsibleContent = document.querySelector('#teamy .collapsible-content');
+            if (!collapsibleContent) return;
+
+            const listaElement = collapsibleContent.querySelector('#team-list-dynamic');
 
             try {
                 const response = await fetch(csvUrl, { cache: 'no-store' });
@@ -1250,31 +1363,37 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
 
 
         /**
-         * Funkcja do liczenia sumy donacji
+         * Funkcja do AUTOMATYCZNEGO liczenia sumy donacji ze strony
          */
         function calculatePrizePool() {
-            const sponsorSection = document.getElementById('sponsorzy');
-            if (!sponsorSection) return;
-
-            const amounts = sponsorSection.querySelectorAll('.sponsor-amount');
             let total = 0;
 
-            amounts.forEach(amountElement => {
-                // Sprawdź, czy element nie jest sumą (żeby nie liczyć sumy w sumie)
-                if (amountElement.id !== 'total-prize-pool') {
-                    const textValue = amountElement.textContent || '';
-                    const numericValue = parseFloat(textValue.replace('PLN', '').replace('zł', '').replace(',', '.').trim());
+            // 1. Znajdź wszystkie elementy z kwotami (klasa .sponsor-amount)
+            const amounts = document.querySelectorAll('.sponsor-amount');
 
-                    if (!isNaN(numericValue)) {
-                        total += numericValue;
-                    }
+            amounts.forEach(element => {
+                // 2. Pomiń element, który ma wyświetlać wynik (żeby nie dodał sam siebie)
+                if (element.id === 'total-prize-pool') return;
+
+                // 3. Pobierz tekst (np. "678.04 PLN"), usuń " PLN" i spacje
+                let textVal = element.textContent.replace('PLN', '').trim();
+
+                // 4. (Opcjonalnie) Zamień przecinek na kropkę, gdybyś kiedyś wpisał "678,04"
+                textVal = textVal.replace(',', '.');
+
+                // 5. Zamień tekst na liczbę
+                let val = parseFloat(textVal);
+
+                // 6. Jeśli to poprawna liczba, dodaj do sumy
+                if (!isNaN(val)) {
+                    total += val;
                 }
             });
 
-            // Sformatuj wynik z powrotem na " PLN"
+            // 7. Wyświetl wynik z dokładnością do 2 miejsc po przecinku
             const totalElement = document.getElementById('total-prize-pool');
             if (totalElement) {
-                totalElement.textContent = total.toFixed(2) + ' PLN'; // .toFixed(2) da np. 205.00 PLN
+                totalElement.textContent = total.toFixed(2) + ' PLN';
             }
         }
 
@@ -1347,16 +1466,31 @@ Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów 
                 });
             }
 
-            // 5. Logika rozwijania sekcji Sponsorzy
-            const sponsorHeader = document.querySelector('#sponsorzy .collapsible-trigger');
+            // 5. Logika rozwijania sekcji Sponsorzy i Teamy
+            const collapsibleHeaders = document.querySelectorAll('.collapsible-trigger');
 
-            if (sponsorHeader) {
-                sponsorHeader.addEventListener('click', () => {
-                    const content = sponsorHeader.nextElementSibling;
-                    if (content && content.classList.contains('collapsible-content')) {
-                        content.classList.toggle('expanded');
-                    }
+            if (collapsibleHeaders) {
+                collapsibleHeaders.forEach(header => {
+                    header.addEventListener('click', () => {
+                        const content = header.nextElementSibling;
+                        if (content && content.classList.contains('collapsible-content')) {
+                            // Rozwijamy/zwijamy tylko sekcję, na którą kliknięto
+                            content.classList.toggle('expanded');
+                        }
+                    });
                 });
+
+                // Domyślnie rozwiń sekcję sponsorów po załadowaniu
+                const sponsorContent = document.querySelector('#sponsorzy .collapsible-content');
+                if (sponsorContent) {
+                     sponsorContent.classList.add('expanded');
+                }
+
+                // Domyślnie rozwiń sekcję teamów po załadowaniu
+                const teamyContent = document.querySelector('#teamy .collapsible-content');
+                if (teamyContent) {
+                     teamyContent.classList.add('expanded');
+                }
             }
         });
     </script>
