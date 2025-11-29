@@ -1,55 +1,63 @@
 from flask import Flask, render_template, jsonify
 import requests
-import os  # Musimy importować 'os', aby odczytać tajny klucz
-import csv  # NOWY IMPORT: Do czytania danych z Google
-import io  # NOWY IMPORT: Do czytania tekstu CSV
+import os
+import csv
+import io
 
 # Stwórz aplikację Flask
 app = Flask(__name__)
 
 
 # ===================================================================
-# NOWA FUNKCJA POMOCNICZA: Pobiera surowe dane CSV z Google
+# FUNKCJA POMOCNICZA: Pobiera surowe dane CSV z Google
 # ===================================================================
 def get_google_sheet_csv():
     sheetID = "1SHS0Grk8YPGvweESfTLaS3w-HsVxq1QSDhqk3gcI4F0"
-    sheetName = "Arkusz1"  # ZMIEŃ, JEŚLI NAZWA ZAKŁADKI JEST INNA
+    sheetName = "Arkusz1"
     csvUrl = f"https://docs.google.com/spreadsheets/d/{sheetID}/gviz/tq?tqx=out:csv&sheet={sheetName}"
 
     headers = {'Cache-Control': 'no-cache'}
     response = requests.get(csvUrl, headers=headers)
-    response.raise_for_status()  # Rzuci błędem, jeśli arkusz jest niedostępny
+    response.raise_for_status()
     return response.text
 
 
 # ===================================================================
-# NOWA FUNKCJA POMOCNICZA: Tworzy mapę {Nick Gracza -> Nazwa Drużyny}
+# FUNKCJA POMOCNICZA: Tworzy mapę {Nick Gracza -> Nazwa Drużyny}
 # ===================================================================
 def create_player_team_map(csv_text):
     player_map = {}
-    # Używamy csv.reader, aby poprawnie obsłużyć przecinki w nazwach
-    # Usuwamy cudzysłowy, które dodaje Google
     reader = csv.reader(io.StringIO(csv_text.replace('"', '')))
 
-    next(reader, None)  # Pomiń wiersz nagłówka
+    next(reader, None)  # Pomiń nagłówek
 
     for row in reader:
         try:
-            # Kolumny na podstawie Twojej konfiguracji
-            team_name = row[1].strip()  # Kolumna B
-            kapitan = row[3].strip()  # Kolumna D
-            gracz2 = row[5].strip()  # Kolumna F
-            gracz3 = row[7].strip()  # Kolumna H
-            gracz4 = row[9].strip()  # Kolumna J
-            rezerwa = row[11].strip()  # Kolumna L
+            # Sprawdź czy wiersz ma wystarczającą długość, aby uniknąć błędów
+            if not row or len(row) < 2:
+                continue
 
-            if team_name:  # Dodaj tylko jeśli jest nazwa drużyny
+            team_name = row[1].strip()  # Kolumna B
+
+            # Pobieranie graczy z zabezpieczeniem przed brakiem kolumn
+            kapitan = row[3].strip() if len(row) > 3 else ""
+            gracz2 = row[5].strip() if len(row) > 5 else ""
+            gracz3 = row[7].strip() if len(row) > 7 else ""
+            gracz4 = row[9].strip() if len(row) > 9 else ""
+
+            # --- TUTAJ JEST KLUCZOWA ZMIANA DLA REZERWOWEGO ---
+            # Sprawdzamy czy wiersz jest wystarczająco długi (ma kolumnę L/indeks 11)
+            rezerwa = row[11].strip() if len(row) > 11 else ""
+
+            if team_name:
                 players = [kapitan, gracz2, gracz3, gracz4, rezerwa]
                 for player in players:
-                    if player:  # Dodaj tylko jeśli nick nie jest pusty
-                        player_map[player] = team_name
-        except IndexError:
-            # Pomiń puste lub źle sformatowane wiersze na końcu arkusza
+                    if player:
+                        # Zapisujemy nick małymi literami (.lower()), aby uniknąć problemów
+                        # typu "Player1" w arkuszu vs "player1" w grze.
+                        player_map[player.lower()] = team_name
+        except Exception as e:
+            print(f"Pominięto wiersz z powodu błędu: {e}")
             continue
 
     return player_map
@@ -75,82 +83,71 @@ def calculate_placement_points(rank):
         return 0
 
 
-# --- Trasa 1: Twoja strona główna ---
+# --- Trasa 1: Strona główna ---
 @app.route('/')
 def strona_glowna():
     return render_template('index.html')
 
 
-# --- Trasa 2: API do pobierania listy zapisanych drużyn ---
+# --- Trasa 2: API lista drużyn ---
 @app.route('/api/druzyny')
 def pobierz_druzyny():
     try:
-        # Używamy teraz nowej funkcji pomocniczej
         csv_data = get_google_sheet_csv()
         return jsonify(data=csv_data)
-
     except requests.exceptions.RequestException as e:
-        print(f"Błąd podczas pobierania danych z Google: {e}")
         return jsonify(error=str(e)), 500
 
 
-# --- Trasa 3 (ZAKTUALIZOWANA): API do pobierania wyników meczu z PUBG ---
+# --- Trasa 3: API wyniki meczu ---
 @app.route('/api/wyniki/<match_id>')
 def pobierz_wyniki_meczu(match_id):
-    # 1. Pobierz klucz API PUBG
     API_KEY = os.environ.get('PUBG_API_KEY')
     if not API_KEY:
-        print("BŁĄD: Nie znaleziono klucza 'PUBG_API_KEY' w zmiennych środowiskowych!")
-        return jsonify(error="Błąd konfiguracji serwera: brak klucza API"), 500
+        return jsonify(error="Błąd konfiguracji: brak klucza API"), 500
 
-    # 2. (NOWOŚĆ) Pobierz mapowanie drużyn z Google Sheets
+    # 1. Pobierz mapowanie (z obsługą rezerwowych)
     try:
-        print("Pobieranie mapowania drużyn z Google Sheets...")
         csv_data = get_google_sheet_csv()
         player_team_map = create_player_team_map(csv_data)
-        print("Mapowanie drużyn utworzone.")
     except Exception as e:
-        print(f"KRYTYCZNY BŁĄD: Nie można pobrać lub sparsować Google Sheet: {e}")
-        return jsonify(error="Nie można załadować listy drużyn z Google Sheets"), 500
+        return jsonify(error="Nie można załadować listy drużyn"), 500
 
-    # 3. Pobierz dane z API PUBG
+    # 2. Pobierz dane z PUBG
     BASE_URL = f"https://api.pubg.com/shards/steam/matches/{match_id}"
     HEADERS = {
         "Authorization": f"Bearer {API_KEY}",
         "Accept": "application/vnd.api+json"
     }
-    print(f"Pobieranie danych dla meczu: {match_id}...")
 
     try:
         response = requests.get(BASE_URL, headers=HEADERS)
-        response.raise_for_status()  # Sprawdź, czy zapytanie się powiodło
+        response.raise_for_status()
         data = response.json()
-        print("Dane pobrane. Przetwarzanie...")
 
-        # 4. Przetwarzanie danych
         participants_data = {}
         results_data = []
         all_included_data = data.get('included', [])
 
-        # Pętla 1: Zbierz dane o graczach (bez zmian)
+        # Zbieranie danych o poszczególnych graczach
         for item in all_included_data:
             if item.get('type') == 'participant':
                 stats = item['attributes']['stats']
-                participant_id = item['id']
-                participants_data[participant_id] = {
+                participants_data[item['id']] = {
                     "name": stats['name'],
                     "kills": stats['kills']
                 }
 
-        # Pętla 2: Zbierz dane o drużynach (roster) i ZMAPUJ NAZWY
+        # Zbieranie danych o drużynach (rosterach)
         for item in all_included_data:
             if item.get('type') == 'roster':
                 roster_stats = item['attributes']['stats']
                 placement = roster_stats['rank']
-
                 total_kills = 0
-                team_player_names = []  # Lista nicków graczy z API PUBG
+                team_player_names = []
 
+                # Sumowanie killi dla wszystkich graczy w tym rosterze
+                # (Jeśli grał rezerwowy, API PUBG go tu uwzględni i kille zostaną dodane)
                 participant_links = item['relationships']['participants']['data']
                 for p_link in participant_links:
                     p_id = p_link['id']
@@ -159,45 +156,36 @@ def pobierz_wyniki_meczu(match_id):
                         total_kills += player['kills']
                         team_player_names.append(player['name'])
 
-                # =======================================================
-                # !!! ZAKTUALIZOWANA LOGIKA MAPOWANIA NAZWY DRUŻYNY !!!
-                # =======================================================
+                # Identyfikacja nazwy drużyny
                 team_name = None
-                # Sprawdź każdego gracza z drużyny w API PUBG...
                 for player_nick in team_player_names:
-                    # ...i zobacz, czy mamy go w naszej mapie z Google Sheets
-                    if player_nick in player_team_map:
-                        team_name = player_team_map[player_nick]  # Znaleziono! Użyj nazwy z Google.
-                        break  # Przestań szukać
+                    # Sprawdzamy nick małymi literami (.lower())
+                    if player_nick.lower() in player_team_map:
+                        team_name = player_team_map[player_nick.lower()]
+                        break
 
-                # Jeśli żaden gracz z drużyny nie został znaleziony w arkuszu...
                 if not team_name:
-                    # ...użyj nicku kapitana jako nazwy domyślnej
                     team_name = team_player_names[0] if team_player_names else "Nieznana Drużyna"
-                # =======================================================
 
-                # 5. Oblicz punkty S.U.P.E.R.
                 placement_points = calculate_placement_points(placement)
                 total_points = placement_points + total_kills
 
                 results_data.append({
-                    "rank": placement,  # Stary rank z API (do posortowania)
-                    "team_name": team_name,  # POPRAWNA NAZWA DRUŻYNY
+                    "rank": placement,
+                    "team_name": team_name,
                     "placement_points": placement_points,
                     "kills": total_kills,
                     "total_points": total_points
                 })
 
-        # 6. Sortowanie (bez zmian)
+        # Sortowanie wyników
         results_data.sort(key=lambda x: (x['total_points'], x['placement_points']), reverse=True)
 
-        # 7. Aktualizacja miejsc (rank) po sortowaniu (bez zmian)
+        # Nadawanie miejsc po sortowaniu
         for i, team in enumerate(results_data):
             team['rank'] = i + 1
 
-        print("Przetwarzanie zakończone. Zwracanie JSON.")
         return jsonify(results_data)
 
     except requests.exceptions.RequestException as e:
-        print(f"Błąd podczas pobierania danych z API PUBG: {e}")
         return jsonify(error=str(e)), 500
