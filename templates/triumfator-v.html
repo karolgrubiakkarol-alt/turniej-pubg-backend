@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triumfator V</title>
+    <link rel="icon" href="https://i.imgur.com/HcTRskR.png" type="image/png">
+    
+    <style>
+        /* ========================================= */
+        /* GLOBALNE STYLE (Spójne z resztą strony)   */
+        /* ========================================= */
+        body {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .page-wrapper {
+            width: 95%;
+            max-width: 1200px;
+            margin: 30px auto;
+            background-color: rgba(30, 30, 30, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.8);
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* NAGŁÓWEK Z LOGO */
+        .main-header {
+            background-color: #252525;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid #ffc107;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .main-header:hover { background-color: #2f2f2f; }
+        .header-logo {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            transition: transform 0.3s ease;
+        }
+        .main-header:hover .header-logo { transform: scale(1.02); }
+
+        /* MENU GŁÓWNE */
+        .main-navbar {
+            background-color: #121212;
+            padding: 0;
+            text-align: center;
+            border-bottom: 2px solid #444;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .main-navbar a {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: bold;
+            padding: 20px 30px;
+            transition: 0.3s;
+            border-bottom: 4px solid transparent;
+        }
+        .main-navbar a:hover { background-color: #2a2a2a; color: #fff; }
+        .main-navbar a.active {
+            background-color: #2a2a2a;
+            color: #ffc107;
+            border-bottom: 4px solid #ffc107;
+        }
+
+        /* TREŚĆ "W BUDOWIE" */
+        .construction-content {
+            flex-grow: 1; /* Wypełnia dostępną przestrzeń */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #ffc107;
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        p {
+            font-size: 1.5em;
+            color: #ccc;
+        }
+
+        .icon {
+            font-size: 5em;
+            margin-bottom: 20px;
+        }
+
+        /* STOPKA */
+        footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 2px solid #333;
+            margin-top: auto; /* Dopycha stopkę do dołu */
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-wrapper">
+    
+    <header class="main-header">
+        <a href="index.html">
+            <img src="https://i.imgur.com/VhDs7mJ.png" alt="PUBG POLSKA" class="header-logo">
+        </a>
+    </header>
+
+    <nav class="main-navbar">
+        <a href="index.html">Strona Główna</a>
+        <a href="turniej-charytatywny.html">Turniej Charytatywny 2025</a>
+        <a href="pubg-polska-cup.html">PUBG POLSKA CUP 2025</a>
+        <a href="triumfator-v.html" class="active">Triumfator V</a>
+    </nav>
+
+    <div class="construction-content">
+        <div class="icon">🚧</div>
+        <h1>Triumfator V</h1>
+        <p>Strona w trakcie budowy.</p>
+        <p style="font-size: 1em; color: #777; margin-top: 10px;">Więcej informacji wkrótce.</p>
+    </div>
+
+    <footer>
+        &copy; 2025 PUBG POLSKA. Strona nie jest powiązana z KRAFTON, Inc.
+    </footer>
+</div>
+
+</body>
+</html>

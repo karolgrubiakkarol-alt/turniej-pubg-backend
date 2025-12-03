@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turniej Charytatywny 2025</title>
+    <link rel="icon" href="https://i.imgur.com/HcTRskR.png" type="image/png">
+    
+    <style>
+        /* ========================================= */
+        /* GLOBALNE USTAWIENIA (Dark Mode)           */
+        /* ========================================= */
+        body {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .page-wrapper {
+            width: 95%;
+            max-width: 1200px;
+            margin: 30px auto;
+            background-color: rgba(30, 30, 30, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.8);
+            overflow: hidden;
+            min-height: 100vh;
+        }
+
+        /* NAGŁÓWEK Z LOGO */
+        .main-header {
+            background-color: #252525;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid #ffc107;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .main-header:hover { background-color: #2f2f2f; }
+        .header-logo {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            transition: transform 0.3s ease;
+        }
+        .main-header:hover .header-logo { transform: scale(1.02); }
+
+        /* MENU GŁÓWNE */
+        .main-navbar {
+            background-color: #121212;
+            padding: 0;
+            text-align: center;
+            border-bottom: 2px solid #444;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .main-navbar a {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: bold;
+            padding: 20px 30px;
+            transition: 0.3s;
+            border-bottom: 4px solid transparent;
+        }
+        .main-navbar a:hover { background-color: #2a2a2a; color: #fff; }
+        .main-navbar a.active {
+            background-color: #2a2a2a;
+            color: #ffc107;
+            border-bottom: 4px solid #ffc107;
+        }
+
+        /* TREŚĆ */
+        .content-padding { padding: 30px; }
+
+        /* WEWNĘTRZNE MENU */
+        .internal-navbar {
+            background-color: #252525;
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #444;
+        }
+        .internal-navbar a {
+            color: #bbb;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 10px;
+            padding: 5px 10px;
+            display: inline-block;
+            transition: 0.3s;
+        }
+        .internal-navbar a:hover {
+            color: #ffc107;
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+        }
+
+        h3 { color: #ffc107; border-bottom: 2px solid #444; padding-bottom: 10px; margin-top: 40px; font-size: 1.8em; }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #ffc107;
+            color: #121212;
+            padding: 15px 30px;
+            font-weight: bold;
+            text-decoration: none;
+            text-transform: uppercase;
+            border-radius: 5px;
+            margin-top: 15px;
+            text-align: center;
+            transition: 0.2s;
+        }
+        .cta-button:hover { background-color: #fff; transform: scale(1.05); }
+
+        .info-list { list-style: none; padding: 0; }
+        .info-list li {
+            background: #2a2a2a; padding: 12px; margin-bottom: 8px; border-left: 4px solid #ffc107; border-radius: 4px; color: #ccc;
+        }
+        .info-list strong { color: #fff; min-width: 150px; display: inline-block; }
+        .info-list a { color: #ffc107; text-decoration: none; font-weight: bold; }
+
+        /* TEAMY */
+        .team-grid { display: flex; flex-wrap: wrap; gap: 15px; }
+        .team-card { background: #2a2a2a; flex: 1 1 250px; padding: 15px; border-left: 3px solid #ffc107; border-radius: 4px; }
+        .team-card-header { font-weight: bold; color: #ffc107; border-bottom: 1px solid #444; padding-bottom: 5px; cursor: pointer; display: flex; justify-content: space-between; }
+        .team-number { color: #fff; margin-right: 5px; }
+        .player-sublist { display: none; list-style: none; padding-left: 0; margin-top: 10px; color: #ccc; font-size: 0.9em; }
+        .player-sublist.expanded { display: block; }
+        .player-sublist li { border-bottom: 1px dotted #444; padding: 3px 0; }
+        .player-sublist a { color: #fff; text-decoration: none; }
+        .captain { font-weight: bold; color: #fff; }
+
+        /* SPONSORZY (WYGLĄD) */
+        .top-sponsors-container { display: flex; justify-content: center; align-items: flex-end; gap: 20px; flex-wrap: wrap; text-align: center; margin-bottom: 40px; }
+        .sponsor-placeholder {
+            background: #111; border-radius: 8px; margin: 0 auto 10px auto;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2em; color: #333; font-weight: bold;
+        }
+
+        .tier-1 .sponsor-placeholder { width: 180px; height: 180px; border: 3px solid #ffc107; }
+        .tier-1 .sponsor-name { font-size: 1.4em; color: #fff; font-weight: bold; text-shadow: 0 0 10px rgba(255, 193, 7, 0.4); display: block;}
+
+        .tier-2 .sponsor-placeholder, .tier-3 .sponsor-placeholder { width: 130px; height: 130px; }
+        .tier-2 .sponsor-placeholder { border: 3px solid #c0c0c0; }
+        .tier-3 .sponsor-placeholder { border: 3px solid #cd7f32; }
+
+        .tier-2 .sponsor-name { color: #e0e0e0; font-weight: bold; display: block;}
+        .tier-3 .sponsor-name { color: #cd7f32; font-weight: bold; display: block;}
+
+        .sponsor-amount { background: #333; color: #ffc107; padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 0.9em; display: inline-block; margin-top: 5px; }
+
+        /* TABELA WYNIKÓW */
+        .tabs-nav { display: flex; flex-wrap: wrap; border-bottom: 2px solid #444; margin-bottom: 0; }
+        .tab-link { background: #333; color: #bbb; border: none; padding: 12px 20px; flex-grow: 1; cursor: pointer; font-weight: bold; margin-right: 2px; }
+        .tab-link:hover { background: #444; color: #fff; }
+        .tab-link.active { background: #ffc107; color: #000; }
+        .tab-content { display: none; padding: 15px; background: #2a2a2a; border: 1px solid #444; border-top: none; }
+        .tab-content.active { display: block; }
+
+        .results-table-container { overflow-x: auto; }
+        .results-table { width: 100%; border-collapse: collapse; background: #222; min-width: 600px; font-size: 0.95em; }
+        .results-table th { background: #ffc107; color: #000; padding: 12px; text-align: center; }
+        .results-table td { border: 1px solid #444; padding: 10px; text-align: center; color: #ccc; }
+        .results-table td:nth-child(2) { text-align: left; font-weight: bold; color: #fff; }
+
+        .rules-container { background: #2a2a2a; padding: 20px; border-radius: 8px; border: 1px solid #444; max-height: 500px; overflow-y: auto; font-family: monospace; color: #ccc; white-space: pre-wrap; }
+
+        footer { text-align: center; padding: 20px; border-top: 2px solid #333; margin-top: 40px; color: #777; }
+        .collapsible-trigger { cursor: pointer; }
+        .collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; }
+        .collapsible-content.expanded { max-height: 5000px; }
+    </style>
+</head>
+<body>
+
+<div class="page-wrapper">
+
+    <header class="main-header">
+        <a href="index.html">
+            <img src="https://i.imgur.com/O50RI1X.png" alt="PUBG POLSKA" class="header-logo">
+        </a>
+    </header>
+
+    <nav class="main-navbar">
+        <a href="index.html">Strona Główna</a>
+        <a href="turniej-charytatywny.html" class="active">Turniej Charytatywny 2025</a>
+        <a href="pubg-polska-cup.html">PUBG POLSKA CUP 2025</a>
+        <a href="triumfator-v.html">Triumfator V</a>
+    </nav>
+
+    <div class="content-padding">
+
+        <nav class="internal-navbar">
+            <a href="#zapisy">Zapisz się</a>
+            <a href="#szczegoly">Szczegóły</a>
+            <a href="#teamy">Zapisane Teamy</a>
+            <a href="#sponsorzy">Sponsorzy</a>
+            <a href="#regulamin">Regulamin</a>
+        </nav>
+
+        <section id="zapisy" style="text-align: center; background: #2a2a2a; padding: 30px; border-radius: 8px; margin-bottom: 40px;">
+            <h3 style="margin-top: 0;">Zapisy na Turniej Charytatywny</h3>
+            <p style="color: #ccc;">Zagraj dla szczytnego celu! Liczba miejsc ograniczona do 25 drużyn.</p>
+            <p style="font-size: 0.9em; color: #ffc107; margin-bottom: 15px;">Wpłata 100 zł gwarantuje slot (priorytet).</p>
+
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfGB21E8OwUtvnRO8lMQIuxgU2anyB7JHFuBXMoqbIbBP_TpA/viewform?usp=header"
+               target="_blank"
+               class="cta-button">
+                WYPEŁNIJ FORMULARZ
+            </a>
+        </section>
+
+        <section id="szczegoly">
+            <h3>Szczegóły Turnieju</h3>
+            <ul class="info-list">
+                <li><strong>Data:</strong> 13 Grudnia 2025 (Sobota), godz. 18:00</li>
+                <li><strong>Format:</strong> SQUAD FPP (4 os.) | Max 25 Drużyn</li>
+                <li><strong>Cel:</strong> 100% Charytatywny (Cel zbiórki zostanie ogłoszony)</li>
+                <li><strong>Mapy:</strong> 2x Miramar, Rondo, Taego, 2x Erangel</li>
+                <li><strong>Nagrody:</strong> Tytuł Mistrza Turnieju Charytatywnego + satysfakcja</li>
+                <li><strong>Transmisja:</strong> Ogłoszenie wkrótce</li>
+            </ul>
+        </section>
+
+        <section id="sponsorzy">
+            <h3 class="collapsible-trigger">Sponsorzy / Darczyńcy (Kliknij, aby rozwinąć)</h3>
+            <div class="collapsible-content expanded">
+                <p style="text-align: center; color: #bbb; margin-bottom: 30px;">
+                    Lista darczyńców zostanie opublikowana tutaj. Dziękujemy za wsparcie!
+                </p>
+
+                <div class="top-sponsors-container">
+                    <div class="tier-2">
+                        <div class="sponsor-placeholder">?</div>
+                        <span class="sponsor-name">Sponsor Srebrny</span><br>
+                        <span class="sponsor-amount">--- PLN</span>
+                    </div>
+                    <div class="tier-1">
+                        <div class="sponsor-placeholder">?</div>
+                        <span class="sponsor-name">Sponsor Złoty</span><br>
+                        <span class="sponsor-amount">--- PLN</span>
+                    </div>
+                    <div class="tier-3">
+                        <div class="sponsor-placeholder">?</div>
+                        <span class="sponsor-name">Sponsor Brązowy</span><br>
+                        <span class="sponsor-amount">--- PLN</span>
+                    </div>
+                </div>
+
+                <div style="text-align:center; padding: 20px; background:#2a2a2a; color:#777; border-radius:5px; margin-top:20px;">
+                    Miejsce na pozostałych darczyńców
+                </div>
+
+                <div style="text-align:center; margin-top:30px; font-size:1.2em; border-top:1px solid #444; padding-top:20px; color:#fff;">
+                    Łączna suma zebrana: <strong style="color:#ffc107">0 PLN</strong>
+                </div>
+            </div>
+        </section>
+
+        <section id="teamy">
+            <h3 class="collapsible-trigger">Zapisane Teamy (Kliknij, aby rozwinąć)</h3>
+            <div class="collapsible-content expanded">
+                <p style="color:#bbb; margin-bottom:20px;">Lista pobierana na żywo z arkusza zapisów. Pierwszeństwo mają drużyny z wpłatą.</p>
+                <div id="team-list-dynamic" class="team-grid">
+                    <p>Ładowanie listy drużyn...</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="wyniki">
+            <h3>Wyniki Końcowe</h3>
+            <div class="tabs-nav">
+                <button class="tab-link active" data-tab="generalna">Generalna</button>
+                <button class="tab-link" data-tab="gra1">Gra 1</button>
+                <button class="tab-link" data-tab="gra2">Gra 2</button>
+                <button class="tab-link" data-tab="gra3">Gra 3</button>
+            </div>
+
+            <div id="tab-generalna" class="tab-content active">
+                <div class="results-table-container">
+                    <table class="results-table"><thead><tr><th>#</th><th>Team</th><th>Pkt (Rank)</th><th>Kills</th><th>Suma</th></tr></thead><tbody></tbody></table>
+                </div>
+            </div>
+            <div id="tab-gra1" class="tab-content"><div class="results-table-container"><table class="results-table"><thead><tr><th>#</th><th>Team</th><th>Pkt</th><th>Kills</th><th>Suma</th></tr></thead><tbody></tbody></table></div></div>
+            <div id="tab-gra2" class="tab-content"><div class="results-table-container"><table class="results-table"><thead><tr><th>#</th><th>Team</th><th>Pkt</th><th>Kills</th><th>Suma</th></tr></thead><tbody></tbody></table></div></div>
+            <div id="tab-gra3" class="tab-content"><div class="results-table-container"><table class="results-table"><thead><tr><th>#</th><th>Team</th><th>Pkt</th><th>Kills</th><th>Suma</th></tr></thead><tbody></tbody></table></div></div>
+        </section>
+
+        <section id="regulamin">
+            <h3>Regulamin Turnieju</h3>
+            <div class="rules-container">
+Regulamin TURNIEJU CHARYTATYWNEGO 2025
+
+I. Informacje Ogólne
+Nazwa Turnieju: TURNIEJ CHARYTATYWNY 2025
+Organizator: PUBG POLSKA
+Data Turnieju: godzina 18:00 – 13 grudnia 2025 r. (Sobota)
+Platforma: PC (Steam)
+Format: SQUAD (4-osobowe drużyny), tryb FPP (First Person Perspective)
+Region: PL
+Oficjalna Transmisja: Informacja o kanale, na którym odbędzie się transmisja, zostanie podana w osobnym ogłoszeniu.
+Komunikacja: Oficjalnym kanałem komunikacji z administracją i miejscem ogłoszeń jest dedykowany serwer Discord. Podczas trwania turnieju, obecność na serwerze oraz korzystanie z dedykowanych kanałów głosowych drużyn jest obowiązkowe.
+
+II. Zapisy i Wpisowe
+Zapisy odbywają się poprzez oficjalny formularz udostępniony przez Organizatora.
+Wziąć udział w wydarzeniu mogą jedynie gracze, którzy mają ukończone 13 lat. (Osoby niepełnoletnie powinny posiadać zgodę opiekuna prawnego).
+Podanie nieprawdziwych danych dotyczących wieku skutkuje natychmiastową dyskwalifikacją całej drużyny.
+Maksymalna liczba drużyn na turnieju wynosi 25.
+Podczas zapisów decyduje kolejność zapisu drużyny przez kapitana, z uwzględnieniem poniższej zasady priorytetu.
+Ważne – zasada priorytetu: Priorytetowo będą traktowane drużyny, które wpłacą darowiznę (wpisowe) o wartości 100 zł. Będą one automatycznie przechodzić na pierwsze miejsce w liście zapisanych drużyn, niezależnie od momentu wysłania zgłoszenia.
+Gwarancja udziału: Każda drużyna, która uiści opłatę w wysokości 100 zł, otrzymuje 100% gwarancję udziału w turnieju (w ramach limitu miejsc).
+Drużyny niewnoszące opłaty mogą wziąć udział w turnieju bezpłatnie, o ile pozostaną wolne miejsca po uwzględnieniu drużyn priorytetowych (decyduje wówczas kolejność zgłoszeń).
+Dane do wpłaty zostaną udostępnione kapitanom drużyn po pomyślnej rejestracji.
+Wszystkie zebrane środki (wpisowe) zostaną w 100% przekazane na cel charytatywny.
+Gracze posiadający aktywną blokadę (bana) na serwerze Discord PUBG POLSKA mają zakaz udziału w turnieju.
+
+III. Cel Charytatywny i Nagrody
+Charakter wydarzenia: Turniej ma charakter w 100% charytatywny.
+Cel zbiórki: Konkretny cel zbiórki charytatywnej zostanie oficjalnie ogłoszony przez Organizatora przed startem turnieju.
+Brak nagród pieniężnych: Uczestnicy nie otrzymują żadnych nagród pieniężnych. Całkowita kwota zebrana z wpisowych oraz dobrowolnych dotacji (donejtów) zostanie przekazana na wskazany cel.
+Gra toczy się o tytuł Mistrza Turnieju Charytatywnego oraz satysfakcję ze wsparcia szczytnego celu.
+
+IV. Format Rozgrywek i Punktacja
+Turniej składa się z 6 (sześciu) gier rozgrywanych w trybie FPP na serwerach niestandardowych.
+Mapy: 2×Miramar, Rondo, Taego, 2×Erangel.
+Obowiązuje standardowa punktacja e-sportowa S.U.P.E.R. (Standard and Universal PUBG Esports Ruleset).
+Punkty za zabójstwa: 1 punkt za każde zabójstwo.
+Punkty za miejsce:
+1. miejsce: 10 punktów
+2. miejsce: 6 punktów
+3. miejsce: 5 punktów
+4. miejsce: 4 punkty
+5. miejsce: 3 punkty
+6. miejsce: 2 punkty
+7-8. miejsce: 1 punkt
+9-25. miejsce: 0 punktów
+Ostateczna klasyfikacja jest tworzona na podstawie sumy punktów (za miejsce + za zabójstwa) ze wszystkich 6 gier.
+Zasady rozstrzygania remisów (Tie-break): W przypadku remisu punktowego o wyższym miejscu decyduje: a) Łączna liczba placement points we wszystkich meczach. b) Najwyższa liczba punktów zdobyta w pojedynczej grze. c) Najwyższe miejsce zajęte w ostatnim meczu turnieju.
+
+V. Zasady Uczciwej Gry (Fair-Play)
+Zakaz oszukiwania: Używanie jakichkolwiek programów wspomagających (cheaty), skryptów (w tym makr), modyfikacji plików gry jest surowo zabronione i skutkuje natychmiastową dyskwalifikacją całej drużyny oraz permanentnym banem na przyszłe wydarzenia organizowane przez PUBG POLSKA.
+Zakaz "Teaming'u": Jakakolwiek forma współpracy lub "sojuszu" między dwiema lub więcej drużynami w trakcie meczu jest zabroniona i karana dyskwalifikacją.
+Wykorzystywanie błędów gry (Exploits): Świadome wykorzystywanie błędów gry (np. wchodzenie pod tekstury) jest zabronione.
+Zachowanie: Wymagana jest kultura osobista i szacunek do przeciwników, organizatorów oraz widzów. Wszelkie przejawy toksyczności, rasizmu czy mowy nienawiści będą karane.
+
+VI. Drużyny i Gracze
+Drużyna składa się z 4 graczy (SQUAD). Dopuszcza się posiadanie jednego (1) gracza rezerwowego.
+Kapitan drużyny jest odpowiedzialny za kontakt z administracją.
+Gracze zobowiązani są do używania w grze nicków (IGN) zgłoszonych podczas rejestracji.
+
+VII. Procedura Meczowa
+Wszystkie drużyny mają obowiązek przebywać na serwerze Discord PUBG POLSKA i korzystać z dedykowanych im kanałów głosowych podczas trwania wszystkich meczów.
+Dane do logowania na serwer (Nazwa lobby + Hasło) będą przekazywane kapitanom drużyn na dedykowanym kanale Discord na 15 minut przed startem pierwszej gry.
+Drużyny mają obowiązek stawić się w lobby na czas.
+Rozłączenia (Disconnects):
+W przypadku rozłączenia pojedynczego gracza (DC) gra jest kontynuowana. Gracz może próbować dołączyć ponownie.
+Organizator nie przewiduje restartu lobby z powodu problemów technicznych pojedynczych graczy.
+Restart meczu może nastąpić tylko w przypadku krytycznego błędu serwera (np. rozłączenie ponad 25% graczy) i tylko po decyzji głównego administratora.
+
+VIII. Transmisja
+Oficjalna transmisja z komentarzem odbędzie się na wybranym kanale streamingowym. Szczegóły zostaną podane w ogłoszeniach przedstartowych. Transmisja będzie posiadała odpowiednie opóźnienie (delay) w celu uniknięcia "stream-snipingu".
+Gracze mogą streamować swoją grę (POV), jednak nakazuje się ustawienie opóźnienia transmisji (minimum 5 minut) dla własnego bezpieczeństwa taktycznego.
+
+IX. Postanowienia Końcowe
+Administracja turnieju (PUBG POLSKA) ma pełne prawo do podejmowania ostatecznych decyzji we wszystkich sprawach spornych.
+Organizator zastrzega sobie prawo do zmiany niniejszego regulaminu w dowolnym momencie, jeśli uzna to za konieczne dla zapewnienia uczciwej i płynnej rozgrywki.
+Zapisanie się do turnieju jest równoznaczne z akceptacją wszystkich punktów niniejszego regulaminu.
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        &copy; 2025 PUBG POLSKA.
+    </footer>
+</div>
+
+<script>
+    // 1. ROZWIJANIE SEKCJI
+    document.querySelectorAll('.collapsible-trigger').forEach(header => {
+        header.addEventListener('click', () => {
+            const content = header.nextElementSibling;
+            if (content) content.classList.toggle('expanded');
+        });
+    });
+
+    // 2. PARSOWANIE CSV I POBIERANIE DRUŻYN
+    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vScvP0CCSXI2M-iz8wNoASNqPNFCWTUFrRBRzyqdQgjo8hPLdYha-rLV35rmAk3OUbzhnGKjVJpkIIK/pub?output=csv';
+
+    function parseCSVRow(row) {
+        const columns = [];
+        let current = '';
+        let inQuotes = false;
+        for(let i=0; i<row.length; i++){
+            if(row[i] === '"') { inQuotes = !inQuotes; }
+            else if(row[i] === ',' && !inQuotes) { columns.push(current); current = ''; }
+            else { current += row[i]; }
+        }
+        columns.push(current);
+        return columns.map(c => c.trim().replace(/^"|"$/g, ''));
+    }
+
+    async function loadTeams() {
+        const list = document.getElementById('team-list-dynamic');
+        try {
+            const response = await fetch(SHEET_URL);
+            if(!response.ok) throw new Error("Błąd pobierania danych");
+
+            const text = await response.text();
+            const rows = text.split(/\r?\n/);
+
+            list.innerHTML = '';
+            let count = 0;
+
+            rows.slice(1).forEach(row => {
+                if(!row.trim()) return;
+                const cols = parseCSVRow(row);
+
+                if(!cols[1]) return;
+
+                count++;
+
+                const teamName = cols[1];
+                const cap = cols[2];
+                const p2 = cols[4];
+                const p3 = cols[6];
+                const p4 = cols[8];
+                const rez = cols[10];
+
+                const card = document.createElement('div');
+                card.className = 'team-card';
+
+                let playersHtml = `<ul class="player-sublist">`;
+                if(cap) playersHtml += `<li class="captain">${cap} (C)</li>`;
+                if(p2) playersHtml += `<li>${p2}</li>`;
+                if(p3) playersHtml += `<li>${p3}</li>`;
+                if(p4) playersHtml += `<li>${p4}</li>`;
+                if(rez) playersHtml += `<li>${rez} (Rez)</li>`;
+                playersHtml += `</ul>`;
+
+                card.innerHTML = `
+                    <div class="team-card-header">
+                        <span class="team-number">${count}.</span>
+                        <span class="team-name">${teamName}</span>
+                    </div>
+                    ${playersHtml}
+                `;
+
+                card.querySelector('.team-card-header').addEventListener('click', function() {
+                    this.nextElementSibling.classList.toggle('expanded');
+                });
+
+                list.appendChild(card);
+            });
+
+            if(count === 0) {
+                list.innerHTML = '<p style="padding:10px; color:#bbb;">Brak zapisanych drużyn.</p>';
+            }
+
+        } catch(e) {
+            console.log("Błąd:", e);
+            list.innerHTML = '<p style="padding:10px; color:#bbb;">Nie udało się załadować listy drużyn (Sprawdź połączenie).</p>';
+        }
+    }
+
+    loadTeams();
+
+    document.querySelectorAll('.tab-link').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-link').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            const tabKey = btn.dataset.tab;
+            const targetId = 'tab-' + tabKey;
+            const targetContent = document.getElementById(targetId);
+            if(targetContent) targetContent.classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
