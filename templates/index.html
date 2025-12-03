@@ -5,129 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PUBG POLSKA - Strona Główna</title>
     <link rel="icon" href="https://i.imgur.com/HcTRskR.png" type="image/png">
-    
     <style>
-        /* ========================================= */
-        /* GLOBALNE STYLE (Dark Mode)                */
-        /* ========================================= */
-        body {
-            background-color: #1e1e1e;
-            color: #e0e0e0;
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
-
-        /* GŁÓWNY KONTENER */
-        .page-wrapper {
-            width: 95%;
-            max-width: 1200px;
-            margin: 30px auto;
-            background-color: rgba(30, 30, 30, 0.95);
-            border-radius: 10px;
-            box-shadow: 0 0 25px rgba(0,0,0,0.8);
-            overflow: hidden;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* ========================================= */
-        /* NAGŁÓWEK Z LOGO                           */
-        /* ========================================= */
-        .main-header {
-            background-color: #252525;
-            padding: 20px;
-            text-align: center;
-            border-bottom: 4px solid #ffc107;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .main-header:hover {
-            background-color: #2f2f2f;
-        }
-        .header-logo {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 0 auto;
-            transition: transform 0.3s ease;
-        }
-        .main-header:hover .header-logo {
-            transform: scale(1.02);
-        }
-
-        /* ========================================= */
-        /* MENU GŁÓWNE (ZAKŁADKI)                    */
-        /* ========================================= */
-        .main-navbar {
-            background-color: #121212;
-            padding: 0;
-            text-align: center;
-            border-bottom: 2px solid #444;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .main-navbar a {
-            color: #b0b0b0;
-            text-decoration: none;
-            font-size: 1.1em;
-            font-weight: bold;
-            padding: 20px 30px;
-            transition: 0.3s;
-            border-bottom: 4px solid transparent;
-        }
-        .main-navbar a:hover {
-            background-color: #2a2a2a;
-            color: #fff;
-        }
-        /* Klasa aktywna dla strony głównej */
-        .main-navbar a.active {
-            background-color: #2a2a2a;
-            color: #ffc107;
-            border-bottom: 4px solid #ffc107;
-        }
-
-        /* ========================================= */
-        /* TREŚĆ STRONY GŁÓWNEJ                      */
-        /* ========================================= */
-        .content-padding {
-            padding: 50px 20px;
-            text-align: center;
-            flex-grow: 1; /* Wypełnia miejsce */
-        }
+        body { background-color: #1e1e1e; color: #e0e0e0; font-family: 'Arial', sans-serif; margin: 0; padding: 0; line-height: 1.6; }
+        .page-wrapper { width: 95%; max-width: 1200px; margin: 30px auto; background: rgba(30, 30, 30, 0.95); border-radius: 10px; box-shadow: 0 0 25px rgba(0,0,0,0.8); overflow: hidden; min-height: 100vh; display: flex; flex-direction: column; }
+        .main-header { background: #252525; padding: 20px; text-align: center; border-bottom: 4px solid #ffc107; transition: background 0.3s; cursor: pointer; }
+        .main-header:hover { background: #2f2f2f; }
+        .header-logo { max-width: 100%; height: auto; display: block; margin: 0 auto; transition: transform 0.3s; }
+        .main-header:hover .header-logo { transform: scale(1.02); }
+        .main-navbar { background: #121212; padding: 0; text-align: center; border-bottom: 2px solid #444; display: flex; justify-content: center; flex-wrap: wrap; }
+        .main-navbar a { color: #b0b0b0; text-decoration: none; font-size: 1.1em; font-weight: bold; padding: 20px 30px; transition: 0.3s; border-bottom: 4px solid transparent; }
+        .main-navbar a:hover { background: #2a2a2a; color: #fff; }
+        .main-navbar a.active { background: #2a2a2a; color: #ffc107; border-bottom: 4px solid #ffc107; }
+        .content-padding { padding: 50px 20px; text-align: center; flex-grow: 1; }
         h1 { color: #ffc107; margin-bottom: 20px; font-size: 2.5em; text-transform: uppercase; }
         p { font-size: 1.2em; color: #ccc; max-width: 800px; margin: 0 auto 20px auto; }
-        
-        .welcome-box {
-            background: #252525;
-            padding: 30px;
-            border-radius: 8px;
-            display: inline-block;
-            margin-top: 30px;
-            border: 1px solid #444;
-        }
-
-        /* Stopka */
-        footer {
-            text-align: center;
-            padding: 20px;
-            border-top: 2px solid #333;
-            margin-top: auto;
-            color: #777;
-        }
+        .welcome-box { background: #252525; padding: 30px; border-radius: 8px; display: inline-block; margin-top: 30px; border: 1px solid #444; }
+        footer { text-align: center; padding: 20px; border-top: 2px solid #333; margin-top: auto; color: #777; }
     </style>
 </head>
 <body>
 
 <div class="page-wrapper">
-    
-    <header class="main-header">
-        <a href="index.html">
-            <img src="https://i.imgur.com/VhDs7mJ.png" alt="PUBG POLSKA" class="header-logo">
-        </a>
+    <header class="main-header" onclick="window.location.href='index.html'">
+        <img src="https://i.imgur.com/VhDs7mJ.png" alt="PUBG POLSKA" class="header-logo">
     </header>
 
     <nav class="main-navbar">
@@ -139,13 +39,12 @@
 
     <div class="content-padding">
         <h1>Witamy na oficjalnej stronie PUBG POLSKA</h1>
-        
         <p>Centrum polskich turniejów PUBG. Wybierz interesujące Cię wydarzenie z menu powyżej, aby sprawdzić szczegóły, wyniki oraz składy drużyn.</p>
         
         <div class="welcome-box">
             <h3 style="color:#ffc107; margin-top:0;">AKTUALNE WYDARZENIA</h3>
             <p style="margin-bottom:0;">Trwają zapisy do: <strong>Turnieju Charytatywnego 2025</strong></p>
-            <p style="margin-top:5px;">Nadchodzi: <strong>PUBG POLSKA CUP 2025</strong></p>
+            <p style="margin-top:5px;">Zobacz wyniki: <strong>PUBG POLSKA CUP 2025</strong></p>
         </div>
     </div>
 
