@@ -1,0 +1,7 @@
+services:
+  - type: static
+    name: pubgpolska-web
+    env: static
+    buildCommand: ""     # Brak komendy budowania (bo to czysty HTML)
+    staticPublishPath: . # Kropka oznacza, że pliki są w głównym katalogu
+    branch: main         # Upewnij się, że Twój główny branch to 'main' lub zmień na 'master'
